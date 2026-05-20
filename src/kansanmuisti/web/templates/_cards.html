@@ -3,59 +3,50 @@
 {% macro mp_card(m) %}
 {%- set parts = (m.full_name or '?').split() -%}
 {%- set win = (m.badges or [])[0] if m.badges else none -%}
-<div class="tcard {{ m.rarity or 'perus' }}" tabindex="0" role="button" aria-label="{{ m.full_name }}">
-  <div class="tcard-inner">
-    <div class="tcard-face tcard-front">
-      <div class="tc-photo"{% if m.photo_url %} style="background-image:url('{{ m.photo_url }}')"{% endif %}>
-        {% if not m.photo_url %}<div class="mono">{{ parts[0][0] }}{{ parts[-1][0] if parts|length>1 else '' }}</div>{% endif %}
-        <div class="holo"></div><div class="glare"></div>
-        {% if win %}<div class="tc-winribbon">🏆 Voittaja: {{ win.label }}</div>{% endif %}
-        <div class="tc-corner">
-          {% if m.party_current %}<span class="tc-party">{{ m.party_current }}</span>{% endif %}
-          {% if m.cardno %}<span class="tc-no">#{{ m.cardno }}</span>{% endif %}
-        </div>
-        {% if win %}<div class="tc-seal" title="{{ win.label }}">{{ win.emoji }}</div>{% endif %}
-        <div class="tc-photo-scrim"></div>
-        <div class="tc-namebar">
-          <div class="tc-name">{{ m.full_name }}</div>
-          <div class="tc-meta">{{ (m.electoral_district or '')|replace(' vaalipiiri','') }}{% for t in (m.traits or []) %} · {{ t }}{% endfor %}</div>
-        </div>
-      </div>
-      <div class="tc-panel">
-        {% if m.attrs %}
-        <div class="tc-attrs">
-          {% for k in ATTR_ORDER %}{% if m.attrs.get(k) is not none %}
-          <div class="tc-attr"><b>{{ m.attrs[k] }}</b><span>{{ ATTR_ABBR[k] }}</span></div>
-          {% endif %}{% endfor %}
-        </div>
-        {% endif %}
-        <div class="tc-idx">
-          {% if m.consistency_index is not none %}<b>{{ m.consistency_index }}</b><span>INDEKSI</span>{% endif %}
-        </div>
-      </div>
-      <div class="tc-hint">klikkaa ⟳</div>
+<a class="tcard mp {{ m.rarity or 'perus' }}" href="/edustaja/{{ m.person_id }}" aria-label="{{ m.full_name }}">
+  <div class="tc-photo"{% if m.photo_url %} style="background-image:url('{{ m.photo_url }}')"{% endif %}>
+    {% if not m.photo_url %}<div class="mono">{{ parts[0][0] }}{{ parts[-1][0] if parts|length>1 else '' }}</div>{% endif %}
+    <div class="holo"></div><div class="glare"></div>
+    {% if win %}<div class="tc-winribbon">🏆 Voittaja: {{ win.label }}</div>{% endif %}
+    <div class="tc-corner">
+      {% if m.party_current %}<span class="tc-party">{{ m.party_current }}</span>{% endif %}
+      {% if m.cardno %}<span class="tc-no">#{{ m.cardno }}</span>{% endif %}
     </div>
-    <div class="tcard-face tcard-back">
-      <h4>{{ m.full_name }}</h4>
-      <div class="small muted" style="margin-bottom:8px">{{ m.party_current or '' }} · {{ (m.electoral_district or '')|replace(' vaalipiiri','') }}{% if m.top_topic %} · ★ {{ m.top_topic }}{% endif %}</div>
-      {% if win %}<div class="bk-award gold">🏆 {{ win.emoji }} {{ win.label }}</div>{% endif %}
-      {% if m.attrs %}
-      <div class="bk-spectrum">
-        {% for k in ATTR_ORDER %}{% if m.attrs.get(k) is not none %}
-        <div class="bk-bar"><span class="bk-lab">{{ ATTR_LABELS[k] }}</span>
-          <span class="bk-track"><i style="width:{{ m.attrs[k] }}%"></i></span>
-          <span class="bk-val">{{ m.attrs[k] }}</span></div>
-        {% endif %}{% endfor %}
-      </div>
-      <div class="small muted" style="margin:6px 0">Arvot 1–99 = sijoittuminen kaikkien edustajien joukossa.</div>
-      {% endif %}
-      <div class="bk-raw small muted">{{ m.n_speeches }} puhetta · {{ m.n_votes_cast }} ääntä
-        {%- if m.absent_pct is not none %} · {{ '%.0f' % m.absent_pct }} % poissa{% endif -%}
-        {%- if m.deviation_rate is not none %} · poikkeama {{ '%.1f' % (m.deviation_rate*100) }} %{% endif %}</div>
-      <a class="bk-open" href="/edustaja/{{ m.person_id }}">Avaa profiili →</a>
+    {% if win %}<div class="tc-seal" title="{{ win.label }}">{{ win.emoji }}</div>{% endif %}
+    <div class="tc-photo-scrim"></div>
+    <div class="tc-namebar">
+      <div class="tc-name">{{ m.full_name }}</div>
+      <div class="tc-meta">{{ (m.electoral_district or '')|replace(' vaalipiiri','') }}{% for t in (m.traits or []) %} · {{ t }}{% endfor %}</div>
     </div>
   </div>
-</div>
+  <div class="tc-body">
+    {% if m.radar_svg %}<div class="tc-radar">{{ m.radar_svg|safe }}</div>{% endif %}
+    {% if m.attrs %}
+    <div class="tc-attrlist">
+      {% for k in ATTR_ORDER %}{% if m.attrs.get(k) is not none %}
+      <div class="tc-arow" title="{{ ATTR_HELP[k] }}">
+        <span class="al">{{ RADAR_LABELS[k] }}</span>
+        <span class="at"><i style="width:{{ m.attrs[k] }}%"></i></span>
+        <span class="av">{{ m.attrs[k] }}</span>
+      </div>
+      {% endif %}{% endfor %}
+      <div class="tc-scale">Arvot 1–99 = sija kaikkien edustajien joukossa</div>
+    </div>
+    {% endif %}
+    <div class="tc-foot">
+      {% if m.consistency_index is not none %}
+      <div class="tc-index">
+        <b>{{ m.consistency_index }}<small>/100</small></b>
+        <span>Johdonmukaisuus<br><i>puheet vs. äänet</i></span>
+      </div>
+      {% endif %}
+      <div class="tc-rawmini">
+        {{ m.n_speeches }} puheenvuoroa<br>
+        {% if m.absent_pct is not none %}poissa {{ '%.0f' % m.absent_pct }} %{% endif %}
+      </div>
+    </div>
+  </div>
+</a>
 {% endmacro %}
 
 {% macro award_card(a) %}

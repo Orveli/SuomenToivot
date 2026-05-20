@@ -34,6 +34,8 @@ templates.env.globals["heat_color"] = viz.heat_color
 templates.env.globals["ATTR_LABELS"] = queries.ATTR_LABELS
 templates.env.globals["ATTR_ABBR"] = queries.ATTR_ABBR
 templates.env.globals["ATTR_ORDER"] = queries.ATTR_ORDER
+templates.env.globals["ATTR_HELP"] = queries.ATTR_HELP
+templates.env.globals["RADAR_LABELS"] = queries.RADAR_LABELS
 
 
 def _asset_version() -> str:
@@ -56,6 +58,16 @@ def _conn():
     return conn
 
 
+def _attach_radar(cards):
+    """Liitä kortteihin valmis tutkagraafi (2D) attribuuteista."""
+    for m in cards:
+        if m.get("attrs"):
+            vals = [(queries.RADAR_LABELS[k], (m["attrs"].get(k) or 0) / 99.0)
+                    for k in queries.ATTR_ORDER if m["attrs"].get(k) is not None]
+            m["radar_svg"] = viz.radar_svg(vals, 200, True) if len(vals) >= 3 else ""
+    return cards
+
+
 def render(request: Request, name: str, **ctx) -> HTMLResponse:
     return templates.TemplateResponse(request, name, ctx)
 
@@ -64,8 +76,10 @@ def render(request: Request, name: str, **ctx) -> HTMLResponse:
 def index(request: Request):
     conn = _conn()
     try:
+        feed = queries.front_feed(conn)
+        _attach_radar(feed["mps"])
         return render(request, "index.html", overview=queries.overview(conn),
-                      topics=queries.topics(conn), feed=queries.front_feed(conn))
+                      topics=queries.topics(conn), feed=feed)
     finally:
         conn.close()
 
@@ -149,6 +163,7 @@ def kortit(request: Request, party: str = "", sort: str = "puheet", dir: str = "
             cmd["badges"] = holders.get(cmd["person_id"], [])
             cmd["attrs"] = attrs.get(cmd["person_id"])
             queries.card_flair(cmd)
+        _attach_radar(cards)
         return render(request, "cards.html", cards=cards, parties=queries.parties(conn),
                       party=party, sort=sort, dir=dir, min_eligible=min_eligible)
     finally:

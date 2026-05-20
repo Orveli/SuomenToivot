@@ -22,6 +22,17 @@ def _one(conn, q, *p):
 ATTR_LABELS = {"puhe": "Puheliaisuus", "las": "Äänestysaktiivisuus",
                "aihe": "Aihelaajuus", "kok": "Kokemus", "its": "Itsenäisyys"}
 ATTR_ABBR = {"puhe": "PUH", "las": "LÄS", "aihe": "AIH", "kok": "KOK", "its": "ITS"}
+# Lyhyet selkokieliset akselilabelit tutkagraafiin
+RADAR_LABELS = {"puhe": "Puheliaisuus", "las": "Läsnäolo", "aihe": "Aiheet",
+                "kok": "Kokemus", "its": "Itsenäisyys"}
+# Yhden lauseen selitys kullekin (näytetään kortissa)
+ATTR_HELP = {
+    "puhe": "Kuinka paljon pitää puheenvuoroja",
+    "las": "Kuinka usein osallistuu äänestyksiin (läsnä)",
+    "aihe": "Kuinka monesta eri aiheesta puhuu",
+    "kok": "Kuinka pitkä ura edustajana",
+    "its": "Kuinka usein äänestää eri tavalla kuin oma ryhmä",
+}
 ATTR_ORDER = ["puhe", "las", "aihe", "kok", "its"]
 
 

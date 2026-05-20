@@ -246,3 +246,33 @@ nav.main{display:flex;gap:4px;margin-left:8px}
 .bk-track>i{display:block;height:100%;background:var(--accent);border-radius:4px}
 .bk-val{text-align:right;font-weight:700;font-size:11px}
 .bk-raw{margin-top:6px}
+
+/* ===================== POKÉMON-TYYLINEN YKSIPUOLINEN KORTTI ===================== */
+.tcard.mp{aspect-ratio:auto;display:block;text-decoration:none;color:var(--ink);border-radius:16px;
+  overflow:hidden;border:1px solid rgba(0,0,0,.12);box-shadow:0 6px 20px rgba(20,30,50,.16);background:#fff;perspective:none}
+.tcard.mp:hover{transform:translateY(-5px);text-decoration:none}
+.tcard.mp .tc-photo{height:155px;flex:none}
+.tcard.mp .tc-body{padding:8px 13px 13px}
+.tc-radar{display:flex;justify-content:center;margin:-4px 0 0}
+.tc-radar svg{overflow:visible}
+.tc-attrlist{margin:0 0 2px}
+.tc-arow{display:grid;grid-template-columns:88px 1fr 24px;align-items:center;gap:8px;margin:4px 0;font-size:12px}
+.tc-arow .al{color:var(--ink)}
+.tc-arow .at{height:9px;background:var(--soft);border-radius:5px;overflow:hidden}
+.tc-arow .at>i{display:block;height:100%;background:linear-gradient(90deg,#7aa7cf,#1f4e79);border-radius:5px}
+.tc-arow .av{text-align:right;font-weight:800;color:var(--accent)}
+.tc-scale{font-size:10px;color:var(--muted);margin-top:5px}
+.tc-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:9px;padding-top:9px}
+.tc-index{display:flex;align-items:center;gap:9px}
+.tc-index b{font-size:30px;font-weight:800;color:var(--accent);line-height:.9}
+.tc-index b small{font-size:13px;color:var(--muted);font-weight:600}
+.tc-index>span{font-size:11px;color:var(--ink);line-height:1.2}
+.tc-index>span i{color:var(--muted);font-style:normal;font-size:9.5px}
+.tc-rawmini{font-size:11px;color:var(--muted);text-align:right;line-height:1.45}
+/* harvinaisuus yksipuolisessa kortissa */
+.tcard.mp.harvinainen{box-shadow:0 0 0 2px rgba(244,196,60,.85),0 6px 20px rgba(20,30,50,.16)}
+.tcard.mp.legendaarinen{box-shadow:0 0 0 2px rgba(255,228,140,.95),0 0 22px rgba(170,120,255,.5)}
+.tcard.mp.legendaarinen .holo{opacity:.5;animation:holoShift 5s linear infinite}
+.tcard.mp.legendaarinen:hover .holo{opacity:.8}
+/* isommat kortit feedissä */
+.feed{grid-template-columns:repeat(auto-fill,minmax(265px,1fr))}
