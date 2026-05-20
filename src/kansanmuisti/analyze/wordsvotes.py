@@ -20,6 +20,9 @@ from __future__ import annotations
 import datetime as dt
 
 NOW = lambda: dt.datetime.now(dt.timezone.utc).isoformat()  # noqa: E731
+# Ristiriita-leima vaatii riittävän varman kanta-arvion — matala varmuus → konteksti.
+# Estää tulkinnanvaraisen kannan muuttumisen syyttäväksi leimaksi.
+RISTIRIITA_MIN_CONFIDENCE = 0.7
 
 # Läpinäkyvä leksikko: VAIN yksiselitteiset, oman äänestyspäätöksen vastentahtoi-
 # suutta ilmaisevat MONISANAFRAASIT. Yksittäissanat (esim. "vastentahtoisesti",
@@ -134,6 +137,10 @@ def compute_words_votes(conn) -> dict:
             vote_value = vr["vote_value"] if vr else None
             align, note = _classify(stance, vote_value, v["is_procedural"],
                                     v["treatment_stage"], reluctance, v["title"])
+            # Integriteetti: älä leimaa ristiriidaksi matalan varmuuden kanta-arviolla.
+            if align == "ristiriita" and (rep["confidence"] or 0) < RISTIRIITA_MIN_CONFIDENCE:
+                align = "konteksti"
+                note = "puheen kanta tulkinnanvarainen (matala varmuus) — ei luokitella ristiriidaksi"
             conn.execute(
                 "INSERT INTO analysis_words_votes(person_id,vote_id,speech_id,legislative_item,"
                 "speech_stance,speech_quote,speech_date,vote_value,vote_date,vote_stage,"

@@ -217,10 +217,18 @@ def cmd_llm_explain(args):
 
 
 def cmd_load_explainer_demo(args):
+    import glob
+    import os
     from .analyze.explain import load_explainer_demo
+    paths = (sorted(glob.glob(os.path.join(args.path, "*.json")))
+             if os.path.isdir(args.path) else [args.path])
     with db.session() as conn:
-        res = load_explainer_demo(conn, args.path)
-    _log(f"Lakiselittäjä-demo ladattu: {res}")
+        tot = {"inserted": 0, "skipped_quote_mismatch": 0}
+        for p in paths:
+            res = load_explainer_demo(conn, p)
+            tot["inserted"] += res["inserted"]
+            tot["skipped_quote_mismatch"] += res["skipped_quote_mismatch"]
+    _log(f"Lakiselittäjät ladattu: {tot}")
 
 
 def cmd_serve(args):
