@@ -70,6 +70,19 @@ km collect-all --start-year 2015 --end-year 2025 && km analyze && km coverage-re
 Keruu on **uudelleenajettava** (`ingest_state`-taulu seuraa tilaa; `INSERT OR REPLACE/IGNORE`).
 Voit ajaa minkä tahansa vuoden uudelleen ilman duplikaatteja.
 
+## Valmis tietokanta (ei pakollista rakentaa itse)
+
+Valmis SQLite-tietokanta (2015–2024) on ladattavissa GitHub Releasesta — ei tarvitse ajaa keruuta:
+
+```bash
+# lataa ja pura data/-hakemistoon
+gh release download data-2015-2024 -R Orveli/SuomenToivot -D /tmp
+gunzip -c /tmp/kansanmuisti.sqlite3.gz > data/kansanmuisti.sqlite3
+km serve
+```
+
+Tietokanta on myös aina regeneroitavissa lähteestä (`km collect-all` + `km analyze`).
+
 ## Testit
 
 ```bash
