@@ -1,0 +1,79 @@
+{
+  "model_label": "Claude Code -agentti",
+  "proscons": [
+    {
+      "vote_id": 36367,
+      "note": "Salikeskustelu painottui voimakkaasti hylkäyksen kannattajiin (kd, ps). Puolesta esitettyjä argumentteja oli debate-teksteissa niukasti; selkein laeille myonteinen puheenvuoro oli lakivaliokunnan puheenjohtaja Kari Tolvasen (kok) esittely.",
+      "pro": [
+        {
+          "argument": "Muutokset ovat seurausta jo vahvistetusta avioliittolain muutoksesta ja on tarkoitettu tulemaan voimaan samanaikaisesti sen kanssa",
+          "speaker": "Kari Tolvanen",
+          "party": "kok",
+          "quote": "Nämä ehdotetut muutokset ovat seurausta jo vahvistetusta lainmuutoksesta joulukuusta 2014."
+        },
+        {
+          "argument": "Esitys ei sisalla muutoksia sosiaaliturvaetuuksia tai sosiaali- ja terveyspalveluita koskevaan lainsaadantoon",
+          "speaker": "Kari Tolvanen",
+          "party": "kok",
+          "quote": "Haluan korostaa, että esitys ei sisällä muutoksia sosiaaliturvaetuuksia tai sosiaali- ja terveyspalveluita koskevaan lainsäädäntöön."
+        }
+      ],
+      "con": [
+        {
+          "argument": "Liitannaislakien kasittely ei ole vain tekninen muutos vaan suuri lainsaadantohanke vaikutuksineen",
+          "speaker": "Sari Essayah",
+          "party": "kd",
+          "quote": "tällainen suuri lainsäädäntöhanke, mikä nyt on käsillä, sukupuolineutraalin avioliittolain liitännäislakien käsittely, on todellakin kaikkea muuta kuin vain tällainen tekninen muutos"
+        },
+        {
+          "argument": "Avioliitto on ainoa parisuhteen muoto, jossa lapsella voi olla mahdollisuus syntya ja kasvaa oman isan ja aidin kanssa",
+          "speaker": "Sari Tanus",
+          "party": "kd",
+          "quote": "avioliitto on ainut parisuhteen muoto, jossa lapsella voi olla mahdollisuus syntyä, kasvaa ja kehittyä oman isän ja äidin kanssa"
+        },
+        {
+          "argument": "Hallituksen esitys on sekava ja kaukana kansalaisten yhdenvertaisesta kohtelusta eika tayta hyvan valmistelun kriteereita",
+          "speaker": "Sari Tanus",
+          "party": "kd",
+          "quote": "kuinka ihmeessä tällaista sekavaa ja kaukana kansalaisten yhdenvertaisesta ja tasa-arvoisesta kohtelusta olevaa esitystä yleensä tuodaan tähän saliin"
+        },
+        {
+          "argument": "Olisi tullut odottaa Aito avioliitto -kansalaisaloitteen kasittelya ennen liitannaislakien etenemista",
+          "speaker": "Sari Essayah",
+          "party": "kd",
+          "quote": "olisi ollut hyvä, jos olisi odotettu, että tämä Aito avioliitto -kansalaisaloite tulee eduskuntaan ennen kuin näitä liitännäislakeja olisi lähdetty viemään eteenpäin"
+        },
+        {
+          "argument": "Lakimuutos estaisi lasta tapaamasta toista biologista vanhempaansa ja polkisi lasten oikeuksia",
+          "speaker": "Mika Niikko",
+          "party": "ps",
+          "quote": "Muutokset avioliittolakiin estäisivät lasta tapaamasta toista biologista vanhempaansa."
+        },
+        {
+          "argument": "Lakimuutoksen yhteiskunnalliset ja taloudelliset vaikutukset ovat ennakoimattomia koska niita ei ole tutkittu",
+          "speaker": "Mika Niikko",
+          "party": "ps",
+          "quote": "Lakimuutoksen yhteiskunnalliset sekä taloudelliset vaikutukset ovat ennakoimattomia, koska niitä ei koskaan ole tutkittu."
+        },
+        {
+          "argument": "Vaite kaikkien ihmissuhteiden yhdenvertaisuudesta ei kaytannossa toteudu",
+          "speaker": "Antero Laukkanen",
+          "party": "kd",
+          "quote": "sellainen yleistys, että jotenkin kaikki ihmissuhteet olisivat yhdenvertaisia ja tasa-arvoisia, ei tule koskaan käytännössä toteutumaan"
+        },
+        {
+          "argument": "Liitannaislakeja on kasitelty vain teknisina muutoksina vaikka ne sisaltavat syvia arvomuutoksia, ja valmistelussa lapsivaikutusten arviointi jai tekematta",
+          "speaker": "Päivi Räsänen",
+          "party": "kd",
+          "quote": "on käsitelty hyvin pitkälti ikään kuin vain teknisinä muutoksina, ja kuitenkin nämä sisältävät hyvin syviä arvomuutoksia"
+        },
+        {
+          "argument": "Sukupuolenvaihdosprosessin sijaan tulisi panostaa taustalla vaikuttavien traumojen tunnistamiseen ja hoitoon",
+          "speaker": "Sari Tanus",
+          "party": "kd",
+          "quote": "tulisi panostaa paljon, paljon enemmän taustalla vaikuttavien, usein hyvin syvältä ja kaukaa lapsuudesta kumpuavien traumojen tunnistamiseen ja niiden hoitoon"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "model_label": "Claude Code -agentti",
+  "proscons": [
+    {
+      "vote_id": 38929,
+      "note": "Keskustelu painottui hallintarekisteröintiin osana arvopaperikeskusasetuksen kansallista toimeenpanoa.",
+      "pro": [
+        {
+          "argument": "Hallintarekisteröinti pysyy Suomessa kiellettynä ja se tehdään ulkomailla kannattamattomaksi hallituksen kompromissina.",
+          "speaker": "Kaj Turunen",
+          "party": "ps",
+          "quote": "hallintarekisteröinti on Suomessa kielletty ja tulee olemaan jatkossakin kielletty. Nyt ulkomailla se tehdään myös kannattamattomaksi."
+        },
+        {
+          "argument": "Esitys on EU-säädöstöön perustuva ja koko valtioneuvosto kantaa siitä vastuun; valmistelu pohjautuu aiempaan eduskunnan ja talousvaliokunnan käsittelyyn.",
+          "speaker": "Mauri Pekkarinen",
+          "party": "kesk",
+          "quote": "kun ministeri antaa jonkun esityksen, EU-säädöstöön kuuluvan esityksen, se on ministerin esitys mutta viime kädessä koko se kaikki muukin hallitus, valtioneuvosto, kantaa siitä vastuun"
+        },
+        {
+          "argument": "Suomi-poikkeuksen kohta 38 saatiin EU-lainsäädäntöön kovalla työllä eikä parempaa muotoilua ollut saatavilla.",
+          "speaker": "Sari Essayah",
+          "party": "kd",
+          "quote": "tehtiin äärimmäisen paljon töitä, että sinne saatiin tämä kohta 38, josta puhutaan niin sanottuna Suomi-poikkeuksena."
+        },
+        {
+          "argument": "Esityksen pääasiallinen sisältö on paljon hallintarekisteröintiä laajempi ja koskee arvopaperikeskusten toimintaa osana kaupankäynnin infrastruktuuria.",
+          "speaker": "Alexander Stubb",
+          "party": "kok",
+          "quote": "on esityksen pääasiallinen sisältö kuitenkin paljon tätä kysymystä laajempi."
+        }
+      ],
+      "con": [
+        {
+          "argument": "Lakiesitys mahdollistaa suomalaisille omistusten hallintarekisteröinnin ulkomaalaisten arvopaperikeskusten kautta, jolloin todellinen omistaja voi hukkua pitkiin omistusketjuihin.",
+          "speaker": "Hanna Sarkkinen",
+          "party": "vas",
+          "quote": "niiden avulla voidaan luoda pitkiäkin omistusketjuja, joissa arvopaperin todellinen omistaja hukkuu. Hallintarekisteröinnillä voidaan siis piilottaa todellinen omistaja."
+        },
+        {
+          "argument": "Hallintarekisteröintiä voidaan käyttää laittomuuksiin kuten veronkiertoon, sisäpiirikauppoihin ja rahanpesuun.",
+          "speaker": "Hanna Sarkkinen",
+          "party": "vas",
+          "quote": "Syitä voi olla monia, ja ne ovat laittomia: veronkierto, sisäpiirikaupat, rahanpesu."
+        },
+        {
+          "argument": "Verottajan tietojen saantia ja yleisöjulkisuutta koskevat keskeiset asiat jäävät lausumien varaan eikä niitä ratkaistu itse lakiesityksessä.",
+          "speaker": "Sari Essayah",
+          "party": "kd",
+          "quote": "kaikkein keskeisimmät ja tärkeimmät asiat niin verottajan tietojen saannin kuin myöskin yleisöjulkisuuden suhteen jäävät näitten lausumien varaan, ja ne olisi tullut kyllä ratkaista tässä itse lakiesityksessä"
+        },
+        {
+          "argument": "Esitys jättää porsaanreiän auki eikä hallituspuolueilta saatu vastausta siihen, kuinka kauan se olisi auki.",
+          "speaker": "Timo Harakka",
+          "party": "sd",
+          "quote": "kuinka kauan arvioitte, että tämä ison possun mentävä porsaanreikä olisi auki."
+        },
+        {
+          "argument": "Suomi voisi halutessaan pitää kiinni suoran omistuksen mallista, mutta esitys luopuu siitä ja helpottaa veronkiertoa, korruptiota ja sisäpiirisuhmurointia.",
+          "speaker": "Li Andersson",
+          "party": "vas",
+          "quote": "Suomessa voisimme halutessamme pitää kiinni suoran omistuksen mallista, mutta hallitus haluaa sen sijaan tämän porsaanreiän kautta luopua tästä mallista, mikä tarkoittaisi veronkierron, korruption ja sisäpiirisuhmuroinnin helpottumista."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+ "model_label": "Claude Code -agentti",
+ "proscons": [
+  {
+   "vote_id": 37591,
+   "note": "HE 176/2016 vp, yrittajavahennys. Puolesta esitettiin oikeudenmukaisuus- ja tyollisyysargumentteja, vastaan tulonjako- ja tehokkuusargumentteja.",
+   "pro": [
+    {
+     "argument": "Yrittajavahennys on oikeudenmukainen, koska se tuo henkiloyritykset samalle viivalle viime kaudella tehdyn paaomaverokevennyksen kanssa.",
+     "speaker": "Hannu Hoskonen",
+     "party": "kesk",
+     "quote": "nyt on aivan oikeudenmukaista, etta myos nama henkiloyritykset ja -yrittajat saavat taman saman edun"
+    },
+    {
+     "argument": "Tasapuolisuusnakokulmasta on reilua ottaa yrittajavahennys kayttoon myos niilla yrityksilla, joilta se viime kaudella jai ottamatta.",
+     "speaker": "Heli Jarvinen",
+     "party": "vihr",
+     "quote": "tasapuolisuusnakokulmasta on reilua se, etta yrittajavahennys otetaan kayttoon myos niilla yrityksilla, joilta se viime kaudella jai ottamatta"
+    },
+    {
+     "argument": "Yrittajavahennys auttaa yrittajan toimeentuloa, mika on tarpeen koska monet pienyrittajat saavat hyvin pientà voittoa.",
+     "speaker": "Heli Jarvinen",
+     "party": "vihr",
+     "quote": "kuinka talla yrittajavahennyksella autetaan yrittajan toimeentuloa. Tasta olen prikulleen samaa mielta, ilman muuta autetaan, ja hyva niin"
+    },
+    {
+     "argument": "Uudet tyopaikat syntyvat pieniin ja keskisuuriin yrityksiin, joten niita on tuettava.",
+     "speaker": "Timo Heinonen",
+     "party": "kok",
+     "quote": "kaikki uudet tyopaikat 2000-luvulla ovat syntyneet nimenomaan pieniin ja keskisuuriin yrityksiin"
+    },
+    {
+     "argument": "Pk-yritykset ovat valtaosa yrityskannasta ja tarkea voimavara, ja niihin tyopaikat syntyvat jatkossakin.",
+     "speaker": "Timo Heinonen",
+     "party": "kok",
+     "quote": "Pk-yritysten osuus yrityskannasta on siis jopa 99,8 prosenttia, ja sinne ne tyopaikat syntyvat myos tulevaisuudessa"
+    },
+    {
+     "argument": "Yrittajavahennys on hallitusohjelman mukainen toimenpide ja tuottaa tulosta.",
+     "speaker": "Toimi Kankaanniemi",
+     "party": "ps",
+     "quote": "se on todella yksi hallitusohjelman mukainen toimenpide suuren toimenpidepaketin"
+    }
+   ],
+   "con": [
+    {
+     "argument": "Yrittajavahennys ei tosiasiassa saavuta sille asetettuja tyollisyys- ja kasvuvaikutuksia ja on ristiriidassa hallituksen oman veropohjalinjan kanssa.",
+     "speaker": "Krista Kiuru",
+     "party": "sd",
+     "quote": "yrittajavahennys on ristiriidassa hallituksen oman verotuksen karkihankkeen kanssa, jossa lahtokohtana on ollut laaja veropohja ja matalat verokannat"
+    },
+    {
+     "argument": "Vahennys on merkittava veroetu vain joillekin, ei kaikille yrittajille.",
+     "speaker": "Krista Kiuru",
+     "party": "sd",
+     "quote": "hallituksen esitys lahtee siita, etta se on merkittava veroetu vain joillekin"
+    },
+    {
+     "argument": "Valtaosa vahennykseen oikeutetuista ei hyody siita, koska pienilla tuloilla ansiotuloverotus on jo nyt edullisempi vaihtoehto.",
+     "speaker": "Krista Kiuru",
+     "party": "sd",
+     "quote": "Nain pienilla tuloilla ansiotuloverotus on tosiasiassa edullisempi vaihtoehto suurelle osalle naista yrittajista"
+    },
+    {
+     "argument": "Esitys on tulonsiirto vahaosaisilta suurituloisille eika auta pienituloisia henkiloyrittajia.",
+     "speaker": "Timo Harakka",
+     "party": "sd",
+     "quote": "tehdaan tulonsiirto vahaosaisilta suurituloisille: perinto- ja lahjaveron alennus seka niin sanottu yrittajavahennys"
+    },
+    {
+     "argument": "Valiokunnan mietinto on suppea ja sivuuttaa asiantuntijakuulemisissa esiin tulleet keskeiset seikat.",
+     "speaker": "Timo Harakka",
+     "party": "sd",
+     "quote": "tama valtiovarainvaliokunnan mietinto on kovin suppea ja sivuuttaa monet keskeiset asiantuntijakuulemisissa esiin tulleet seikat"
+    },
+    {
+     "argument": "Vahennys suosii suhteellisesti suurituloisia ja sen tyollisyysvaikutukset jaavat vahaisiksi, eika siihen ole varaa nykyisessa taloustilanteessa.",
+     "speaker": "Maria Tolppanen",
+     "party": "sd",
+     "quote": "kyseessa suhteellisesti suurituloisia suosiva veronalennus, jonka tyollisyystoimet jaavat olema"
+    }
+   ]
+  }
+ ]
+}

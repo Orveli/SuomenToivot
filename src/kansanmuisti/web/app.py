@@ -379,7 +379,7 @@ def aanestys(request: Request, vote_id: int):
         d = queries.vote_detail(conn, vote_id)
         if not d:
             return render(request, "notfound.html", what="Äänestystä")
-        return render(request, "vote.html", **d)
+        return render(request, "vote.html", proscons=queries.vote_proscons(conn, vote_id), **d)
     finally:
         conn.close()
 

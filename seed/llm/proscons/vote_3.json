@@ -1,0 +1,103 @@
+{
+ "model_label": "Claude Code -agentti",
+ "proscons": [
+  {
+   "vote_id": 36421,
+   "note": "Argumentit poimittu salikeskustelusta. PUOLESTA = lain hyvaksymista puoltavat puheenvuorot, VASTAAN = lakiin kohdistuva kritiikki ja riskit.",
+   "pro": [
+    {
+     "argument": "Uudistuksella turvataan nykyisenkaltaisen Metsahallituksen sailyminen monialaisena toimijana",
+     "speaker": "Jari Leppa",
+     "party": "kesk",
+     "quote": "Lain uudistuksen tavoitteena ja ajurina on koko ajan ollut sama asia. Se on se, etta me pystymme kaikissa olosuhteissa sailyttamaan nykyisen kaltaisen Metsahallituksen toimintatavoiltaan, monialaisen suomalaisen luonnon toimijana ja huolehtijana."
+    },
+    {
+     "argument": "Nykyinen liikelaitosmalli ei ole EU-saantelyn kannalta kelvollinen, joten metsatalous on saatettava yhtiomuotoon",
+     "speaker": "Kimmo Tiilikainen",
+     "party": "kesk",
+     "quote": "meilla on jo vuodelta 2007 olemassa komission paatos, jossa todetaan, etta tama suomalainen liikelaitoslaki tassa mielessa ei ole kelpo ja relevantti. Kaikista muista liikelaitoksista on sen jalkeen kaytannossa lainsaadanto muutettu"
+    },
+    {
+     "argument": "Jarjestely varmistaa, etta Metsahallitus sailyy yhtena kokonaisuutena tytaryhtion kautta",
+     "speaker": "Kimmo Tiilikainen",
+     "party": "kesk",
+     "quote": "Talla jarjestelylla on varmuus siita, etta Metsahallitus sailyy yhtena kokonaisuutena. Nyt Metsahallituksen liiketoiminta tulee Metsahallituksen sataprosenttisesti omistaman tytaryhtion hoitoon"
+    },
+    {
+     "argument": "Laki on valmisteltu poikkeuksellisen yhteistyon hengessa ministerion ja toimijoiden kanssa",
+     "speaker": "Markku Eestila",
+     "party": "kok",
+     "quote": "tama on harvinainen laki siita, etta tassa on niin paljon kiinnitetty huomiota yhteistyohon eri toimijoitten seka ministerion tasolla, ja mietinnossa on myos korostettu sita, etta Metsahallituksen pitaa pyrkia puhumaan yhdella aanella"
+    },
+    {
+     "argument": "Hankintadirektiivi pakottaa muuttamaan valtion metsatalouden liiketoiminnan muodon",
+     "speaker": "Eeva-Maria Maijala",
+     "party": "kesk",
+     "quote": "Hankintadirektiivi tulee voimaan nyt huhtikuun puolivalissa. Meidan tulee muuttaa valtion metsatalouden liiketoiminnan muoto. Siina on kaikki. Muutetaan valtion metsatalouden liiketoiminnan muoto."
+    },
+    {
+     "argument": "Laki turvaa luontoarvot, jokamiehenoikeudet ja luontaiselinkeinot eika maita siirry osakeyhtiolle",
+     "speaker": "Mikko Karna",
+     "party": "kesk",
+     "quote": "Oleellisinta on muistaa se, etta yhtaan hehtaaria valtion maa- ja vesiomaisuutta ei ole siirtymassa nyt perustettavan osakeyhtion haltuun. Tama osakeyhtio ainoastaan kayttaa tata omaisuutta sen kanssa tehtavan yksinoikeudellisen sopimuksen kanssa."
+    },
+    {
+     "argument": "Liiketoiminta sailyy 100-prosenttisesti valtion omistuksessa ja tyopaikat sailyvat Suomessa",
+     "speaker": "Krista Mikkonen",
+     "party": "vihr",
+     "quote": "meidan taytyy varmistaa, etta me voimme Metsahallituksen liiketaloustoiminnan pitaa omissa kasissamme. Se on hyva asia, etta me varmistamme sen, etta meilla tyopaikat sailyvat taalla"
+    },
+    {
+     "argument": "Perustettavan puukauppayhtion kotipaikan sijoittaminen Lappiin huomioi alueellisen nakokulman",
+     "speaker": "Markus Lohi",
+     "party": "kesk",
+     "quote": "Minusta on erittain arvokas ja hieno asia, etta maa- ja metsatalousvaliokunta talla tavalla huomioi taman nakokulman, etta nyt perustettavan puukauppaa harjoittavan yhtion kotipaikka tulee tanne."
+    },
+    {
+     "argument": "Laissa perustetaan neuvottelukuntia tuomaan alueellista nakokulmaa paatoksentekoon",
+     "speaker": "Timo V. Korhonen",
+     "party": "kesk",
+     "quote": "tassa uudessa Metsahallitus-laissa myos 39 :ssa esitetaan perustettavaksi neuvottelukuntia, jotka olisivat paatoksenteon apuna ja antaisivat sita alueellista nakokulmaa Metsahallituksen paatoksentekoon."
+    }
+   ],
+   "con": [
+    {
+     "argument": "Maita ja vesia voitaisiin siirtaa kolmannen taseen ja luontotaseen valilla ilman lainsaadannon rajoituksia",
+     "speaker": "Ville Niinisto",
+     "party": "vihr",
+     "quote": "ne maat ja vedet, jotka jatkossa taman lain jalkeen olisivat siella muun paaoman puolella, olisi mahdollista hallituksen paatoksella siirtaa taman kolmannen taseen ja luontotaseen valilla eestaas periaatteessa lainsaadannon mitenkaan sita rajoittamatta."
+    },
+    {
+     "argument": "Teoriassa jopa kansallispuistot voitaisiin siirtaa kolmanteen taseeseen",
+     "speaker": "Ville Niinisto",
+     "party": "vihr",
+     "quote": "Teoriassa on siis mahdollista, etta jos hallitus niin haluaa, niin vaikka kansallispuistotkin voidaan siirtaa periaatteessa sinne kolmanteen taseeseen"
+    },
+    {
+     "argument": "Esitys ei yhdista suomalaisia eika sovita riittavasti yhteen elinkeino- ja luontotarpeita",
+     "speaker": "Ville Niinisto",
+     "party": "vihr",
+     "quote": "Mina olisin toivonut, etta Sipilan hallituksen toimesta olisi tuotu eduskuntaan sellainen esitys, joka mahdollisimman paljon yhdistaa suomalaisia ja johon olisivat valmistelun aikana vuosien varrella eri jarjestot pystyneet ottamaan kantaa"
+    },
+    {
+     "argument": "Lain valmistelun tiedottaminen on hoidettu huonosti, mika lisasi epavarmuutta",
+     "speaker": "Eeva-Maria Maijala",
+     "party": "kesk",
+     "quote": "silloin kun tata lakia alettiin tekemaan ja hoitamaan eteenpain, niin taman tiedottaminen on hoidettu huonosti. Ja silloin kun ihmisella ei ole tietoa ja on epavarmuutta, niin tilanne saattaa kasaantua jopa niin sekavaksi"
+    },
+    {
+     "argument": "Metsahallituksen tuottovaatimus on liian korkea ja johtaa liian nuorten metsien hakkuisiin",
+     "speaker": "Timo V. Korhonen",
+     "party": "kesk",
+     "quote": "Metsahallituksen tuottovaatimus talla hetkella on liian korkea. Valitettavasti hakataan aivan liian nuoria metsia talla hetkella."
+    },
+    {
+     "argument": "Lakiin on lisatty paljon muita kuin valttamattomia asioita, jotka huolettavat kansalaisia",
+     "speaker": "Krista Mikkonen",
+     "party": "vihr",
+     "quote": "nyt taman lain valmistelun myota tahan on otettu paljon muitakin asioita mukaan, ja ne ovat ne, jotka kansalaisia huolettavat."
+    }
+   ]
+  }
+ ]
+}

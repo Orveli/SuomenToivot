@@ -1133,3 +1133,17 @@ def glossary() -> List[dict]:
     if not p.exists():
         return []
     return json.loads(p.read_text(encoding="utf-8")).get("terms", [])
+
+
+# --- M23: Äänestyksen puolesta/vastaan -selitys ----------------------------
+def vote_proscons(conn, vote_id: int) -> Optional[dict]:
+    import json
+    r = _one(conn, "SELECT * FROM analysis_vote_proscons WHERE vote_id=?", vote_id)
+    if not r:
+        return None
+    for k in ("pro", "con"):
+        try:
+            r[k] = json.loads(r.get(k + "_json") or "[]")
+        except Exception:
+            r[k] = []
+    return r

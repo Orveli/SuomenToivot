@@ -1,0 +1,84 @@
+{
+  "model_label": "Claude Code -agentti",
+  "proscons": [
+    {
+      "vote_id": 36307,
+      "note": "Salikeskustelussa kaikki puheenvuorot vastustivat lakiesitystä; varsinaisia puolesta-argumentteja ei debate-teksteissä esitetty. Tuomo Puumala (kesk) ainoastaan selosti neutraalisti valiokunnan mietinnön ja esityksen sisällön.",
+      "pro": [],
+      "con": [
+        {
+          "argument": "Lasketut säästöt eivät viime kaudella osoittautuneet aidoiksi, joten esitys olisi syytä jättää",
+          "speaker": "Krista Kiuru",
+          "party": "sd",
+          "quote": "nämä säästöt, jotka oli laskettu tapahtuvaksi, osoittautuivat sellaisiksi, että säästöä ei aidosti tule"
+        },
+        {
+          "argument": "Samaan aikaan tehty asetusmuutos kasvattaa ryhmäkokoja ja heikentää varhaiskasvatuksen laatua",
+          "speaker": "Hanna Halmeenpää",
+          "party": "vihr",
+          "quote": "suhdeluku aikuisiin päiväkotien lapsiryhmissä kasvaa. Siis lapsia enemmän, kasvattajia vähemmän"
+        },
+        {
+          "argument": "Riittävä henkilöstö ja pieni ryhmäkoko ovat keskeisiä laatutekijöitä, joita muutos heikentää",
+          "speaker": "Hanna Halmeenpää",
+          "party": "vihr",
+          "quote": "riittävä henkilöstön määrä ja riittävän pieni ryhmäkoko ovat, tai olisivat, keskeisiä varhaiskasvatuksen laatutekijöitä"
+        },
+        {
+          "argument": "Mitoituksen tiukkeneminen kasvattaa ryhmät koululuokkien kokoisiksi, vaikka lisää henkilökuntaa tarvittaisiin",
+          "speaker": "Eeva-Johanna Eloranta",
+          "party": "sd",
+          "quote": "Päivähoitoryhmän koko siis nousee 24 lapseen, ja niistä tulee koululuokkien kokoisia"
+        },
+        {
+          "argument": "Esitys on hallitusohjelman varhaiskasvatustavoitteiden vastainen ja ristiriitainen",
+          "speaker": "Anneli Kiljunen",
+          "party": "sd",
+          "quote": "Hallituksen toiminta tässä asiassa on totaalisen ristiriitaista ja perusteetonta"
+        },
+        {
+          "argument": "Esitys vie yhteiskuntaa kohti vastikkeellisuuden mallia ja lisää jäykkyyttä ja byrokratiaa",
+          "speaker": "Anna Kontula",
+          "party": "vas",
+          "quote": "vie suomalaista yhteiskuntaa ja sen hyvinvointirakenteita kohti semmoista vastikkeellisuuden mallia, jossa jäykkyys ja byrokratia tulee kasvamaan entisestään"
+        },
+        {
+          "argument": "Esitys asettaa lapset eriarvoiseen asemaan ja vaarantaa yhdenvertaisuuden eri kunnissa",
+          "speaker": "Eeva-Johanna Eloranta",
+          "party": "sd",
+          "quote": "Tämä lakiesitys asettaa lapset räikeällä tavalla eriarvoiseen asemaan keskenään"
+        },
+        {
+          "argument": "Suomi käyttää varhaiskasvatukseen jo vähemmän kuin muut Pohjoismaat",
+          "speaker": "Krista Kiuru",
+          "party": "sd",
+          "quote": "Suomessa käytetään bruttokansantuotteesta 1,2 prosenttia rahaa varhaiskasvatuksen hoitamiseen. Se on paljon vähemmän kuin muissa Pohjoismaissa"
+        },
+        {
+          "argument": "Leikkaus on taloudellisesti järjetön, koska säästetty euro maksaa moninkertaisesti tulevaisuudessa",
+          "speaker": "Sanna Marin",
+          "party": "sd",
+          "quote": "tänä päivänä varhaiskasvatuksesta säästetty euro maksaa yhteiskunnalle moninkertaisesti tulevaisuudessa"
+        },
+        {
+          "argument": "Yli 50 000 alan ammattilaista on vedonnut, että kokonaisuus tulisi selvittää ennen päätöstä",
+          "speaker": "Krista Kiuru",
+          "party": "sd",
+          "quote": "tämä koko varhaiskasvatusta ja sen tilaa koskeva selvitys tehtäisiin ensin ja sitten tehtäisiin tämä kokonaisuus loppuun"
+        },
+        {
+          "argument": "Säästölaki puskettiin läpi vaikka sen vaikutuksia joudutaan arvioimaan vasta myöhemmin",
+          "speaker": "Krista Kiuru",
+          "party": "sd",
+          "quote": "puskemassa läpi sellaisen säästölain, jonka vaikutuksia joudutaan vasta myöhemmin ar"
+        },
+        {
+          "argument": "Subjektiivinen päivähoito-oikeus on keskeinen hyvinvointivaltion saavutus, jonka rajaaminen siirtää arvioinnin pois perheiltä",
+          "speaker": "Sanna Marin",
+          "party": "sd",
+          "quote": "Subjektiivinen päivähoito-oikeus on yksi tärkeimmistä hyvinvointivaltion uudistuksista ja saavutuksista viime vuosikymmeniltä"
+        }
+      ]
+    }
+  ]
+}

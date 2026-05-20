@@ -1,0 +1,85 @@
+{
+  "model_label": "Claude Code -agentti",
+  "proscons": [
+    {
+      "vote_id": 36587,
+      "note": "HE 43/2016 vp: ulkomaalaislain muutos, perheenyhdistämisen edellytysten tiukentaminen. Salipuheet ovat osin katkaistuja; lainaukset poimittu eheistä virkkeistä.",
+      "pro": [
+        {
+          "argument": "Esitys vastaa EU:hun kohdistuneeseen ennennäkemättömään muuttopaineeseen, johon nykyrakenteet eivät ole riittäneet",
+          "speaker": "Pirkko Mattila",
+          "party": "uv",
+          "quote": "Euroopan unioniin on vuonna 2015 kohdistunut ennennäkemättömän suuri muuttopaine."
+        },
+        {
+          "argument": "Pakolaiskriisin laajempia vaikutuksia Suomeen saapuviin ei voi sivuuttaa keskittymällä vain jo Suomessa oleviin",
+          "speaker": "Ben Zyskowicz",
+          "party": "kok",
+          "quote": "he tarkastelevat asiaa niiden turvapaikanhakijoiden kannalta, jotka ovat jo Suomessa, mutta eivät halua ottaa huomioon tässä yhteydessä tehtävien ratkaisujen laajempia vaikutuksia"
+        },
+        {
+          "argument": "Vastuullinen politiikka edellyttää maan kantokyvyn huomioimista ja kohtuutta",
+          "speaker": "Joona Räsänen",
+          "party": "sd",
+          "quote": "vastuullisuus rakentuu silloin sen varaan, että me huomioimme sen kantokykymme"
+        },
+        {
+          "argument": "Suuri osa kansasta kannattaa turvapaikkalinjan tiukentamista, mikä näkyy gallup-tutkimuksessa",
+          "speaker": "Simon Elo",
+          "party": "uv",
+          "quote": "70 prosenttia vastaajista sanoo, että Suomen pitää tiukentaa linjaa turvapaikkahakemusten hyväksymisessä"
+        },
+        {
+          "argument": "Esityksen tavoitteena on hallita maahanmuuttoa, vähentää kustannuksia eikä näyttäytyä erityisen houkuttelevana turvapaikkamaana",
+          "speaker": "Simon Elo",
+          "party": "uv",
+          "quote": "Hallituksen esityksen tavoitteenahan on hallita maahanmuuttoa, vähentää maahanmuuton kustannuksia"
+        },
+        {
+          "argument": "Turvatun toimeentulon edellytys estää sen, että maassa oleskelu rasittaisi kohtuuttomasti Suomea",
+          "speaker": "Simon Elo",
+          "party": "uv",
+          "quote": "Turvatun toimeentulon perheenyhdistämisen edellytykseksi asettamisen perustarkoitus on se, ettei maahan muuttavan ulkomaalaisen ja hänen perheenjäsenensä maassa oleskelu kohtuuttomasti rasita"
+        },
+        {
+          "argument": "Jos muut maat kiristävät ehtojaan eikä Suomi, Suomi jäisi muita houkuttelevammaksi turvapaikanhakijoille",
+          "speaker": "Ben Zyskowicz",
+          "party": "kok",
+          "quote": "Suomi jäisi selvästi houkuttelevammaksi turvapaikanhakijoiden kannalta kuin muut Pohjoismaat, jotka kaikki ovat tiukentaneet ehtojaan"
+        }
+      ],
+      "con": [
+        {
+          "argument": "Esityksellä on tavoite rajoittaa ihmisten ihmisoikeuksia",
+          "speaker": "Ville Niinistö",
+          "party": "vihr",
+          "quote": "osalla täällä on konkreettinen, poliittinen tavoite rajoittaa ihmisten ihmisoikeuksia ja se on teidän päämääränne"
+        },
+        {
+          "argument": "Perheen läsnäolo edistää kotoutumista ja ehkäisee syrjäytymistä ja radikalisoitumista",
+          "speaker": "Ben Zyskowicz",
+          "party": "kok",
+          "quote": "kotoutumista edistää se, jos perhe on mukana"
+        },
+        {
+          "argument": "Esityksen tosiasiallinen vaikutus ja tavoite on, että Suomi ottaisi mahdollisimman vähän pakolaisia vastaan",
+          "speaker": "Ville Niinistö",
+          "party": "vihr",
+          "quote": "tämän esityksen tosiasiallinen käytännön vaikutus ja jopa monien edustajien julki lausuma tavoite on se, että Suomi ottaisi mahdollisimman vähän pakolaisia vastaan"
+        },
+        {
+          "argument": "Turvaa hakevien ihmisoikeuksia rajoittava hallitus ei myöskään pidä huolta suomalaisista köyhistä",
+          "speaker": "Ville Niinistö",
+          "party": "vihr",
+          "quote": "en usko, että sellainen valtio ja sellainen hallitus, joka rajoittaa täältä turvaa hakevien ihmisoikeuksia, pitää myöskään suomalaisista köyhistä kiinni"
+        },
+        {
+          "argument": "Aiemmat 2010 ja 2012 lakimuutokset ovat jo osoittautuneet merkittäviksi perheenyhdistämistä rajoittaviksi tekijöiksi",
+          "speaker": "Ville Niinistö",
+          "party": "vihr",
+          "quote": "perheenyhdistäjä ei enää Suomessa voi laittaa prosessia liikkeelle, ja se on ollut suurin yksittäinen"
+        }
+      ]
+    }
+  ]
+}

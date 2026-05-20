@@ -1,0 +1,97 @@
+{
+  "model_label": "Claude Code -agentti",
+  "proscons": [
+    {
+      "vote_id": 39061,
+      "note": "Salikeskustelu HE 39/2017 vp ammatillisen koulutuksen reformista. Useat puhujat kannattivat uudistuksen tavoitteita mutta esittivät myös kritiikkiä yksityiskohdista.",
+      "pro": [
+        {
+          "argument": "Reformi lisää työpaikoilla tapahtuvaa oppimista, mikä vahvistaa ammattiosaamista ja parantaa työllistymistä",
+          "speaker": "Sari Multala",
+          "party": "kok",
+          "quote": "Ammatillisen koulutuksen reformilla lisätään työpaikoilla tapahtuvaa oppimista. Tämä vahvistaa ammatillisen osaamisen kehittymistä tutkitusti ja myös parantaa mahdollisuuksia työllistyä opintojen jälkeen."
+        },
+        {
+          "argument": "Uusi koulutussopimusmalli tarjoaa hyvän välineen työpaikoilla tapahtuvan oppimisen lisäämiseksi",
+          "speaker": "Sari Multala",
+          "party": "kok",
+          "quote": "Uusi koulutussopimusmalli tarjoaa myös erinomaisen välineen työpaikoilla tapahtuvan oppimisen lisäämiseksi."
+        },
+        {
+          "argument": "Reformi vastaa joustavammin työelämän muuttuviin koulutustarpeisiin kun ammatteja katoaa ja uusia tulee",
+          "speaker": "Ulla Parviainen",
+          "party": "kesk",
+          "quote": "Se vastaa nykyistä joustavammin työelämän muuttuviin koulutustarpeisiin, sillä ammatteja katoaa ja uusia tulee."
+        },
+        {
+          "argument": "Esityksessä on paljon hyviä elementtejä kuten osaamisperusteisuus, henkilökohtaistaminen ja työelämässä oppiminen",
+          "speaker": "Sari Multala",
+          "party": "kok",
+          "quote": "Nyt käsittelyssä olevassa esityksessä on paljon hyviä elementtejä, kuten osaamisperusteisuus, henkilökohtaistaminen, työelämässä oppiminen, vaikuttavampi rahoitusjärjestelmä ja selkeämpi toimintaa ohjaava lainsäädäntö."
+        },
+        {
+          "argument": "Työelämälähtöisyys ja osaamisperusteisuus ovat oikeita suuntia, ja yksilöllisempi oppimispolku auttaa nuoria joille koulumainen opiskelu sopii huonosti",
+          "speaker": "Jukka Gustafsson",
+          "party": "sd",
+          "quote": "Työelämälähtöisyys ja vahva osaamisperusteisuus ovat oikeita suuntia. Esimerkiksi lisääntyvä työpaikalla tapahtuva oppiminen ja yksilöllisempi oppimispolku voivat auttaa niitä nuoria, joille koulumainen opiskelu sopii huonosti."
+        },
+        {
+          "argument": "Reformi turvaa työelämälle osaavien työntekijöiden saatavuuden ja vastaa nopeasti muuttuviin osaamistarpeisiin",
+          "speaker": "Sanni Grahn-Laasonen",
+          "party": "kok",
+          "quote": "Reformi turvaa työelämälle osaavien työntekijöiden saatavuuden ja vastaa työelämän nopeasti muuttuviin osaamistarpeisii"
+        },
+        {
+          "argument": "On tervetullutta että ammatillisen koulutuksen kehittämiseen kiinnitetään huomiota ja resursseja",
+          "speaker": "Li Andersson",
+          "party": "vas",
+          "quote": "on todella tervetullutta, että ammatillisen koulutuksen kehittämiseen kiinnitetään huomiota ja resursseja."
+        },
+        {
+          "argument": "Lainsäädännössä määritellään yhtenäiset käytännöt koulutuskorvaukseen, mikä korjaa nykyisen alojen epätasa-arvon",
+          "speaker": "Sari Multala",
+          "party": "kok",
+          "quote": "Lainsäädännössä määriteltäisiin yhtenäiset käytännöt koulutuskorvauksen maksamiseen. Tällä hetkellä lainsäädäntöä ei ole, mikä on johtanut siihen, että eri alat ovat epätasa-a"
+        }
+      ],
+      "con": [
+        {
+          "argument": "Reformi olisi pitänyt kohdistaa koko toisen asteen koulutukseen lukio mukaan lukien saumattoman jatkumon luomiseksi",
+          "speaker": "Anneli Kiljunen",
+          "party": "sd",
+          "quote": "Useat asiantuntijat ovat todenneet, että reformi olisi tullut kohdistaa koko toisen asteen ammatilliseen koulutukseen sekä lukioon sekä koko ikäluokkaan."
+        },
+        {
+          "argument": "Hallitus toteutti ensin massiiviset taloudelliset leikkaukset ja vaatii sen jälkeen uudistuksia jotka vaatisivat lisärahoitusta",
+          "speaker": "Anneli Kiljunen",
+          "party": "sd",
+          "quote": "Nyt hallitus on keskittynyt ainoastaan toisen asteen ammatillisen koulutuksen uudistamiseen toteuttamalla ensin massiiviset taloudelliset leikkaukset, ja tämän jälkeen hallitus vaatii useita uudistuksia, jotka vaativat pikemminkin lisärahoitusta kuin leikkauksia."
+        },
+        {
+          "argument": "Sivistysvaliokunnan asiantuntijakuulemisessa nousseet monet isotkin epäkohdat jäivät korjaamatta",
+          "speaker": "Jukka Gustafsson",
+          "party": "sd",
+          "quote": "valitettavasti sivistysvaliokunnan asiantuntijakuulemisessa nousseet monet isotkin epäkohdat jäivät korjaamatta."
+        },
+        {
+          "argument": "Uuteen rahoitusjärjestelmään jäi vakava valuvika; asiantuntijat esittivät perusrahoituksen nostamista 50 prosentista 60:een",
+          "speaker": "Jukka Gustafsson",
+          "party": "sd",
+          "quote": "Yksi vakavimmista valuvioista jäi uuteen rahoitusjärjestelmään. Suurin osa asiantuntijoista esitti perusrahoituksen nostamista 50 prosentista 60:een."
+        },
+        {
+          "argument": "Koulutussopimuksella oppimista ja oppisopimuskoulutusta ei määritellä säädöksissä, mikä voi johtaa eriarvoisuuteen samankaltaisissa tehtävissä",
+          "speaker": "Jari Myllykoski",
+          "party": "vas",
+          "quote": "kun tällä hetkellä koulutussopimuksella oppimista ja oppisopimuskoulutusta ei määritellä säädöksissä, niin se saattaa johtaa siihen, että tilanteessa, jossa samankaltaisella osaamistasolla olevat oppijat tekevät sam"
+        },
+        {
+          "argument": "Budjettileikkaukset vaikuttavat koulutuksen keskeyttämisongelmaan ja resursseihin",
+          "speaker": "Petri Honkonen",
+          "party": "kesk",
+          "quote": "nytten tietysti näiden budjettileikkauksien johdosta on selvää, että resurssit k"
+        }
+      ]
+    }
+  ]
+}

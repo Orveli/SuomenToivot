@@ -1,0 +1,73 @@
+{
+  "model_label": "Claude Code -agentti",
+  "proscons": [
+    {
+      "vote_id": 40979,
+      "note": "HE 124/2017 vp, ns. aktiivimalli. Salikeskustelussa puolustavia puheenvuoroja oli selvästi vähemmän kuin vastustavia.",
+      "pro": [
+        {
+          "argument": "Aktivointitoimenpiteillä on havaittu työllistymistä parantava vaikutus jo ennen toimenpiteiden alkua",
+          "speaker": "Juhana Vartiainen",
+          "party": "kok",
+          "quote": "Se vahvin vaikutus näistä toimenpiteistä näytti tulevan jo ennen kuin ne toimenpiteet alkoivat. Eli tavallaan se työllistymistodennäköisyys nousi jo ennen kuin har"
+        },
+        {
+          "argument": "Työllisyys on tärkein aihe ja sen esteitä on poistettava, kun työtä on lisääntymässä",
+          "speaker": "Eero Suutari",
+          "party": "kok",
+          "quote": "Työllisyys on tämän salin tärkein puheenaihe. Sen esteitä täytyy poistaa, sillä nyt tämä työ on tällä hetkellä jopa lisääntymässä."
+        },
+        {
+          "argument": "Esitys lyhentää työttömyyden alun omavastuuaikaa seitsemästä viiteen päivään, mikä parantaa työttömyysturvan tasoa",
+          "speaker": "Hannakaisa Heikkinen",
+          "party": "kesk",
+          "quote": "ehdotetaan, että työttömyyden alussa olevaa työttömyysturvan omavastuuaikaa lyhennetään seitsemästä päivästä viiteen päivään. Tämähän on erittäin positiivinen muutos."
+        }
+      ],
+      "con": [
+        {
+          "argument": "Valmistelu oli ristiriitaista ja perustuslakivaliokunnan kannanotot sivuutettiin",
+          "speaker": "Anneli Kiljunen",
+          "party": "sd",
+          "quote": "tämä käsittely sosiaali- ja terveysvaliokunnassa oli hyvin ristiriitainen ja sitä sävytti hyvin vahvasti myös hallituspuolueiden välinpitämättömyys perustuslakivaliokunnan kannanotoista."
+        },
+        {
+          "argument": "Laki rankaisee työttömyydestä leikkaamalla jo valmiiksi puolitettua työttömyysturvaa",
+          "speaker": "Eero Heinäluoma",
+          "party": "sd",
+          "quote": "yhteiskunta on tekemässä lakia, jolla työttömyydestä rangaistaan sen ohella, että menetät palkan ja saat puolet palkasta olevan työttömyysturvan. Sitäkin leikataan, jos et löydä työtä."
+        },
+        {
+          "argument": "Aktiivisuutta ei voi osoittaa itse aktiivisesti työpaikkoja hakemalla",
+          "speaker": "Eero Suutari",
+          "party": "kok",
+          "quote": "Tässä esityksessä voi hyvinkin olla korjattavia seikkoja, kuten esimerkiksi se, ettei aktiivisuutta voi osoittaa itse hakemalla työpaikkoja aktiivisesti."
+        },
+        {
+          "argument": "Laki leikkaa perustoimeentuloa ja siirtää noin puolet toimeentulotuen piiriin, mikä heikentää paluuta työelämään",
+          "speaker": "Anna Kontula",
+          "party": "vas",
+          "quote": "Lakiesitys leikkaa monien ensisijaista perustoimeentuloa, mikä johtaa siihen, että noin puolet näistä henkilöistä siirtyy toimeentulotuen piiriin."
+        },
+        {
+          "argument": "Hallitus ei vetänyt esitystä pois huolimatta perustuslakivaliokunnan painavasta lausunnosta",
+          "speaker": "Outi Alanko-Kahiluoto",
+          "party": "vihr",
+          "quote": "olin kyllä hyvin hämmästynyt siitä, että hallitus ei vetänyt tätä lakiesitystä pois."
+        },
+        {
+          "argument": "Malli on monessa suhteessa ongelmallinen ja monen mielestä rangaistuspaketti",
+          "speaker": "Heli Järvinen",
+          "party": "vihr",
+          "quote": "on monessa suhteessa erittäin ongelmallinen. Moni pitää sitä enemmän rangaistuspakettina kui"
+        },
+        {
+          "argument": "Esityksen kolmikantaisuutta korostetaan harhaanjohtavasti, vaikka kaikki työmarkkinajärjestöt eivät olleet mukana",
+          "speaker": "Jari Myllykoski",
+          "party": "vas",
+          "quote": "Mielestäni on harhaanjohtavaa ja liioiteltua kovastikaan painottaa kolmikantaisuutta, kun tiedämme, että kaikki työmarkkinajärjestöt eivät ole olleet siinä mukana"
+        }
+      ]
+    }
+  ]
+}

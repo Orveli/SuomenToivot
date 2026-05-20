@@ -508,3 +508,12 @@ th.right,th.num{text-align:right}
 .ask-src-head{display:inline;gap:6px;align-items:center}
 .ask-src-head .src{font-size:.82rem;white-space:nowrap;margin-left:6px}
 .ask-text{margin:6px 0 0;color:var(--ink,#16191d);font-style:italic}
+
+/* ---- M23: Puolesta/vastaan (neutraali — kumpikin sama sävy) ---- */
+.pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0}
+.pc-col{border:1px solid var(--line,#dde2e8);border-radius:var(--r-lg,12px);padding:12px 14px;background:#fff}
+.pc-col h3{margin:0 0 8px;font-size:1rem;border-bottom:2px solid var(--line,#dde2e8);padding-bottom:6px}
+.pc-arg{margin-bottom:12px}
+.pc-claim{font-weight:600}
+.pc-arg .wv-quote{margin-top:4px}
+@media(max-width:640px){.pc-grid{grid-template-columns:1fr}}

@@ -12,6 +12,31 @@
 </p>
 {% for t in topics %}<a class="tag" href="/aihe/{{ t.slug }}">{{ t.label }}{% if t.is_primary %} ★{% endif %}</a>{% endfor %}
 
+{% if proscons %}
+<h2>Puolesta &amp; vastaan <span class="small muted">(salikeskustelun argumentit)</span></h2>
+<p class="small muted">Neutraali kooste siitä, mitä argumentteja salissa esitettiin kummallakin
+puolella — kukin nimettyyn puhujaan ja lainaukseen sidottuna. Emme tee johtopäätöstä.</p>
+<div class="pc-grid">
+  <div class="pc-col pc-pro">
+    <h3>Puolesta</h3>
+    {% for a in proscons.pro %}
+    <div class="pc-arg"><div class="pc-claim">{{ a.argument }}</div>
+      <div class="small"><b>{{ a.speaker }}</b>{% if a.party %} <span class="party-tag">{{ a.party }}</span>{% endif %}</div>
+      {% if a.quote %}<blockquote class="wv-quote">“{{ a.quote }}”</blockquote>{% endif %}</div>
+    {% else %}<p class="muted small">Ei kirjattuja puolesta-argumentteja tästä keskustelusta.</p>{% endfor %}
+  </div>
+  <div class="pc-col pc-con">
+    <h3>Vastaan</h3>
+    {% for a in proscons.con %}
+    <div class="pc-arg"><div class="pc-claim">{{ a.argument }}</div>
+      <div class="small"><b>{{ a.speaker }}</b>{% if a.party %} <span class="party-tag">{{ a.party }}</span>{% endif %}</div>
+      {% if a.quote %}<blockquote class="wv-quote">“{{ a.quote }}”</blockquote>{% endif %}</div>
+    {% else %}<p class="muted small">Ei kirjattuja vastaan-argumentteja tästä keskustelusta.</p>{% endfor %}
+  </div>
+</div>
+{% if proscons.note %}<p class="small muted">{{ proscons.note }}</p>{% endif %}
+{% endif %}
+
 <h2>Tulos</h2>
 <table>
   <tr><th>Jaa</th><th>Ei</th><th>Tyhjää</th><th>Poissa</th><th>Yhteensä</th></tr>

@@ -231,6 +231,28 @@ def cmd_load_explainer_demo(args):
     _log(f"Lakiselittäjät ladattu: {tot}")
 
 
+def cmd_proscons_export(args):
+    from .analyze.proscons import export_vote_debates
+    with db.session() as conn:
+        res = export_vote_debates(conn, limit=args.limit, out=args.out)
+    _log(f"Vietiin {res['votes']} äänestyksen keskustelut → {res['out']}")
+
+
+def cmd_load_proscons(args):
+    import glob
+    import os
+    from .analyze.proscons import load_proscons
+    paths = (sorted(glob.glob(os.path.join(args.path, "*.json")))
+             if os.path.isdir(args.path) else [args.path])
+    with db.session() as conn:
+        tot = {"inserted": 0, "skipped_quote_mismatch": 0}
+        for p in paths:
+            r = load_proscons(conn, p)
+            tot["inserted"] += r["inserted"]
+            tot["skipped_quote_mismatch"] += r["skipped_quote_mismatch"]
+    _log(f"Puolesta/vastaan-selitykset ladattu: {tot}")
+
+
 def cmd_serve(args):
     import uvicorn
     uvicorn.run("kansanmuisti.web.app:app", host=args.host, port=args.port, reload=args.reload)
@@ -340,6 +362,15 @@ def build_parser() -> argparse.ArgumentParser:
     sp = sub.add_parser("load-explainer-demo", help="Lataa lakiselittäjän demo-otos")
     sp.add_argument("path", nargs="?", default="seed/llm_explainer_demo.json")
     sp.set_defaults(func=cmd_load_explainer_demo)
+
+    sp = sub.add_parser("proscons-export", help="Vie äänestysten keskustelut puolesta/vastaan-analyysiin")
+    sp.add_argument("--limit", type=int, default=10)
+    sp.add_argument("--out", default="data/proscons_batch.json")
+    sp.set_defaults(func=cmd_proscons_export)
+
+    sp = sub.add_parser("load-proscons", help="Lataa puolesta/vastaan-selitykset (tiedosto tai hakemisto)")
+    sp.add_argument("path")
+    sp.set_defaults(func=cmd_load_proscons)
 
     sp = sub.add_parser("serve", help="Käynnistä verkkopalvelin")
     sp.add_argument("--host", default="127.0.0.1")
