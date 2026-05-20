@@ -1,10 +1,12 @@
-data/
+# Data-hakemisto: ohita kaikki paitsi päätietokanta (versioidaan Git LFS:llä)
+data/*
+!data/kansanmuisti.sqlite3
+data/*.sqlite3-wal
+data/*.sqlite3-shm
+data/*.db
 __pycache__/
 *.pyc
 .venv/
-data/*.sqlite3
-data/*.db
-data/raw/
 .pytest_cache/
 *.egg-info/
 .DS_Store
