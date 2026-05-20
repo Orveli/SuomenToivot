@@ -27,6 +27,26 @@ ADMIN_TOKEN = os.environ.get("KANSANMUISTI_ADMIN_TOKEN", "")
 DATA_LICENSE = "CC BY 4.0"
 DATA_ATTRIBUTION = "Lähde: Eduskunta – avoin data (avoindata.eduskunta.fi), CC BY 4.0, muokattu/yhdistelty."
 
+# ---------------------------------------------------------------------------
+# LLM-analyysikerros (valinnainen). Ydin toimii ilman avainta; LLM-näkymät
+# degradoituvat siististi (näyttävät "ei vielä ajettu"). Tulokset välimuistissa
+# (llm_cache) → toistettavia ja jaettavissa tietokannassa. Periaate säilyy:
+# jokainen LLM-väite on lähteistetty alkuperäiseen puheeseen/äänestykseen,
+# näytetään lainaus, ei motiiviväitteitä, epävarmuus merkitään.
+# ---------------------------------------------------------------------------
+LLM_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+LLM_API_BASE = os.environ.get("KANSANMUISTI_LLM_API", "https://api.anthropic.com/v1")
+LLM_MODEL = os.environ.get("KANSANMUISTI_LLM_MODEL", "claude-haiku-4-5-20251001")
+LLM_VERSION = os.environ.get("KANSANMUISTI_LLM_API_VERSION", "2023-06-01")
+LLM_MAX_TOKENS = int(os.environ.get("KANSANMUISTI_LLM_MAX_TOKENS", "1536"))
+LLM_TIMEOUT = int(os.environ.get("KANSANMUISTI_LLM_TIMEOUT", "120"))
+# Turvaraja: enint. näin monta TUOTANTOkutsua (ei välimuistiosumaa) per ajo.
+LLM_MAX_CALLS = int(os.environ.get("KANSANMUISTI_LLM_MAX_CALLS", "500"))
+
+
+def llm_enabled() -> bool:
+    return bool(LLM_API_KEY)
+
 # Keruun oletusaikaikkuna (täysi tavoite: 2015–2025). Voidaan ohittaa CLI:llä.
 DEFAULT_START_YEAR = int(os.environ.get("KANSANMUISTI_START_YEAR", "2015"))
 DEFAULT_END_YEAR = int(os.environ.get("KANSANMUISTI_END_YEAR", "2025"))

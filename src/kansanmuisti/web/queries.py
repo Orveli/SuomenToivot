@@ -1020,3 +1020,72 @@ def set_correction_status(conn, correction_id: int, status: str) -> None:
         raise ValueError("virheellinen tila")
     conn.execute("UPDATE correction_request SET status=? WHERE id=?", (status, correction_id))
     conn.commit()
+
+
+# --- M2: Sanat vs. äänet -tilikirja ----------------------------------------
+ALIGN_LABELS = {
+    "linjassa": "Linjassa",
+    "ristiriita": "Ristiriita",
+    "vastentahtoinen": "Vastentahtoinen kuri",
+    "konteksti": "Kontekstisidonnainen",
+    "ei_riitä": "Data ei riitä",
+}
+ALIGN_HELP = {
+    "linjassa": "Puheen kanta ja ääni samaan suuntaan (lain hyväksyntä/hylkäys).",
+    "ristiriita": "Puheessa toinen kanta kuin annettu ääni — ilman avointa kompromissisignaalia.",
+    "vastentahtoinen": "Ääni eri suuntaan kuin puheen kanta, mutta puhuja kertoo avoimesti äänestävänsä kantaansa vastaan (esim. hallituskuri).",
+    "konteksti": "Ääni ei koske yksiselitteisesti lain hyväksymistä (esim. lausuma- tai muutosehdotus) — ristiriitaa ei voi päätellä.",
+    "ei_riitä": "Ääni oli tyhjä/poissa tai puheen kanta ehdollinen — ei vertailtavissa.",
+}
+ALIGN_ORDER = ["ristiriita", "vastentahtoinen", "linjassa", "konteksti", "ei_riitä"]
+
+
+def words_votes_overview(conn) -> dict:
+    counts = {r["alignment"]: r["c"] for r in conn.execute(
+        "SELECT alignment, COUNT(*) c FROM analysis_words_votes GROUP BY alignment")}
+    agg = _one(conn,
+        "SELECT COUNT(DISTINCT person_id) np, COUNT(DISTINCT legislative_item) ni, "
+        "COUNT(*) n FROM analysis_words_votes")
+    model = _one(conn, "SELECT model FROM analysis_speech_stance ORDER BY computed_at DESC LIMIT 1")
+    examples = _rows(conn,
+        "SELECT wv.alignment, wv.legislative_item, wv.speech_stance, wv.speech_quote, "
+        "wv.speech_id, wv.vote_id, wv.vote_value, wv.context_note, wv.confidence, "
+        "p.person_id, p.full_name, p.party_current, p.photo_url, v.title vote_title, v.session_date "
+        "FROM analysis_words_votes wv JOIN person p ON p.person_id=wv.person_id "
+        "JOIN vote v ON v.vote_id=wv.vote_id "
+        "ORDER BY CASE wv.alignment WHEN 'ristiriita' THEN 0 WHEN 'vastentahtoinen' THEN 1 "
+        "WHEN 'linjassa' THEN 2 WHEN 'konteksti' THEN 3 ELSE 4 END, wv.confidence DESC")
+    # dedupe per (henkilö, säädös): yksi edustava rivi + liittyvien äänten määrä
+    seen: dict = {}
+    deduped = []
+    for e in examples:
+        k = (e["person_id"], e["legislative_item"])
+        if k in seen:
+            seen[k]["n_related"] += 1
+            continue
+        e["n_related"] = 1
+        seen[k] = e
+        deduped.append(e)
+    return {"counts": counts, "n_pairs": (agg or {}).get("n", 0),
+            "n_persons": (agg or {}).get("np", 0), "n_items": (agg or {}).get("ni", 0),
+            "examples": deduped[:24], "model": (model or {}).get("model")}
+
+
+def person_words_votes(conn, pid: int) -> List[dict]:
+    """Edustajan tilikirja säädöksittäin: puheen kanta + lainaus + liittyvät äänet."""
+    rows = _rows(conn,
+        "SELECT wv.legislative_item, wv.speech_stance, wv.speech_quote, wv.speech_id, "
+        "wv.speech_date, wv.vote_id, wv.vote_value, wv.alignment, wv.context_note, "
+        "v.title vote_title, v.session_date "
+        "FROM analysis_words_votes wv JOIN vote v ON v.vote_id=wv.vote_id "
+        "WHERE wv.person_id=? ORDER BY wv.legislative_item, wv.vote_date", pid)
+    items: dict = {}
+    for r in rows:
+        it = items.setdefault(r["legislative_item"], {
+            "legislative_item": r["legislative_item"], "stance": r["speech_stance"],
+            "quote": r["speech_quote"], "speech_id": r["speech_id"],
+            "speech_date": r["speech_date"], "votes": []})
+        it["votes"].append({"vote_id": r["vote_id"], "vote_value": r["vote_value"],
+                            "alignment": r["alignment"], "context_note": r["context_note"],
+                            "vote_title": r["vote_title"], "session_date": r["session_date"]})
+    return list(items.values())

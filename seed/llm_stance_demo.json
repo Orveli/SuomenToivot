@@ -1,0 +1,30 @@
+{
+  "_note": "Käsin varmennettu demo-otos M1-kanta-analyysille. Nämä ovat OIKEITA eduskuntapuheita; kanta on luettu ja merkitty manuaalisesti (provenienssi: model='käsin varmennettu demo-otos'). Tarkoitus: näyttää sanat-vs-äänet-tilikirja (M2) toimivaksi oikealla datalla ilman API-avainta. Korvautuu/täydentyy kun 'km llm-stance' ajetaan ANTHROPIC_API_KEY:llä koko aineistoon. Loaderi hylkää rivin, jos evidence_quote ei ole sanatarkka osa puheen tekstiä.",
+  "model_label": "käsin varmennettu demo-otos",
+  "stances": [
+    {"speech_id": 17007, "legislative_item": "HE 35/2023 vp",
+     "proposition": "Ajoneuvoveron alentaminen 50 M€ (HE 35/2023)",
+     "stance": "puolesta", "confidence": 0.95,
+     "evidence_quote": "Hallitusohjelman linjauksen mukaisesti autoveroa alennetaan 50 miljoonalla eurolla."},
+    {"speech_id": 17014, "legislative_item": "HE 35/2023 vp",
+     "proposition": "Ajoneuvoveron alentaminen (autoilijan tuki)",
+     "stance": "puolesta", "confidence": 0.85,
+     "evidence_quote": "olemme kuitenkin autoilijan asialla"},
+    {"speech_id": 17008, "legislative_item": "HE 35/2023 vp",
+     "proposition": "Ajoneuvoveron alentaminen velkarahalla",
+     "stance": "vastaan", "confidence": 0.9,
+     "evidence_quote": "hallitus yli 200 miljoonalla eurolla tekee aukkoja meidän veropohjaan"},
+    {"speech_id": 17301, "legislative_item": "HE 35/2023 vp",
+     "proposition": "Saastuttavimpien autojen verotuksen keventäminen",
+     "stance": "vastaan", "confidence": 0.97,
+     "evidence_quote": "Pidän tätä hallituksen esitystä saastuttavimpien autojen verotuksen keventämisestä vastuuttomana ja kaikin puolin aika käsittämättömänä."},
+    {"speech_id": 17302, "legislative_item": "HE 35/2023 vp",
+     "proposition": "Veronalennus heikossa taloustilanteessa",
+     "stance": "vastaan", "confidence": 0.88,
+     "evidence_quote": "Nyt olemme käsittelemässä jälleen kerran hallituksen esitystä, jossa verotuotoista tullaan luopumaan, alennetaan veroja, tässä tapauksessa nyt ajoneuvoveroa."},
+    {"speech_id": 64180, "legislative_item": "HE 228/2018 vp",
+     "proposition": "Päästöoikeuksien mitätöintimahdollisuus (päästökauppalaki)",
+     "stance": "puolesta", "confidence": 0.8,
+     "evidence_quote": "mahdollisuus mitätöidä päästöoikeuksia on kannatettava asia, mikä tämän lakiesityksen mukana nyt tulee."}
+  ]
+}

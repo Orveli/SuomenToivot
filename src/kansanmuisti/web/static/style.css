@@ -443,3 +443,28 @@ th.right,th.num{text-align:right}
 /* --- Profiilin komponenttirivit: label & arvo eivät liimaudu mobiilissa --- */
 .component{gap:10px}
 .component>span:first-child{margin-right:auto}
+
+/* ---- M2: Sanat vs. äänet (neutraali — ei hyvä/huono-värejä) ---- */
+.wv-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.wv-chip{background:var(--soft,#eef1f5);border:1px solid var(--line,#dde2e8);
+  border-radius:999px;padding:5px 12px;font-size:.9rem}
+.wv-chip b{font-size:1.05rem}
+.wv-list{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.wv-row{display:grid;grid-template-columns:170px 1fr;gap:14px;border:1px solid var(--line,#dde2e8);
+  border-radius:var(--r-lg,12px);padding:12px 14px;background:#fff}
+.wv-who{display:flex;gap:10px;align-items:flex-start}
+.wv-who img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:center 16%;
+  border:1px solid var(--line,#dde2e8);flex:0 0 auto}
+.wv-tags{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.wv-quote{margin:4px 0;padding:6px 0 6px 12px;border-left:3px solid var(--line,#dde2e8);
+  font-style:italic;color:var(--ink,#16191d)}
+.wv-quote .src{font-style:normal;font-size:.82rem;white-space:nowrap;margin-left:6px}
+.wv-vote{margin-top:4px}
+/* Neutraalit merkit: ero tehdään muodolla + tekstillä, ei arvottavalla värillä */
+.wv-badge{display:inline-block;font-size:.78rem;font-weight:600;padding:2px 9px;border-radius:6px;
+  border:1px solid var(--line,#cfd6df);background:var(--soft,#eef1f5);color:var(--ink,#16191d)}
+.wv-ristiriita{border-color:var(--accent,#2f6fb0);border-width:2px}
+.wv-vastentahtoinen{border-style:dashed}
+.wv-linjassa{background:#fff}
+.wv-konteksti,.wv-ei_riitä{color:var(--muted,#5a626d);background:transparent}
+@media(max-width:560px){.wv-row{grid-template-columns:1fr}}

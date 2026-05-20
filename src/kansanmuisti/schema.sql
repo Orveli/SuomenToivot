@@ -342,6 +342,98 @@ CREATE TABLE IF NOT EXISTS analysis_position_change (
 );
 
 -- ---------------------------------------------------------------------------
+-- LLM-analyysikerros (valinnainen). Tulokset EROTETTU faktoista. Jokaisella
+-- rivillä lähde (speech_id/vote_id), suora lainaus ja luottamustaso. Vastaukset
+-- välimuistissa (llm_cache) → toistettavia. Periaate: ei motiiviväitteitä,
+-- kuvaileva, epävarmuus merkitään (METHODOLOGY.md / LEGAL_ETHICS.md).
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS llm_cache (
+    key            TEXT PRIMARY KEY,   -- sha256(malli+systeemi+käyttäjä+skeema)
+    model          TEXT,
+    response_json  TEXT,
+    created_at     TEXT
+);
+
+-- M1: Kanta-resolveri. Per puhe poimitut konkreettiset väittämät + kanta.
+CREATE TABLE IF NOT EXISTS analysis_speech_stance (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    speech_id        INTEGER NOT NULL,
+    person_id        INTEGER,
+    legislative_item TEXT,
+    proposition      TEXT,              -- mistä konkreettisesta asiasta
+    stance           TEXT,              -- 'puolesta'|'vastaan'|'ehdollinen'|'ei_kantaa'
+    conditional_note TEXT,              -- ehdollisen kannan ehto (jos)
+    evidence_quote   TEXT,              -- suora lainaus puheesta (pakollinen)
+    confidence       REAL,              -- 0..1
+    model            TEXT,
+    computed_at      TEXT,
+    FOREIGN KEY (speech_id) REFERENCES speech(id)
+);
+
+-- M2 + M3: Sanat vs. äänet -tilikirja. Puheen kanta vs. saman säädöksen ääni,
+-- kontekstilla (muutos vs. lopullinen) ja hallitussopu-erottimella.
+CREATE TABLE IF NOT EXISTS analysis_words_votes (
+    id               INTEGER PRIMARY KEY AUTOINCREMENT,
+    person_id        INTEGER NOT NULL,
+    vote_id          INTEGER NOT NULL,
+    speech_id        INTEGER,
+    legislative_item TEXT,
+    speech_stance    TEXT,              -- 'puolesta'|'vastaan'|'ehdollinen'|'ei_kantaa'
+    speech_quote     TEXT,
+    speech_date      TEXT,
+    vote_value       TEXT,              -- 'Jaa'|'Ei'|'Tyhjää'|'Poissa'
+    vote_date        TEXT,
+    vote_stage       TEXT,              -- treatment_stage (esim. ainoa/1./2. käsittely)
+    alignment        TEXT,              -- 'linjassa'|'ristiriita'|'vastentahtoinen'|'konteksti'|'ei_riitä'
+    context_note     TEXT,              -- esim. "ääni koski muutosesitystä, ei lakia"
+    confidence       REAL,
+    model            TEXT,
+    computed_at      TEXT,
+    FOREIGN KEY (person_id) REFERENCES person(person_id),
+    FOREIGN KEY (vote_id) REFERENCES vote(vote_id)
+);
+
+-- M24: Lakiselittäjä (HE/äänestys arkikielellä, lähteistetty).
+CREATE TABLE IF NOT EXISTS analysis_bill_explainer (
+    legislative_item TEXT PRIMARY KEY,  -- esim. 'HE 8/2024 vp'
+    what_changes     TEXT,              -- mikä muuttuu
+    who_affected     TEXT,              -- keitä koskee
+    contested        TEXT,              -- mistä kiisteltiin (lainauksin)
+    sources_json     TEXT,              -- [{type, ref, quote}]
+    model            TEXT,
+    computed_at      TEXT
+);
+
+-- M24: Aihe-aikajana (kronologinen, tapahtumapohjainen).
+CREATE TABLE IF NOT EXISTS analysis_topic_timeline (
+    topic_slug   TEXT PRIMARY KEY,
+    milestones_json TEXT,               -- [{date, kind, title, ref, note}]
+    model        TEXT,
+    computed_at  TEXT
+);
+
+-- M23: Selko-CV (edustajan toiminta selkokielellä, lähteistetty).
+CREATE TABLE IF NOT EXISTS analysis_member_brief (
+    person_id    INTEGER PRIMARY KEY,
+    selko_text   TEXT,                  -- markdown, lähdeviittein
+    sources_json TEXT,                  -- [{type, ref, label}]
+    model        TEXT,
+    computed_at  TEXT,
+    FOREIGN KEY (person_id) REFERENCES person(person_id)
+);
+
+-- M23: Äänestyksen puolesta/vastaan -selitys (neutraali, kummankin puolen argumentit).
+CREATE TABLE IF NOT EXISTS analysis_vote_proscons (
+    vote_id      INTEGER PRIMARY KEY,
+    pro_json     TEXT,                  -- [{argument, speaker, party, quote}]
+    con_json     TEXT,                  -- [{argument, speaker, party, quote}]
+    note         TEXT,
+    model        TEXT,
+    computed_at  TEXT,
+    FOREIGN KEY (vote_id) REFERENCES vote(vote_id)
+);
+
+-- ---------------------------------------------------------------------------
 -- Kattavuus, keruun tila, korjauskanava
 -- ---------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS coverage_stat (
@@ -386,6 +478,12 @@ CREATE INDEX IF NOT EXISTS idx_speech_topic_topic ON speech_topic(topic_id);
 CREATE INDEX IF NOT EXISTS idx_vote_topic_topic ON vote_topic(topic_id);
 CREATE INDEX IF NOT EXISTS idx_person_party_person ON person_party(person_id);
 CREATE INDEX IF NOT EXISTS idx_dev_person ON analysis_party_deviation(person_id);
+CREATE INDEX IF NOT EXISTS idx_stance_person ON analysis_speech_stance(person_id);
+CREATE INDEX IF NOT EXISTS idx_stance_speech ON analysis_speech_stance(speech_id);
+CREATE INDEX IF NOT EXISTS idx_stance_item ON analysis_speech_stance(legislative_item);
+CREATE INDEX IF NOT EXISTS idx_wv_person ON analysis_words_votes(person_id);
+CREATE INDEX IF NOT EXISTS idx_wv_vote ON analysis_words_votes(vote_id);
+CREATE INDEX IF NOT EXISTS idx_wv_align ON analysis_words_votes(alignment);
 
 -- Kokotekstihaku puheille (FTS5, external content)
 CREATE VIRTUAL TABLE IF NOT EXISTS speech_fts USING fts5(

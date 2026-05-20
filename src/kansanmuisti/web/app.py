@@ -36,6 +36,9 @@ templates.env.globals["ATTR_ABBR"] = queries.ATTR_ABBR
 templates.env.globals["ATTR_ORDER"] = queries.ATTR_ORDER
 templates.env.globals["ATTR_HELP"] = queries.ATTR_HELP
 templates.env.globals["RADAR_LABELS"] = queries.RADAR_LABELS
+templates.env.globals["ALIGN_LABELS"] = queries.ALIGN_LABELS
+templates.env.globals["ALIGN_HELP"] = queries.ALIGN_HELP
+templates.env.globals["ALIGN_ORDER"] = queries.ALIGN_ORDER
 
 
 def _asset_version() -> str:
@@ -125,7 +128,8 @@ def edustaja(request: Request, pid: int):
                       position_changes=queries.person_position_changes(conn, pid),
                       promises=queries.person_promise_alignment(conn, pid),
                       fingerprint=queries.member_party_agreement(conn, pid),
-                      word_style=queries.person_word_style(conn, pid))
+                      word_style=queries.person_word_style(conn, pid),
+                      words_votes=queries.person_words_votes(conn, pid))
     finally:
         conn.close()
 
@@ -194,6 +198,15 @@ def vaalikone(request: Request, s: int = 0):
         statement = next((x for x in statements if x["id"] == sid), statements[0])
         return render(request, "vaalikone.html", statements=statements,
                       stance=queries.vaalikone_stance(conn, sid), sid=sid, statement=statement)
+    finally:
+        conn.close()
+
+
+@app.get("/sanat-vs-aanet", response_class=HTMLResponse)
+def sanat_vs_aanet(request: Request):
+    conn = _conn()
+    try:
+        return render(request, "wordsvotes.html", **queries.words_votes_overview(conn))
     finally:
         conn.close()
 

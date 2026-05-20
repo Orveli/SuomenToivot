@@ -163,6 +163,33 @@ def cmd_load_promises(args):
          f"({res['resolved']} kohdistui kerättyihin äänestyksiin).")
 
 
+def cmd_llm_stance(args):
+    from .analyze.stance import compute_stance
+    with db.session() as conn:
+        res = compute_stance(conn, limit=args.limit, model=args.model,
+                             max_calls=args.max_calls, only_with_votes=not args.all_speeches)
+    if res.get("skipped_no_key") and not res.get("live_calls"):
+        _log("HUOM: ANTHROPIC_API_KEY puuttuu → uusia kantoja ei muodostettu "
+             "(luettiin vain välimuisti). Aseta avain ja aja uudelleen.")
+    _log(f"Kanta-analyysi (M1): {res}")
+
+
+def cmd_words_votes(args):
+    from .analyze.wordsvotes import compute_words_votes
+    with db.session() as conn:
+        res = compute_words_votes(conn)
+    _log(f"Sanat vs. äänet -tilikirja (M2): {res}")
+
+
+def cmd_load_llm_demo(args):
+    from .analyze.stance import load_stance_demo
+    from .analyze.wordsvotes import compute_words_votes
+    with db.session() as conn:
+        rs = load_stance_demo(conn, args.path)
+        rv = compute_words_votes(conn)
+    _log(f"Demo-otos ladattu: {rs}; tilikirja rakennettu: {rv}")
+
+
 def cmd_serve(args):
     import uvicorn
     uvicorn.run("kansanmuisti.web.app:app", host=args.host, port=args.port, reload=args.reload)
@@ -241,6 +268,21 @@ def build_parser() -> argparse.ArgumentParser:
     sp = sub.add_parser("load-promises", help="Lataa kuratoidut lupaukset JSON-tiedostosta")
     sp.add_argument("path")
     sp.set_defaults(func=cmd_load_promises)
+
+    sp = sub.add_parser("llm-stance", help="M1: poimi puhekannat LLM:llä (vaatii ANTHROPIC_API_KEY)")
+    sp.add_argument("--limit", type=int, help="Rajoita käsiteltäviä puheita")
+    sp.add_argument("--model", help="Ohita oletusmalli")
+    sp.add_argument("--max-calls", type=int, help="Tuotantokutsubudjetti per ajo")
+    sp.add_argument("--all-speeches", action="store_true",
+                    help="Käsittele myös puheet ilman äänestyskytkentää")
+    sp.set_defaults(func=cmd_llm_stance)
+
+    sp = sub.add_parser("words-votes", help="M2: rakenna sanat-vs-äänet-tilikirja kannoista (deterministinen)")
+    sp.set_defaults(func=cmd_words_votes)
+
+    sp = sub.add_parser("load-llm-demo", help="Lataa käsin varmennettu demo-otos + rakenna tilikirja")
+    sp.add_argument("path", nargs="?", default="seed/llm_stance_demo.json")
+    sp.set_defaults(func=cmd_load_llm_demo)
 
     sp = sub.add_parser("serve", help="Käynnistä verkkopalvelin")
     sp.add_argument("--host", default="127.0.0.1")

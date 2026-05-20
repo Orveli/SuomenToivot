@@ -556,3 +556,50 @@ selvästi ("ei riittävästi dataa"), ei nollana.
 - **Poissaolot eivät ole kannanottoja.** Poissaolo voi johtua sairaudesta,
   valiokuntatyöstä, parista (pairing) tai muusta syystä; sitä ei tulkita
   kannaksi eikä lasketa poikkeamaksi.
+
+## 9. LLM-analyysikerros: kanta-resolveri (M1) ja "sanat vs. äänet" (M2)
+
+Valinnainen kielimallikerros (oletusmalli `claude-haiku-4-5`) tuottaa sellaista,
+mihin avainsanahaku ei pysty: se erottaa *kannan* (puolesta/vastaan/ehdollinen)
+pelkän maininnan sijaan. Ydin toimii ilman avainta; kerros aktivoituu, kun
+`ANTHROPIC_API_KEY` on asetettu. Tulokset tallennetaan `llm_cache`-tauluun
+(avain = sha256(malli+systeemi+käyttäjä+skeema)) → ajot ovat toistettavia,
+deterministisiä ja jaettavissa tietokannan mukana.
+
+### 9.1 M1 — kanta-resolveri (`km llm-stance`)
+Kullekin äänestykseen liittyvälle puheelle malli palauttaa pakotetulla
+JSON-skeemalla listan väittämiä: `{proposition, stance, conditional_note,
+evidence_quote, confidence}`. Säännöt: vain selkeä kanta kirjataan; jokaisessa
+rivissä on **sanatarkka lainaus** puheesta (muuten rivi hylätään); motiiveja
+ei päätellä; epävarmuus → matala `confidence`. Demo-otos (`km load-llm-demo`)
+sisältää käsin varmennettuja kantoja oikeisiin puheisiin (provenienssi merkitty
+`model`-kenttään); loaderi hylkää rivin, jos lainaus ei ole sanatarkka.
+
+### 9.2 M2 — sanat vs. äänet -tilikirja (`km words-votes`)
+Sovitus puhekannan ja saman säädöksen äänen välillä on **deterministinen,
+läpinäkyvä sääntö** (ei LLM-arvausta), joten se ajetaan ilman avainta kun kannat
+on poimittu:
+
+- Verrataan **vain yksiselitteisiä lain hyväksyntä/hylkäys-äänestyksiä** (otsikon
+  Jaa-puoli "Hyväksyminen"/"Mietintö", Ei-puoli sisältää "hylk"). Jaa = lain
+  hyväksyntä, Ei = hylkäys.
+- **Lausuma- ja muutosehdotusäänestykset → `konteksti`.** Niissä Ei *ei* tarkoita
+  lain vastustamista (esim. opposition ponsi), joten ristiriitaa ei voi päätellä.
+  Tämä estää reilun kannan virheellisen leimaamisen (vrt. esimerkki: edustaja
+  puhuu lain mekanismien puolesta mutta äänestää Ei opposition lausumasta).
+- **Menettelyäänestykset → `konteksti`; tyhjä/poissa → `ei_riitä`.**
+- **Vastentahtoinen kuri (M3):** jos kanta ja ääni ovat ristiriidassa mutta
+  puheessa on avoin kompromissisignaali ("hallitusvastuun vuoksi", "äänestän
+  vastentahtoisesti" tms. yksiselitteinen monisanafraasi), tulos on
+  `vastentahtoinen`, ei `ristiriita`. Yksittäissanoja ei käytetä (väärät osumat);
+  laajempi vastentahtoisuuden tunnistus jää LLM-ajolle.
+
+Luokat (`linjassa`, `ristiriita`, `vastentahtoinen`, `konteksti`, `ei_riitä`)
+esitetään neutraalisti — käyttöliittymässä ei hyvä/huono-värejä. Jokainen rivi
+linkittää alkuperäiseen puheeseen ja äänestykseen. Tulokset ovat kuvailevia
+indikaattoreita, eivät arvosanoja, eivätkä motiiviväitteitä.
+
+### 9.3 Kustannus ja skaalaus
+Kanta-analyysi koskee ~107 000 äänestyksiin kytkettyä puhetta. Aja vaiheittain
+`--limit`-rajauksella; `KANSANMUISTI_LLM_MAX_CALLS` rajaa tuotantokutsut per ajo.
+Välimuistin ansiosta keskeytetyn ajon voi jatkaa ilman lisäkustannusta.

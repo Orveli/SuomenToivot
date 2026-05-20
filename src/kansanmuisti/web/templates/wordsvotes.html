@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Sanat vs. äänet — SuomenToivot{% endblock %}
+{% block body %}
+<h1>Sanat vs. äänet</h1>
+<p class="muted">Mitä edustaja <strong>sanoi</strong> salissa lakiesityksestä — ja miten hän
+sitten <strong>äänesti</strong> samasta asiasta. Tämä on jotain, mitä pelkkä sanahaku ei
+voi tehdä: se ei tiedä, ottiko puhuja kantaa <em>puolesta vai vastaan</em>, eikä koskeeko
+ääni samaa asiaa kuin puhe. Jokainen rivi on lähteistetty puheen lainaukseen ja äänestykseen.</p>
+
+<div class="notice small">
+  <strong>Näin luemme:</strong> vertaamme vain yksiselitteisiä lain
+  <em>hyväksyntä/hylkäys</em>-äänestyksiä (Jaa = lain hyväksyntä, Ei = hylkäys). Lausuma- ja
+  muutosehdotusäänestyksissä Ei ei tarkoita lain vastustamista, joten ne merkitään
+  <em>kontekstisidonnaisiksi</em> — niistä ei voi päätellä ristiriitaa. Jos puhuja kertoo
+  avoimesti äänestävänsä kantaansa vastaan (esim. hallituskuri), se on
+  <em>vastentahtoinen</em>, ei ristiriita. Emme esitä motiiveja.
+</div>
+
+{% if not examples %}
+<div class="notice"><strong>LLM-analyysia ei ole vielä ajettu.</strong> Kanta-analyysi (M1)
+muodostetaan kielimallilla puheista; aseta <code>ANTHROPIC_API_KEY</code> ja aja
+<code>km llm-stance</code> sekä <code>km words-votes</code>. Pikademo:
+<code>km load-llm-demo</code>.</div>
+{% else %}
+
+{% if model and 'demo' in model %}
+<div class="notice small">⚠️ <strong>Demo-otos.</strong> Alla näkyy käsin varmennettu otos oikeita
+puheita ({{ n_persons }} edustajaa, {{ n_items }} säädöstä), joka osoittaa toiminnallisuuden.
+Koko aineiston (114&nbsp;000 puhetta) kanta-analyysi vaatii API-avaimen ja ajon
+<code>km llm-stance</code>. Tällöin myös <em>ristiriita</em>- ja <em>vastentahtoinen</em>-tapaukset
+pinnoittuvat laajemmin.</div>
+{% endif %}
+
+<h2>Yhteenveto</h2>
+<div class="wv-chips">
+  {% for a in ALIGN_ORDER %}{% if counts.get(a) %}
+  <span class="wv-chip" title="{{ ALIGN_HELP[a] }}">
+    <b>{{ counts[a] }}</b> {{ ALIGN_LABELS[a] }}</span>
+  {% endif %}{% endfor %}
+</div>
+<p class="small muted">{{ n_pairs }} puhe–ääni-vertailua · {{ n_persons }} edustajaa ·
+{{ n_items }} säädöstä.</p>
+
+<h2>Esimerkkejä</h2>
+<p class="small muted">Järjestys: ristiriidat ja vastentahtoiset ensin. Klikkaa puhetta tai
+äänestystä nähdäksesi alkuperäisen lähteen.</p>
+<div class="wv-list">
+  {% for e in examples %}
+  <div class="wv-row">
+    <div class="wv-who">
+      {% if e.photo_url %}<img src="{{ e.photo_url }}" alt="" loading="lazy">{% endif %}
+      <div>
+        <a href="/edustaja/{{ e.person_id }}"><b>{{ e.full_name }}</b></a>
+        <span class="party-tag">{{ e.party_current }}</span>
+      </div>
+    </div>
+    <div class="wv-body">
+      <div class="wv-tags">
+        <span class="wv-badge wv-{{ e.alignment }}">{{ ALIGN_LABELS[e.alignment] }}</span>
+        <span class="small muted">{{ e.legislative_item }}</span>
+      </div>
+      <blockquote class="wv-quote">“{{ e.speech_quote }}”
+        <a class="src" href="/puhe/{{ e.speech_id }}">puhe →</a></blockquote>
+      <div class="wv-vote small">
+        Puheen kanta: <b>{{ e.speech_stance }}</b> ·
+        Ääni: <b>{{ e.vote_value }}</b>
+        (<a href="/aanestys/{{ e.vote_id }}">{{ (e.vote_title or '')[:42] }}</a>)
+        {% if e.context_note %}<span class="muted">— {{ e.context_note }}</span>{% endif %}
+        {% if e.n_related > 1 %}<span class="muted">· +{{ e.n_related - 1 }} muuta liittyvää äänestystä</span>{% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="notice small" style="margin-top:18px">
+  Menetelmä: kannan poiminta puheesta on <a href="/menetelmat">kielimallipohjainen, lähteistetty</a>
+  (jokaisella kannalla suora lainaus + luottamustaso); puhe–ääni-sovitus on deterministinen,
+  läpinäkyvä sääntö. Tulokset ovat <em>kuvailevia indikaattoreita</em>, eivät arvosanoja.
+</div>
+{% endblock %}

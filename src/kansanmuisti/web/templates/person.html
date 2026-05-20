@@ -118,6 +118,32 @@ Lue molemmat äänestykset ja arvioi, onko kyse samasta kysymyksestä.</p>
 </table>
 {% endif %}
 
+{# ---- M2: Sanat vs. äänet ---- #}
+{% if words_votes %}
+<h2>Sanat vs. äänet <span class="small muted">(puheen kanta vrt. ääni)</span></h2>
+<p class="small muted">Mitä edustaja sanoi lakiesityksestä salissa ja miten äänesti samasta
+asiasta. Kanta on poimittu puheesta <a href="/sanat-vs-aanet">lähteistetysti</a>; emme esitä
+motiiveja. <a href="/sanat-vs-aanet">Lue lisää menetelmästä →</a></p>
+{% for it in words_votes %}
+<div class="wv-row" style="grid-template-columns:1fr">
+  <div class="wv-body">
+    <div class="wv-tags"><span class="small muted">{{ it.legislative_item }}</span>
+      · Puheen kanta: <b>{{ it.stance }}</b></div>
+    <blockquote class="wv-quote">“{{ it.quote }}”
+      <a class="src" href="/puhe/{{ it.speech_id }}">puhe →</a></blockquote>
+    {% for v in it.votes %}
+    <div class="wv-vote small">
+      <span class="wv-badge wv-{{ v.alignment }}">{{ ALIGN_LABELS[v.alignment] }}</span>
+      Ääni <b>{{ v.vote_value }}</b>
+      (<a href="/aanestys/{{ v.vote_id }}">{{ (v.vote_title or '')[:40] }}</a>)
+      {% if v.context_note %}<span class="muted">— {{ v.context_note }}</span>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+
 {# ---- Lupaukset vs. teot ---- #}
 <h2>Lupaukset vs. teot</h2>
 {% if promises %}
