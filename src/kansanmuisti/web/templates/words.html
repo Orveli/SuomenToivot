@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Puhetyyli: täyte- ja kirosanat — SuomenToivot{% endblock %}
+{% macro board(rows, unit) %}
+<table>
+  <tr><th>Edustaja</th><th>Ryhmä</th><th class="right">/1000 sanaa</th><th class="right">{{ unit }}</th></tr>
+  {% for r in rows %}
+  <tr>
+    <td><a href="/edustaja/{{ r.person_id }}">{{ r.full_name }}</a></td>
+    <td><span class="party-tag">{{ r.party_current or '' }}</span></td>
+    <td class="right">{{ '%.2f' % r.per_1000 }}</td>
+    <td class="right small muted">{{ r.n_hits }} / {{ r.n_words }} sanaa</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endmacro %}
+{% block body %}
+<h1>Puhetyyli: täyte- ja kirosanat</h1>
+<div class="disclaimer">
+  <strong>Lue varauksella.</strong> Täysistuntopöytäkirjat ovat <strong>toimitettuja</strong>
+  (puhtaaksikirjoitettuja), joten osa puhutuista täytesanoista on jo poistettu — luvut kuvaavat
+  <em>tekstiin jäänyttä</em> kieltä, eivät puhetta sellaisenaan. Konteksti voi tuottaa kohinaa
+  (lainaus, sävyttävä käyttö, paikannimi). Luvut ovat <strong>kuvailevia</strong> sanalaskentoja
+  julkisesta pöytäkirjasta — eivät kerro pätevyydestä tai luonteesta. Vertailussa vain edustajat,
+  joilla väh. {{ min_words }} sanaa; mittarina osumat / 1000 sanaa.
+</div>
+
+<h2>🗣️ Täytesanat</h2>
+<div class="grid cols-2">
+  <div><h3>Eniten</h3>{{ board(data.filler.top, 'täytesanaa') }}</div>
+  <div><h3>Vähiten</h3>{{ board(data.filler.bottom, 'täytesanaa') }}</div>
+</div>
+
+<h2>🤬 Kirosanat / voimasanat</h2>
+<p class="small muted">{{ data.swear.zero }} vertailtavaa edustajaa ei käyttänyt yhtään listan
+voimasanaa (per 1000 = 0,00).</p>
+<div class="grid cols-2">
+  <div><h3>Eniten</h3>{{ board(data.swear.top, 'voimasanaa') }}</div>
+  <div><h3>Vähiten (≥1 osuma harvinaisin)</h3>{{ board(data.swear.bottom, 'voimasanaa') }}</div>
+</div>
+
+<h2>Käytetyt sanalistat (läpinäkyvyys)</h2>
+<p class="small muted">Laskenta on täysin läpinäkyvä — tässä koko leksikko. Sananmuototäsmäys on
+tarkka (ei prefiksi); monisanaiset fraasit otellaan peräkkäisinä sanoina.</p>
+<p><strong>Täytesanat:</strong> <span class="small muted">{{ lex.filler|join(', ') }}</span></p>
+<p><strong>Voimasanat:</strong> <span class="small muted">{{ lex.swear|join(', ') }}</span></p>
+{% endblock %}

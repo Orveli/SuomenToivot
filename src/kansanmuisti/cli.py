@@ -93,6 +93,13 @@ def cmd_analyze(args):
         _log(f"  {k}: {v}")
 
 
+def cmd_word_style(args):
+    from .analyze.wordstyle import compute_word_style
+    with db.session() as conn:
+        res = compute_word_style(conn)
+    _log(f"Puhetyyli (täyte-/kirosanat) laskettu: {res}")
+
+
 def cmd_photos(args):
     from .collect.photos import collect_photos
     with db.session() as conn:
@@ -179,6 +186,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("analyze", help="Aja analyysiputki")
     sp.set_defaults(func=cmd_analyze)
+
+    sp = sub.add_parser("word-style", help="Laske täyte- ja kirosanat per edustaja")
+    sp.set_defaults(func=cmd_word_style)
 
     sp = sub.add_parser("photos", help="Hae edustajien kuvat Wikimedia Commonsista")
     sp.add_argument("--refresh", action="store_true", help="Hae myös jo löydetyt uudelleen")

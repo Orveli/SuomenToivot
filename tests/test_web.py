@@ -102,6 +102,19 @@ def test_commons_file_url():
     assert _commons_file_url(u) == "https://commons.wikimedia.org/wiki/File:Jouni_Backman.jpg"
 
 
+def test_words_page_renders(client):
+    r = client.get("/sanat")
+    assert r.status_code == 200
+    assert "Täytesanat" in r.text and "Voimasanat" in r.text
+
+
+def test_word_usage_computed(conn):
+    n = conn.execute("SELECT COUNT(*) FROM analysis_word_usage").fetchone()[0]
+    assert n > 0  # täyte/kiro lasketut fixture-datalle
+    cats = {r[0] for r in conn.execute("SELECT DISTINCT category FROM analysis_word_usage")}
+    assert "filler" in cats and "swear" in cats
+
+
 def test_map_page_renders(client):
     r = client.get("/kartta")
     assert r.status_code == 200

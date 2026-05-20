@@ -569,6 +569,36 @@ def index_highlights(conn) -> dict:
     return {"spotlight": spotlight, "tight": tight, "trend": trend}
 
 
+def word_leaderboard(conn, category: str, direction: str = "desc",
+                     limit: int = 15, min_words: int = 5000) -> List[dict]:
+    """Leaderboard täyte-/kirosanoista per 1000 sanaa (reilu vertailu)."""
+    order = "DESC" if direction == "desc" else "ASC"
+    return _rows(conn,
+        f"SELECT u.person_id, p.full_name, p.party_current, u.per_1000, u.n_hits, u.n_words"
+        f" FROM analysis_word_usage u JOIN person p ON p.person_id=u.person_id"
+        f" WHERE u.category=? AND u.n_words>=?"
+        f" ORDER BY u.per_1000 {order}, u.n_words DESC LIMIT ?",
+        category, min_words, limit)
+
+
+def word_zero_count(conn, category: str, min_words: int = 5000) -> int:
+    return conn.execute(
+        "SELECT COUNT(*) FROM analysis_word_usage WHERE category=? AND n_words>=? AND n_hits=0",
+        (category, min_words)).fetchone()[0]
+
+
+def person_word_style(conn, pid: int) -> dict:
+    out = {}
+    for r in conn.execute(
+            "SELECT category, n_hits, n_words, per_1000 FROM analysis_word_usage WHERE person_id=?",
+            (pid,)):
+        words = _rows(conn,
+            "SELECT word, n FROM analysis_word_hits WHERE person_id=? AND category=?"
+            " ORDER BY n DESC LIMIT 6", pid, r["category"])
+        out[r["category"]] = {**dict(r), "top": words}
+    return out
+
+
 def political_map(conn) -> dict:
     """Poliittisen kartan pisteet, ryhmäkeskipisteet ja meta (selitysosuudet)."""
     rows = _rows(conn,

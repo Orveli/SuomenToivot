@@ -92,7 +92,8 @@ def edustaja(request: Request, pid: int):
                       recent_votes=queries.person_recent_votes(conn, pid),
                       position_changes=queries.person_position_changes(conn, pid),
                       promises=queries.person_promise_alignment(conn, pid),
-                      fingerprint=queries.member_party_agreement(conn, pid))
+                      fingerprint=queries.member_party_agreement(conn, pid),
+                      word_style=queries.person_word_style(conn, pid))
     finally:
         conn.close()
 
@@ -128,6 +129,29 @@ def kortit(request: Request, party: str = "", sort: str = "puheet", dir: str = "
                                      min_eligible=min_eligible)
         return render(request, "cards.html", cards=cards, parties=queries.parties(conn),
                       party=party, sort=sort, dir=dir, min_eligible=min_eligible)
+    finally:
+        conn.close()
+
+
+@app.get("/sanat", response_class=HTMLResponse)
+def sanat(request: Request):
+    conn = _conn()
+    try:
+        from ..analyze.wordstyle import (FILLER_WORDS, FILLER_PHRASES,
+                                         SWEAR_WORDS, SWEAR_PHRASES, MIN_WORDS_LEADERBOARD)
+        data = {}
+        for cat in ("filler", "swear"):
+            data[cat] = {
+                "top": queries.word_leaderboard(conn, cat, "desc"),
+                "bottom": queries.word_leaderboard(conn, cat, "asc"),
+                "zero": queries.word_zero_count(conn, cat),
+            }
+        lex = {
+            "filler": sorted(FILLER_WORDS) + [" ".join(p) for p in FILLER_PHRASES],
+            "swear": sorted(SWEAR_WORDS) + [" ".join(p) for p in SWEAR_PHRASES],
+        }
+        return render(request, "words.html", data=data, lex=lex,
+                      min_words=MIN_WORDS_LEADERBOARD)
     finally:
         conn.close()
 

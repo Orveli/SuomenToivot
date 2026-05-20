@@ -238,6 +238,25 @@ CREATE TABLE IF NOT EXISTS analysis_member_topic (
     PRIMARY KEY (person_id, topic_id)
 );
 
+CREATE TABLE IF NOT EXISTS analysis_word_usage (
+    person_id        INTEGER NOT NULL,
+    category         TEXT NOT NULL,          -- 'filler' | 'swear'
+    n_hits           INTEGER,
+    n_words          INTEGER,
+    per_1000         REAL,                   -- osumia / 1000 sanaa
+    lexicon_version  TEXT,
+    computed_at      TEXT,
+    PRIMARY KEY (person_id, category)
+);
+
+CREATE TABLE IF NOT EXISTS analysis_word_hits (
+    person_id  INTEGER NOT NULL,
+    category   TEXT NOT NULL,
+    word       TEXT NOT NULL,
+    n          INTEGER,
+    PRIMARY KEY (person_id, category, word)
+);
+
 CREATE TABLE IF NOT EXISTS analysis_party_words (
     party    TEXT NOT NULL,
     word     TEXT NOT NULL,

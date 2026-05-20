@@ -170,6 +170,24 @@ Lupaus↔äänestys-yhteys on <strong>toimituksellinen tulkinta</strong>, ei aut
 </table>
 {% endif %}
 
+{# ---- Puhetyyli ---- #}
+{% if word_style %}
+<h2>Puhetyyli <span class="small muted">(täyte- ja voimasanat)</span></h2>
+<p class="small muted">Osumia / 1000 sanaa puheissa. Pöytäkirjat ovat toimitettuja, joten luvut
+ovat alarajoja. Kuvaileva. <a href="/sanat">Vertaa kaikkia.</a></p>
+<table>
+  <tr><th>Laji</th><th class="right">/1000 sanaa</th><th class="right">Osumia</th><th>Yleisimmät</th></tr>
+  {% for cat, label in [('filler','Täytesanat'),('swear','Voimasanat')] %}
+  {% set w = word_style.get(cat) %}
+  {% if w %}
+  <tr><td>{{ label }}</td><td class="right">{{ '%.2f' % w.per_1000 }}</td>
+    <td class="right">{{ w.n_hits }}</td>
+    <td class="small muted">{% for t in w.top %}{{ t.word }} ({{ t.n }}){% if not loop.last %}, {% endif %}{% endfor %}</td></tr>
+  {% endif %}
+  {% endfor %}
+</table>
+{% endif %}
+
 {# ---- Puheenvuorot ---- #}
 {% if speeches %}
 <h2>Viimeisimmät puheenvuorot</h2>
