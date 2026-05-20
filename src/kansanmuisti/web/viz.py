@@ -60,8 +60,8 @@ def radar_svg(values: Sequence[Tuple[str, float]], size: int = 150,
     return (
         f'<svg viewBox="0 0 {size} {size}" width="{size}" height="{size}" role="img">'
         + "".join(grid_el) + "".join(axes)
-        + f'<polygon points="{" ".join(poly)}" fill="{accent}" fill-opacity="0.35" '
-          f'stroke="{accent}" stroke-width="1.6"/>'
+        + f'<polygon points="{" ".join(poly)}" fill="{accent}" fill-opacity="0.42" '
+          f'stroke="{accent}" stroke-width="2.0" stroke-linejoin="round"/>'
         + "".join(labels) + "</svg>")
 
 

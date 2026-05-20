@@ -304,3 +304,107 @@ nav.main{display:flex;gap:4px;margin-left:8px}
 .tc-gidx i{opacity:.65;font-style:normal;font-size:9.5px}
 /* sinetti & nauha kuvavetoisessa kortissa (z-index päälle) */
 .tcard.mp .tc-corner,.tcard.mp .tc-seal,.tcard.mp .tc-winribbon{z-index:3}
+
+/* ============================================================
+   DESIGN-REFRESH (designagenttien parhaat ehdotukset)
+   Lisätty loppuun → ohittaa aiemmat säännöt.
+   ============================================================ */
+:root{
+  --ink:#16191d; --body:#33383f; --muted:#646b73;
+  --line:#e3e7ec; --line-strong:#cdd3da;
+  --soft:#f5f7f9; --soft-2:#eef1f5;
+  --accent:#1f4e79; --accent-700:#16395a; --accent-300:#7ba3c9;
+  --accent-soft:#e9f0f7; --accent-tint:#f3f7fb;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;
+  --r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:18px;--r-pill:999px;
+  --e1:0 1px 2px rgba(16,24,40,.06),0 1px 1px rgba(16,24,40,.04);
+  --e2:0 2px 4px rgba(16,24,40,.06),0 4px 12px rgba(16,24,40,.06);
+  --e3:0 8px 24px rgba(16,24,40,.10),0 2px 6px rgba(16,24,40,.05);
+  --e-ring:0 0 0 3px rgba(31,78,121,.30);
+  --maxw-text:680px;
+}
+body{color:var(--body)}
+h1,h2,h3{color:var(--ink)}
+h1{font-size:clamp(28px,3.6vw,40px);line-height:1.12;letter-spacing:-.01em;font-weight:800;margin:.1em 0 var(--s4)}
+h2{border:0;padding:0;margin:var(--s7) 0 var(--s4);font-size:23px;line-height:1.2;letter-spacing:-.005em;font-weight:800}
+h2::before{content:"";display:block;width:34px;height:3px;border-radius:2px;background:var(--accent);margin-bottom:var(--s3)}
+h3{font-size:17px;font-weight:700}
+a{text-decoration-thickness:1px;text-underline-offset:2px}
+:where(a,button,summary,input,select,textarea,.card,.tcard,.tcard.mp):focus-visible{outline:none;box-shadow:var(--e-ring);border-radius:var(--r-sm)}
+
+/* --- Header: kiinteä, vaalea, SVG-hakuikoni --- */
+header.site{background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(16,24,40,.03);position:sticky;top:0;z-index:100}
+.brand{font-size:21px;letter-spacing:-.01em}
+.navsearch{position:relative}
+.navsearch input{padding-left:38px;border-color:var(--line-strong);background:var(--soft)}
+.navsearch input:focus{background:#fff;border-color:var(--accent)}
+.navsearch::before{content:"";position:absolute;left:14px;top:50%;width:15px;height:15px;transform:translateY(-50%);opacity:.5;background:center/contain no-repeat;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23646b73' stroke-width='2.2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.2-3.2'/%3E%3C/svg%3E")}
+
+/* --- Kortit (.card) ja elevaatio --- */
+.card{box-shadow:var(--e1);border-color:var(--line);transition:box-shadow .15s,transform .15s,border-color .15s}
+.card:hover{box-shadow:var(--e2);border-color:var(--line-strong);transform:translateY(-1px);text-decoration:none}
+
+/* --- Taulukot: pois "taulukkolaskenta"-ilme --- */
+table{border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden}
+thead th,table tr th{background:var(--soft);border-bottom:1px solid var(--line-strong)}
+th,td{padding:10px 14px}
+td{border-bottom:1px solid var(--line)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:nth-child(even) td{background:rgba(238,241,245,.5)}
+tbody tr:hover td,tr:hover td{background:var(--accent-tint)}
+.right,td.num{font-variant-numeric:tabular-nums}
+
+/* --- Pillit yhtenäisiksi --- */
+.tag,.pill,.flag{border-radius:var(--r-pill)}
+.notice,.disclaimer{border-radius:var(--r-md);box-shadow:var(--e1)}
+.chartbox{box-shadow:var(--e1);border-radius:var(--r-lg)}
+
+/* --- Pitkät tekstisivut: luettava mitta --- */
+.doc{max-width:var(--maxw-text)}
+.doc p,.doc li{font-size:16.5px;line-height:1.7;color:var(--body)}
+
+/* ============================================================
+   KORTIN VIIMEISTELY (kuvavetoinen .tcard.mp)
+   ============================================================ */
+.tcard.mp{border-radius:var(--r-xl);background-position:center 16%;
+  transition:transform .18s ease,box-shadow .18s ease;box-shadow:var(--e2)}
+.tcard.mp::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(8,12,20,.42),transparent 22%)}
+.tcard.mp:hover{transform:translateY(-6px) scale(1.015);box-shadow:var(--e3)}
+.tcard.mp:focus-visible{box-shadow:0 0 0 3px #fff,0 0 0 6px var(--accent),var(--e3)}
+.tc-glass{padding:10px 13px 13px;border-radius:0 0 var(--r-xl) var(--r-xl);
+  background:linear-gradient(180deg,rgba(10,14,22,0),rgba(10,14,22,.55) 30%,rgba(10,14,22,.9) 80%);
+  -webkit-backdrop-filter:blur(6px) saturate(115%);backdrop-filter:blur(6px) saturate(115%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+.tc-glass .tc-name{font-size:18px;letter-spacing:-.01em;line-height:1.03}
+.tc-glass .tc-meta{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;opacity:.78}
+.tc-gradar svg{width:100px;height:100px;display:block;filter:drop-shadow(0 0 4px rgba(150,200,255,.4))}
+.tc-gvals{display:grid;grid-template-columns:1fr 1fr;gap:1px 10px;align-content:center}
+.tc-gvals b{min-width:20px;color:#bfe0ff;font-variant-numeric:tabular-nums}
+.tc-gidx{margin-top:7px;padding-top:7px}
+.tc-gidx b{font-size:16px;font-variant-numeric:tabular-nums}
+.tc-corner .tc-no{background:rgba(10,14,22,.55);padding:1px 6px;border-radius:var(--r-pill);opacity:1;font-variant-numeric:tabular-nums}
+.tc-corner .tc-party{box-shadow:0 1px 4px rgba(0,0,0,.35)}
+.tc-seal{width:36px;height:36px;font-size:18px;
+  background:radial-gradient(circle at 34% 28%,#fff6cf,#f4c43c 58%,#b8901c);
+  box-shadow:0 2px 7px rgba(0,0,0,.45),inset 0 0 0 2px rgba(255,255,255,.6),inset 0 -3px 5px rgba(120,80,0,.35)}
+/* harvinaisuus = foliopyyhkäisy */
+.tcard.mp.harvinainen,.tcard.mp.legendaarinen{position:relative}
+.tcard.mp.harvinainen::after,.tcard.mp.legendaarinen::after{content:"";position:absolute;inset:0;border-radius:var(--r-xl);pointer-events:none;z-index:4;
+  background:linear-gradient(135deg,rgba(255,255,255,0) 42%,rgba(255,245,205,.4) 50%,rgba(255,255,255,0) 58%);
+  background-size:250% 250%;animation:foilSweep 6s ease-in-out infinite}
+@keyframes foilSweep{0%{background-position:0% 0%}50%{background-position:100% 100%}100%{background-position:0% 0%}}
+@media (prefers-reduced-motion:reduce){.tcard.mp.harvinainen::after,.tcard.mp.legendaarinen::after{animation:none}}
+
+/* --- Etusivun hero --- */
+.hero{background:radial-gradient(120% 90% at 100% 0%,var(--accent-tint),transparent 60%),linear-gradient(180deg,var(--soft),#fff);
+  border:1px solid var(--line);border-radius:var(--r-xl);padding:var(--s7) var(--s6);margin:var(--s4) 0 var(--s6);text-align:center;box-shadow:var(--e1)}
+.hero h1{max-width:20ch;margin:0 auto var(--s3)}
+.hero p{max-width:56ch;margin:0 auto var(--s5);color:var(--muted);font-size:17px}
+.hero .searchbox{max-width:560px;margin:0 auto}
+.truststrip{display:flex;justify-content:center;gap:var(--s6);flex-wrap:wrap;margin-top:var(--s5)}
+.truststrip a{color:var(--muted);font-size:14px;text-decoration:none}
+.truststrip a:hover{color:var(--accent)}
+.truststrip b{display:block;font-size:24px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+@media(max-width:600px){.hero{padding:var(--s6) var(--s4)}.truststrip{gap:var(--s4)}}

@@ -1,21 +1,20 @@
 {% extends "base.html" %}
 {% import "_cards.html" as c %}
 {% block body %}
-<h1>Mitä päättäjäsi on oikeasti tehnyt?</h1>
-<p class="muted">Selaa kansanedustajia ja puolueita kortteina — <strong>klikkaa korttia avataksesi profiilin</strong>.
-Tutkagraafi näyttää edustajan profiilin viidellä ulottuvuudella. Jokainen luku perustuu julkiseen
-Eduskunnan dataan ja on jäljitettävissä lähteeseen.</p>
-
-<form class="searchbox" action="/haku" method="get">
-  <input type="text" name="q" placeholder="Hae nimi, aihe tai säädös…" autofocus>
-  <button type="submit">Hae</button>
-</form>
-
-<div class="grid cols-3" style="margin:14px 0">
-  <a class="card" href="/edustajat"><div class="kpi">{{ overview.persons }}</div><div class="muted">edustajaa →</div></a>
-  <a class="card" href="/tilastot"><div class="kpi">{{ overview.votes }}</div><div class="muted">äänestystä →</div></a>
-  <a class="card" href="/kartta"><div class="kpi">{{ overview.speeches }}</div><div class="muted">puheenvuoroa →</div></a>
-</div>
+<section class="hero">
+  <h1>Mitä päättäjäsi on oikeasti tehnyt?</h1>
+  <p>Selaa kansanedustajia ja puolueita kortteina — <strong>klikkaa korttia avataksesi profiilin</strong>.
+  Jokainen luku perustuu julkiseen Eduskunnan dataan ja on jäljitettävissä lähteeseen.</p>
+  <form class="searchbox" action="/haku" method="get">
+    <input type="text" name="q" placeholder="Hae nimi, aihe tai säädös…" autofocus>
+    <button type="submit">Hae</button>
+  </form>
+  <div class="truststrip">
+    <a href="/edustajat"><b>{{ overview.persons }}</b> edustajaa</a>
+    <a href="/tilastot"><b>{{ overview.votes }}</b> äänestystä</a>
+    <a href="/kartta"><b>{{ overview.speeches }}</b> puheenvuoroa</a>
+  </div>
+</section>
 
 {# ---- Palkintokortit ---- #}
 {% if feed.awards %}

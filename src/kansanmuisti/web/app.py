@@ -65,8 +65,8 @@ def _attach_radar(cards):
             vals = [(queries.RADAR_LABELS[k], (m["attrs"].get(k) or 0) / 99.0)
                     for k in queries.ATTR_ORDER if m["attrs"].get(k) is not None]
             m["radar_svg"] = viz.radar_svg(
-                vals, 104, show_labels=False, accent="#9fd0ff",
-                grid="rgba(255,255,255,.45)") if len(vals) >= 3 else ""
+                vals, 120, show_labels=False, accent="#bfe0ff",
+                grid="rgba(255,255,255,.4)") if len(vals) >= 3 else ""
     return cards
 
 
