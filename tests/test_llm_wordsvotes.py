@@ -117,3 +117,18 @@ def test_explainer_demo_quote_check(conn, tmp_path):
 def test_glossary_and_pages(client):
     assert client.get("/sanasto").status_code == 200
     assert client.get("/laki?item=HE 1/2024 vp").status_code == 200  # ei selitystä → notice
+
+
+def test_rag_retrieve(conn):
+    from kansanmuisti.analyze import rag
+    hits = rag.retrieve(conn, "terveydenhuolto hoitotakuu")
+    assert hits and all("text" in h and h.get("who") for h in hits)
+    # answer ilman avainta → None (ei tuotantokutsua)
+    assert rag.answer(conn, "kysymys", hits, max_calls=0) is None
+
+
+def test_ask_page(client):
+    r = client.get("/kysy?q=hoitotakuu")
+    assert r.status_code == 200
+    r2 = client.get("/kysy")  # tyhjä lomake
+    assert r2.status_code == 200 and "Kysy edustajasta" in r2.text

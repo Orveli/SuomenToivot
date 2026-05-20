@@ -342,6 +342,20 @@ def aihe(request: Request, slug: str):
         conn.close()
 
 
+@app.get("/kysy", response_class=HTMLResponse)
+def kysy(request: Request, q: str = "", pid: int = 0):
+    from ..analyze import rag
+    conn = _conn()
+    try:
+        passages = rag.retrieve(conn, q, pid or None) if q else []
+        ans = rag.answer(conn, q, passages) if (q and passages) else None
+        return render(request, "ask.html", q=q, pid=pid, passages=passages, ans=ans,
+                      person=queries.person(conn, pid) if pid else None,
+                      persons=queries.list_persons(conn), llm_enabled=config.llm_enabled())
+    finally:
+        conn.close()
+
+
 @app.get("/laki", response_class=HTMLResponse)
 def laki(request: Request, item: str = ""):
     conn = _conn()

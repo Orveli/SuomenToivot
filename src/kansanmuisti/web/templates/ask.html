@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Kysy edustajasta — SuomenToivot{% endblock %}
+{% block body %}
+<h1>Kysy edustajasta</h1>
+<p class="muted">Kysy luonnollisella kielellä — esim. <em>"Mitä mieltä edustaja on ollut
+ydinvoimasta?"</em> Vastaus muodostetaan <strong>vain edustajien omista puheista</strong>,
+lähdeviittein. Et tarvitse oikeita hakusanoja.</p>
+
+<form class="ask-form" action="/kysy" method="get">
+  <input type="text" name="q" value="{{ q }}" placeholder="Kirjoita kysymys…" autofocus>
+  <select name="pid">
+    <option value="0">— kaikki edustajat —</option>
+    {% for p in persons %}
+    <option value="{{ p.person_id }}" {{ 'selected' if p.person_id==pid }}>{{ p.full_name }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">Kysy</button>
+</form>
+
+{% if q %}
+  {% if ans %}
+  <div class="ask-answer {{ 'unanswerable' if not ans.answerable }}">
+    <div class="ask-badge">🤖 Tekoälyn tuottama tiivistys — perustuu vain alla oleviin puheisiin</div>
+    <p>{{ ans.answer }}</p>
+  </div>
+  {% elif passages and not llm_enabled %}
+  <div class="notice small">Vastauksen automaattinen tiivistäminen vaatii kielimallin
+    (<code>ANTHROPIC_API_KEY</code>). Alla silti <strong>oikeat, lähteistetyt puhekatkelmat</strong>,
+    jotka haku löysi — voit lukea ne itse.</div>
+  {% endif %}
+
+  {% if passages %}
+  <h2>Lähteet <span class="small muted">({{ passages|length }} puhekatkelmaa)</span></h2>
+  <ol class="ask-sources">
+    {% for p in passages %}
+    <li>
+      <div class="ask-src-head">
+        <a href="/edustaja/{{ p.person_id }}"><b>{{ p.who }}</b></a>
+        <span class="party-tag">{{ p.party or '' }}</span>
+        <span class="small muted">{{ (p.started_at or '')[:10] }}
+          {% if p.legislative_item %}· {{ p.legislative_item }}{% endif %}</span>
+        <a class="src" href="/puhe/{{ p.id }}">koko puhe →</a>
+      </div>
+      <p class="ask-text">{{ p.text }}…</p>
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <div class="notice">Aineistosta ei löytynyt puheita tähän kysymykseen. Kokeile toisia sanoja
+    tai poista edustajarajaus.</div>
+  {% endif %}
+{% endif %}
+
+<div class="notice small" style="margin-top:18px">
+  Vastaus perustuu <em>vain</em> haettuihin puheisiin eikä käytä ulkopuolista tietoa. Emme anna
+  äänestysohjeita emmekä esitä motiiveja. Lue aina alkuperäinen puhe lähteestä.
+</div>
+{% endblock %}

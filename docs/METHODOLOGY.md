@@ -603,3 +603,24 @@ indikaattoreita, eivät arvosanoja, eivätkä motiiviväitteitä.
 Kanta-analyysi koskee ~107 000 äänestyksiin kytkettyä puhetta. Aja vaiheittain
 `--limit`-rajauksella; `KANSANMUISTI_LLM_MAX_CALLS` rajaa tuotantokutsut per ajo.
 Välimuistin ansiosta keskeytetyn ajon voi jatkaa ilman lisäkustannusta.
+
+## 10. Kansalaiskerros: lakiselittäjä (M24), aikajana ja "kysy edustajasta" (M23)
+
+**M24 lakiselittäjä** (`km llm-explain`): kielimalli tiivistää HE:n arkikielelle
+(mikä muuttuu / keitä koskee / mistä kiisteltiin) **vain** esityksen sisällöstä ja
+salipuheista, jokainen väite lähdelainauksin. Ei ennusteta vaikutuksia, ei arvioida
+lain hyvyyttä, ei esitetä motiiveja. Demo (`km load-explainer-demo`) on käsin
+varmennettu; loaderi hylkää selityksen, jos jokin lähdelainaus ei ole sanatarkka.
+
+**Aihe-aikajana**: deterministinen, tapahtumapohjainen lista aiheen äänestyksistä
+ajassa — vain mitä tapahtui ja milloin, ei syy-seuraussuhteita. Ei vaadi avainta.
+
+**Eduskuntasanasto** (`/sanasto`): staattinen, kuratoitu termistö arkikielellä;
+kuvaa menettelyä neutraalisti, ei poliittista sisältöä.
+
+**M23 "kysy edustajasta"** (`/kysy`): kaksivaiheinen RAG. (1) Kokotekstihaku (FTS5)
+hakee aiheeseen liittyvät puheet — toimii ilman avainta ja näyttää lähteistetyt
+katkelmat. (2) Kielimalli tiivistää vastauksen **vain** haetuista katkelmista,
+viittaa numeroin, ja kieltäytyy jos tietoa ei löydy (answerable=false) — vaatii
+avaimen. Ei hallusinaatiota (vain konteksti), ei äänestysohjeita, ei motiiveja;
+vastaus merkitään tekoälyn tuottamaksi ja alkuperäinen puhe on aina linkkinä.
