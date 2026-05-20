@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Edustajat — Kansanmuisti{% endblock %}
+{% macro sortlink(key, label) %}
+  {%- set nextdir = 'asc' if (sort==key and dir=='desc') else ('desc' if sort==key else 'desc') -%}
+  {%- if key=='nimi' or key=='puolue' -%}{%- set nextdir = 'desc' if (sort==key and dir=='asc') else 'asc' -%}{%- endif -%}
+  <a href="/edustajat?sort={{ key }}&dir={{ nextdir }}{% if party %}&party={{ party }}{% endif %}{% if min_eligible %}&min_eligible={{ min_eligible }}{% endif %}">{{ label }}{% if sort==key %} {{ '▲' if dir=='asc' else '▼' }}{% endif %}</a>
+{% endmacro %}
+{% block body %}
+<h1>Edustajat</h1>
+<p class="muted">Lajiteltava lista. Klikkaa saraketta järjestääksesi (esim. <em>Poikkeama ryhmästä</em>
+löytää itsenäisimmin äänestäneet, <em>Poissa-%</em> eniten poissaolleet). Kaikki luvut perustuvat
+kerättyyn aineistoon ja linkittyvät lähteisiin profiilissa.</p>
+
+<form method="get" action="/edustajat" class="searchbox" style="flex-wrap:wrap;gap:10px;align-items:center">
+  <input type="hidden" name="sort" value="{{ sort }}"><input type="hidden" name="dir" value="{{ dir }}">
+  <label class="small muted">Ryhmä:
+    <select name="party" onchange="this.form.submit()">
+      <option value="">kaikki</option>
+      {% for p in parties %}<option value="{{ p.code }}" {{ 'selected' if p.code==party }}>{{ p.code }} ({{ p.n }})</option>{% endfor %}
+    </select>
+  </label>
+  <label class="small muted">Väh. äänestyksiä:
+    <select name="min_eligible" onchange="this.form.submit()">
+      {% for v in [0,100,200,500,1000] %}<option value="{{ v }}" {{ 'selected' if v==min_eligible }}>{{ v }}</option>{% endfor %}
+    </select>
+  </label>
+  <span class="small muted">{{ members|length }} edustajaa</span>
+</form>
+
+<div class="disclaimer small">Vertailu eri pituisten urien välillä on epätarkkaa: edustajalla voi olla
+muutama tai tuhansia äänestyksiä. Sarake <strong>Ääniä annettu</strong> ja suodatin "väh. äänestyksiä"
+auttavat vertaamaan vertailukelpoisia. Johdonmukaisuusindeksi on <strong>laskennallinen indikaattori</strong>
+(<a href="/menetelmat#6-johdonmukaisuusindeksi-0100">menetelmä</a>), ei arvosana.</div>
+
+<table>
+  <tr>
+    <th>{{ sortlink('nimi','Nimi') }}</th>
+    <th>{{ sortlink('puolue','Ryhmä') }}</th>
+    <th class="right">{{ sortlink('puheet','Puheita') }}</th>
+    <th class="right">{{ sortlink('aanet','Ääniä') }}</th>
+    <th class="right">{{ sortlink('poissa_pct','Poissa-%') }}</th>
+    <th class="right">{{ sortlink('poikkeama','Poikkeama') }}</th>
+    <th class="right">{{ sortlink('indeksi','Indeksi') }}</th>
+    <th>Luottamus</th>
+  </tr>
+  {% for m in members %}
+  <tr>
+    <td><a href="/edustaja/{{ m.person_id }}">{{ m.full_name }}</a></td>
+    <td>{% if m.party_current %}<a class="party-tag" href="/puolue/{{ m.party_current }}">{{ m.party_current }}</a>{% endif %}</td>
+    <td class="right">{{ m.n_speeches }}</td>
+    <td class="right">{{ m.n_votes_cast }}</td>
+    <td class="right">{% if m.absent_pct is not none %}{{ '%.0f' % m.absent_pct }} %{% else %}—{% endif %}</td>
+    <td class="right">{% if m.deviation_rate is not none %}{% if m.deviation_rate*100 < 0.5 %}&lt;1{% else %}{{ '%.1f' % (m.deviation_rate*100) }}{% endif %} %{% else %}—{% endif %}</td>
+    <td class="right">{{ m.consistency_index if m.consistency_index is not none else '—' }}</td>
+    <td class="small">{{ m.confidence_level or '—' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

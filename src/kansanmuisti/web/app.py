@@ -84,6 +84,30 @@ def edustaja(request: Request, pid: int):
         conn.close()
 
 
+@app.get("/edustajat", response_class=HTMLResponse)
+def edustajat(request: Request, sort: str = "nimi", dir: str = "asc",
+              party: str = "", min_eligible: int = 0):
+    conn = _conn()
+    try:
+        rows = queries.member_directory(conn, sort=sort, direction=dir,
+                                        party=party or None, min_eligible=min_eligible)
+        return render(request, "representatives.html", members=rows, sort=sort, dir=dir,
+                      party=party, min_eligible=min_eligible,
+                      parties=queries.parties(conn),
+                      sort_labels=queries.MEMBER_SORT_LABELS)
+    finally:
+        conn.close()
+
+
+@app.get("/tilastot", response_class=HTMLResponse)
+def tilastot(request: Request):
+    conn = _conn()
+    try:
+        return render(request, "stats.html", **queries.stats_overview(conn))
+    finally:
+        conn.close()
+
+
 @app.get("/puolue", response_class=HTMLResponse)
 def puolueet(request: Request):
     conn = _conn()

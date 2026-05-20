@@ -79,6 +79,25 @@ def test_unknown_person_404page(client):
     assert "ei löytynyt" in r.text.lower()
 
 
+def test_representatives_directory_and_sort(client):
+    r = client.get("/edustajat")
+    assert r.status_code == 200
+    assert "Anna Aalto" in r.text and "Poikkeama" in r.text
+    # lajittelu poikkeaman mukaan (henkilö 3 poikkesi → mukana)
+    r2 = client.get("/edustajat?sort=poikkeama&dir=desc")
+    assert r2.status_code == 200
+    # puoluesuodatus
+    r3 = client.get("/edustajat?party=kok")
+    assert r3.status_code == 200
+    assert "Anna Aalto" in r3.text and "Dan Dahl" not in r3.text
+
+
+def test_stats_page(client):
+    r = client.get("/tilastot")
+    assert r.status_code == 200
+    assert "Puoluevertailu" in r.text and "Puoluekuri" in r.text and "Aihetrendit" in r.text
+
+
 def test_admin_corrections_requires_token(client):
     # ilman tokenia pääsy estetty
     r = client.get("/yllapito/korjaukset")

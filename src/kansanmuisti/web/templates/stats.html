@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Tilastot — Kansanmuisti{% endblock %}
+{% block body %}
+<h1>Tilastot ja vertailut</h1>
+<p class="muted">Kuvailevia lukuja koko kerätystä aineistosta (2015–2024). Luvut eivät kerro
+motiiveista; lasketut indikaattorit on merkitty ja kuvattu <a href="/menetelmat">menetelmissä</a>.
+Katso myös <a href="/edustajat">lajiteltava edustajalista</a>.</p>
+
+{# ---- Puoluevertailu ---- #}
+<h2>Puoluevertailu</h2>
+<p class="small muted">Nykyisen eduskuntaryhmän mukaan. Indeksi = jäsenten johdonmukaisuusindeksien
+keskiarvo (<span class="badge">laskennallinen indikaattori</span>); poissa-% = keskim. poissaolo-osuus.</p>
+<table>
+  <tr><th>Ryhmä</th><th class="right">Edustajia</th><th class="right">Puheita yht.</th>
+    <th class="right">Puheita/edustaja</th><th class="right">Keskim. indeksi</th>
+    <th class="right">Keskim. poikkeama</th><th class="right">Keskim. poissa-%</th></tr>
+  {% for p in party_comparison %}
+  <tr>
+    <td><a class="party-tag" href="/puolue/{{ p.code }}">{{ p.code }}</a></td>
+    <td class="right">{{ p.n_members }}</td>
+    <td class="right">{{ p.speeches }}</td>
+    <td class="right">{{ p.avg_speeches|int }}</td>
+    <td class="right">{{ p.avg_idx }}</td>
+    <td class="right">{{ p.avg_dev }} %</td>
+    <td class="right">{{ p.avg_absent }} %</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{# ---- Ryhmäkuri ---- #}
+<h2>Puoluekuri — ryhmän sisäinen yhtenäisyys</h2>
+<p class="small muted">Kuinka usein ryhmän edustaja äänesti toisin kuin ryhmän enemmistö (vain
+substantiiviset Jaa/Ei-äänet, ryhmä äänestyshetkellä). Pieni luku = yhtenäinen ryhmä.
+Korkea poikkeama <strong>ei ole "huono"</strong> — se voi heijastaa itsenäistä harkintaa.</p>
+<table>
+  <tr><th>Ryhmä</th><th class="right">Poikkeama-%</th><th class="right">Poikkeamia</th><th class="right">Kelpoisia ääniä</th><th></th></tr>
+  {% for c in cohesion %}
+  <tr>
+    <td><span class="party-tag">{{ c.party }}</span></td>
+    <td class="right">{{ c.pct }} %</td>
+    <td class="right">{{ c.deviations }}</td>
+    <td class="right">{{ c.eligible }}</td>
+    <td style="width:30%"><div class="bar"><i style="width:{{ (c.pct/5*100)|round }}%"></i></div></td>
+  </tr>
+  {% endfor %}
+</table>
+
+{# ---- Aihetrendit ---- #}
+<h2>Aihetrendit — puheenvuoroja vuodessa (primääriaihe)</h2>
+<p class="small muted">Huippuvuosi korostettu. Datassa näkyy reaalimaailma: turvallisuus ja energia
+2022, terveydenhuolto 2024.</p>
+<div style="overflow-x:auto">
+<table>
+  <tr><th>Aihe</th>{% for y in trends.years %}<th class="right">{{ y }}</th>{% endfor %}</tr>
+  {% for t in trends.topics %}
+  {% set row = trends.counts[t.slug] %}
+  {% set peak = row.values()|max %}
+  <tr>
+    <td><a href="/aihe/{{ t.slug }}">{{ t.label }}</a></td>
+    {% for y in trends.years %}
+      <td class="right">{% if row[y]==peak and peak>0 %}<strong>{{ row[y] }}</strong>{% else %}{{ row[y] }}{% endif %}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+</div>
+
+{# ---- Tiukimmat äänestykset ---- #}
+<h2>Tiukimmat äänestykset</h2>
+<p class="small muted">Pienin Jaa–Ei-ero (substantiiviset äänestykset). Hetket, joissa muutama ääni ratkaisi.</p>
+<table>
+  <tr><th>Vuosi</th><th>Tulos</th><th>Säädös</th><th>Aihe</th></tr>
+  {% for v in closest %}
+  <tr>
+    <td>{{ v.vp_year }}</td>
+    <td class="nowrap"><strong>{{ v.result_yes }}–{{ v.result_no }}</strong> <span class="muted">(ero {{ v.era }})</span></td>
+    <td class="small">{{ v.legislative_item or '' }}</td>
+    <td><a href="/aanestys/{{ v.vote_id }}">{{ (v.title or '')[:60] }}</a></td>
+  </tr>
+  {% endfor %}
+</table>
+
+{# ---- Puheliaimmat ---- #}
+<h2>Puheliaimmat edustajat</h2>
+<table>
+  <tr><th>Edustaja</th><th>Ryhmä</th><th class="right">Puheita</th></tr>
+  {% for s in speakers %}
+  <tr>
+    <td><a href="/edustaja/{{ s.person_id }}">{{ s.first_name }} {{ s.last_name }}</a></td>
+    <td><span class="party-tag">{{ s.party or '' }}</span></td>
+    <td class="right">{{ s.n }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

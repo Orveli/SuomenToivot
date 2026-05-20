@@ -297,6 +297,116 @@ def list_persons(conn, limit: int = 500) -> List[dict]:
         "SELECT person_id, full_name, party_current FROM person ORDER BY full_name LIMIT ?", limit)
 
 
+# --- lajiteltava edustajalista ---------------------------------------------
+# Sallitut lajitteluavaimet -> SQL-lauseke (estää injektion)
+MEMBER_SORT = {
+    "nimi": "p.full_name",
+    "puolue": "p.party_current",
+    "puheet": "s.n_speeches",
+    "aanet": "s.n_votes_cast",
+    "poissa": "s.n_absent",
+    "poissa_pct": "(CASE WHEN s.n_votes_total>0 THEN 1.0*s.n_absent/s.n_votes_total END)",
+    "poikkeama": "s.deviation_rate",
+    "indeksi": "s.consistency_index",
+}
+MEMBER_SORT_LABELS = {
+    "nimi": "Nimi", "puolue": "Ryhmä", "puheet": "Puheita", "aanet": "Ääniä annettu",
+    "poissa": "Poissa", "poissa_pct": "Poissa-%", "poikkeama": "Poikkeama ryhmästä",
+    "indeksi": "Johdonm.indeksi",
+}
+
+
+def member_directory(conn, sort: str = "nimi", direction: str = "asc",
+                     party: Optional[str] = None, min_eligible: int = 0) -> List[dict]:
+    col = MEMBER_SORT.get(sort, "p.full_name")
+    direction_sql = "DESC" if str(direction).lower() == "desc" else "ASC"
+    where = ["s.person_id IS NOT NULL"]
+    params: list = []
+    if party:
+        where.append("p.party_current=?")
+        params.append(party)
+    if min_eligible:
+        where.append("s.n_votes_eligible>=?")
+        params.append(min_eligible)
+    where_sql = " AND ".join(where)
+    sql = (
+        "SELECT p.person_id, p.full_name, p.party_current, s.n_speeches, s.n_votes_cast,"
+        " s.n_votes_total, s.n_absent, s.n_votes_eligible, s.deviation_rate,"
+        " s.consistency_index, s.confidence_level,"
+        " CASE WHEN s.n_votes_total>0 THEN 100.0*s.n_absent/s.n_votes_total END AS absent_pct"
+        " FROM person p JOIN analysis_member_summary s ON s.person_id=p.person_id"
+        f" WHERE {where_sql}"
+        # NULLit aina loppuun kummassakin suunnassa, tasapeli nimellä
+        f" ORDER BY ({col}) IS NULL, ({col}) {direction_sql}, p.full_name ASC")
+    return _rows(conn, sql, *params)
+
+
+# --- puoluevertailu ---------------------------------------------------------
+def party_comparison(conn, min_members: int = 3) -> List[dict]:
+    """Puoluetason koonti nykyisen ryhmän mukaan (jäsenten tunnuslukujen keskiarvot)."""
+    return _rows(conn,
+        "SELECT p.party_current AS code,"
+        " COALESCE(MAX(p.party_current_name), p.party_current) AS name,"
+        " COUNT(*) AS n_members,"
+        " SUM(s.n_speeches) AS speeches,"
+        " ROUND(AVG(s.n_speeches),0) AS avg_speeches,"
+        " ROUND(AVG(s.consistency_index),1) AS avg_idx,"
+        " ROUND(AVG(s.deviation_rate)*100,2) AS avg_dev,"
+        " ROUND(AVG(CASE WHEN s.n_votes_total>0 THEN 100.0*s.n_absent/s.n_votes_total END),1) AS avg_absent"
+        " FROM person p JOIN analysis_member_summary s ON s.person_id=p.person_id"
+        " WHERE p.party_current IS NOT NULL"
+        " GROUP BY p.party_current HAVING n_members>=? ORDER BY avg_idx DESC", min_members)
+
+
+def party_cohesion(conn, min_eligible: int = 1000) -> List[dict]:
+    """Ryhmäkuri: poikkeama-% ryhmän äänestyshetken mukaan (autoritatiivisin)."""
+    return _rows(conn,
+        "SELECT party, COUNT(*) eligible, SUM(classification='deviates') deviations,"
+        " ROUND(100.0*SUM(classification='deviates')/COUNT(*),2) pct"
+        " FROM analysis_party_deviation WHERE classification IN ('follows','deviates')"
+        " AND party IS NOT NULL GROUP BY party HAVING eligible>=? ORDER BY pct ASC", min_eligible)
+
+
+# --- tilastot ---------------------------------------------------------------
+def topic_trends(conn) -> dict:
+    """Per vuosi per aihe: primääriaiheen puheenvuorojen määrä (2015–2024)."""
+    years = list(range(2015, 2025))
+    topics = _rows(conn, "SELECT id, slug, label FROM topic WHERE slug!='muu' ORDER BY id")
+    counts = {t["slug"]: {y: 0 for y in years} for t in topics}
+    for r in conn.execute(
+            "SELECT CAST(substr(s.started_at,1,4) AS INT) y, t.slug, COUNT(*) n"
+            " FROM speech s JOIN speech_topic st ON st.speech_id=s.id AND st.is_primary=1"
+            " JOIN topic t ON t.id=st.topic_id WHERE t.slug!='muu' AND s.started_at IS NOT NULL"
+            " GROUP BY y, t.slug"):
+        if r["y"] in counts.get(r["slug"], {}):
+            counts[r["slug"]][r["y"]] = r["n"]
+    return {"years": years, "topics": topics, "counts": counts}
+
+
+def closest_votes(conn, limit: int = 12) -> List[dict]:
+    return _rows(conn,
+        "SELECT vote_id, vp_year, title, legislative_item, result_yes, result_no,"
+        " ABS(result_yes-result_no) AS era FROM vote"
+        " WHERE is_procedural=0 AND result_yes>40 AND result_no>40"
+        " ORDER BY era ASC, session_date DESC LIMIT ?", limit)
+
+
+def top_speakers(conn, limit: int = 12) -> List[dict]:
+    return _rows(conn,
+        "SELECT person_id, first_name, last_name, party, COUNT(*) n FROM speech"
+        " WHERE person_id IS NOT NULL GROUP BY person_id ORDER BY n DESC LIMIT ?", limit)
+
+
+def stats_overview(conn) -> dict:
+    return {
+        "trends": topic_trends(conn),
+        "cohesion": party_cohesion(conn),
+        "party_comparison": party_comparison(conn),
+        "closest": closest_votes(conn),
+        "speakers": top_speakers(conn),
+    }
+
+
 # --- kattavuus --------------------------------------------------------------
 def coverage(conn) -> List[dict]:
     return _rows(conn, "SELECT metric, dimension, value FROM coverage_stat ORDER BY metric, dimension")
