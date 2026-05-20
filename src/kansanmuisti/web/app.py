@@ -48,7 +48,8 @@ def index(request: Request):
     conn = _conn()
     try:
         return render(request, "index.html", overview=queries.overview(conn),
-                      topics=queries.topics(conn), parties=queries.parties(conn))
+                      topics=queries.topics(conn), parties=queries.parties(conn),
+                      highlights=queries.index_highlights(conn))
     finally:
         conn.close()
 
@@ -81,7 +82,8 @@ def edustaja(request: Request, pid: int):
                       speeches=queries.person_speeches(conn, pid),
                       recent_votes=queries.person_recent_votes(conn, pid),
                       position_changes=queries.person_position_changes(conn, pid),
-                      promises=queries.person_promise_alignment(conn, pid))
+                      promises=queries.person_promise_alignment(conn, pid),
+                      fingerprint=queries.member_party_agreement(conn, pid))
     finally:
         conn.close()
 
@@ -93,8 +95,15 @@ def edustajat(request: Request, sort: str = "nimi", dir: str = "asc",
     try:
         rows = queries.member_directory(conn, sort=sort, direction=dir,
                                         party=party or None, min_eligible=min_eligible)
+        # sarakemaksimit informatiivisia datapalkkeja varten
+        def mx(key):
+            vals = [r[key] for r in rows if r[key] is not None]
+            return max(vals) if vals else 1
+        maxes = {"n_speeches": mx("n_speeches"), "n_votes_cast": mx("n_votes_cast"),
+                 "absent_pct": mx("absent_pct"), "deviation_rate": mx("deviation_rate"),
+                 "consistency_index": 100}
         return render(request, "representatives.html", members=rows, sort=sort, dir=dir,
-                      party=party, min_eligible=min_eligible,
+                      party=party, min_eligible=min_eligible, maxes=maxes,
                       parties=queries.parties(conn),
                       sort_labels=queries.MEMBER_SORT_LABELS)
     finally:
@@ -126,6 +135,11 @@ def tilastot(request: Request):
         series = [(labels.get(s, s), [trends["counts"][s][y] for y in trends["years"]])
                   for s in focus if s in trends["counts"]]
         data["trend_chart"] = viz.line_chart_svg(series, trends["years"])
+        scatter = queries.activity_scatter(conn)
+        pts = [(r["n_votes_cast"], r["n_speeches"],
+                f'{r["full_name"]} ({r["party_current"] or "?"}) — {r["n_speeches"]} puhetta, {r["n_votes_cast"]} ääntä')
+               for r in scatter]
+        data["scatter_chart"] = viz.scatter_svg(pts, "Ääniä annettu", "Puheenvuoroja")
         return render(request, "stats.html", **data)
     finally:
         conn.close()
@@ -212,9 +226,11 @@ def vertailu(request: Request, a: int = 0, b: int = 0):
     conn = _conn()
     try:
         data = None
+        agreement = None
         if a and b:
             data = queries.compare(conn, a, b)
-        return render(request, "compare.html", data=data,
+            agreement = queries.pair_agreement(conn, a, b)
+        return render(request, "compare.html", data=data, agreement=agreement,
                       persons=queries.list_persons(conn), a=a, b=b)
     finally:
         conn.close()

@@ -64,6 +64,29 @@ def test_compare(client):
     r = client.get("/vertailu?a=1&b=4")
     assert r.status_code == 200
     assert "Anna Aalto" in r.text and "Dan Dahl" in r.text
+    # MP↔MP-samanmielisyys näkyy (jakavat fixture-äänestykset 100/101/102)
+    assert "samanmielisyys" in r.text
+
+
+def test_party_line_persisted(conn):
+    # analysis_party_line täyttyy ja sisältää substantiiviset linjat
+    n = conn.execute("SELECT COUNT(*) FROM analysis_party_line").fetchone()[0]
+    assert n > 0
+    line = conn.execute("SELECT line FROM analysis_party_line WHERE vote_id=100 AND party='kok'").fetchone()
+    assert line["line"] == "Jaa"  # kok-enemmistö äänesti Jaa äänestyksessä 100
+
+
+def test_member_fingerprint_query(conn):
+    from kansanmuisti.web import queries
+    # pienellä otoksella (min_total=1) edustaja 1 on samaa mieltä kok-linjan kanssa
+    fp = queries.member_party_agreement(conn, 1, min_total=1)
+    assert any(f["party"] == "kok" and f["pct"] == 100 for f in fp)
+
+
+def test_index_and_scatter_render(client):
+    assert client.get("/").status_code == 200
+    r = client.get("/tilastot")
+    assert "Aktiivisuus" in r.text
 
 
 def test_correction_post(client):

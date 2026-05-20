@@ -36,6 +36,13 @@
     </table>
   </div>
 {% endmacro %}
+{% if agreement %}
+<div class="notice" style="text-align:center">
+  <div style="font-size:32px;font-weight:800;color:var(--accent)">{{ agreement.pct }} %</div>
+  <div class="muted">samanmielisyys — näin usein {{ data.a.person.full_name }} ja {{ data.b.person.full_name }}
+  äänestivät samoin ({{ agreement.agree }} / {{ agreement.total }} yhteistä substantiiviäänestystä)</div>
+</div>
+{% endif %}
 <div class="grid cols-2">{{ col(data.a) }}{{ col(data.b) }}</div>
 <p class="small disclaimer">Vertailu yhdistää eri laajuisia aineistoja; lue molempien edustajien
 profiilit ja lähteet ennen johtopäätöksiä. Indeksi on indikaattori, ei arvosana.</p>

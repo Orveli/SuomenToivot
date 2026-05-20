@@ -53,6 +53,12 @@ def compute_party_deviation(conn) -> dict:
         else:
             party_line[key] = "Jaa" if c["Jaa"] > c["Ei"] else "Ei"
 
+    # persistoi puoluelinja per (vote, party) — sormenjälki & samanmielisyysmatriisi
+    conn.execute("DELETE FROM analysis_party_line")
+    conn.executemany(
+        "INSERT OR REPLACE INTO analysis_party_line(vote_id,party,line) VALUES(?,?,?)",
+        [(vid, p, line) for (vid, p), line in party_line.items()])
+
     n = 0
     rows = []
     for r in conn.execute(

@@ -102,6 +102,12 @@ keskusta ja RKP sijoittuvat siltoina väliin.</p>
   {% endfor %}
 </table>
 
+{# ---- Aktiivisuus-scatter ---- #}
+<h2>Aktiivisuus: puheenvuorot vs. annetut äänet</h2>
+<p class="small muted">Jokainen piste on yksi edustaja. Vie hiiri pisteen päälle nähdäksesi nimen.
+Oikealla ylhäällä paljon sekä puhuvat että äänestävät; pitkä ura kasvattaa molempia.</p>
+{% if scatter_chart %}<div class="chartbox">{{ scatter_chart|safe }}</div>{% endif %}
+
 {# ---- Puheliaimmat ---- #}
 <h2>Puheliaimmat edustajat</h2>
 <table>

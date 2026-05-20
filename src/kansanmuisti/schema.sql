@@ -202,6 +202,13 @@ CREATE TABLE IF NOT EXISTS analysis_party_deviation (
     PRIMARY KEY (person_id, vote_id)
 );
 
+CREATE TABLE IF NOT EXISTS analysis_party_line (
+    vote_id  INTEGER NOT NULL,
+    party    TEXT NOT NULL,
+    line     TEXT,                          -- 'Jaa'|'Ei'|'TIE'|'UNDEFINED'
+    PRIMARY KEY (vote_id, party)
+);
+
 CREATE TABLE IF NOT EXISTS analysis_member_summary (
     person_id            INTEGER PRIMARY KEY,
     period               TEXT,

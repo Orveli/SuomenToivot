@@ -97,6 +97,35 @@ def line_chart_svg(series: List[Tuple[str, List[float]]], xlabels: List[str],
     return "".join(parts)
 
 
+def scatter_svg(points: List[Tuple[float, float, str]], xlabel: str, ylabel: str,
+                width: int = 760, height: int = 420) -> str:
+    """Hajontakaavio. points = [(x, y, hover-label), ...]. Neutraalit pisteet."""
+    if not points:
+        return ""
+    pad_l, pad_r, pad_t, pad_b = 48, 16, 14, 40
+    plot_w = width - pad_l - pad_r
+    plot_h = height - pad_t - pad_b
+    xmax = max(p[0] for p in points) or 1
+    ymax = max(p[1] for p in points) or 1
+    def X(v): return pad_l + plot_w * v / xmax
+    def Y(v): return pad_t + plot_h - plot_h * v / ymax
+    parts = [f'<svg viewBox="0 0 {width} {height}" width="100%" height="{height}" role="img">']
+    for frac in (0, 0.25, 0.5, 0.75, 1.0):
+        yy = Y(ymax * frac)
+        parts.append(f'<line x1="{pad_l}" y1="{yy:.1f}" x2="{pad_l+plot_w}" y2="{yy:.1f}" stroke="{LINE}" stroke-width="0.5"/>')
+        parts.append(f'<text x="{pad_l-5}" y="{yy+3:.1f}" font-size="9" fill="#5b6168" text-anchor="end">{int(ymax*frac)}</text>')
+        xx = X(xmax * frac)
+        parts.append(f'<text x="{xx:.1f}" y="{height-22}" font-size="9" fill="#5b6168" text-anchor="middle">{int(xmax*frac)}</text>')
+    for x, y, label in points:
+        parts.append(
+            f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="3.2" fill="{ACCENT}" fill-opacity="0.55" '
+            f'stroke="{ACCENT}" stroke-width="0.4"><title>{escape(label)}</title></circle>')
+    parts.append(f'<text x="{pad_l+plot_w/2:.0f}" y="{height-6}" font-size="10" fill="{INK}" text-anchor="middle">{escape(xlabel)}</text>')
+    parts.append(f'<text x="12" y="{pad_t+plot_h/2:.0f}" font-size="10" fill="{INK}" text-anchor="middle" transform="rotate(-90 12 {pad_t+plot_h/2:.0f})">{escape(ylabel)}</text>')
+    parts.append("</svg>")
+    return "".join(parts)
+
+
 def heat_color(v: float) -> str:
     """0..1 -> vaalea→tumma sininen (neutraali, ei puna/vihreä-politiikkaa)."""
     v = max(0.0, min(1.0, v))

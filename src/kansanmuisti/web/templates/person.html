@@ -53,6 +53,22 @@
 <p class="muted">Ei riittävästi dataa indeksin laskemiseen tällä aineistolla.</p>
 {% endif %}
 
+{# ---- Äänestyssormenjälki: samanmielisyys puolueiden kanssa ---- #}
+{% if fingerprint %}
+<h2>Samanmielisyys puolueiden kanssa</h2>
+<p class="small muted">Kuinka usein edustaja äänesti samoin kuin kunkin ryhmän <strong>enemmistölinja</strong>
+(vain äänestykset, joissa molemmilla substantiivinen Jaa/Ei-kanta). Kuvaileva luku — paljastaa, minkä
+ryhmien kanssa edustaja käytännössä äänestää, ei syytä.</p>
+{% for f in fingerprint %}
+<div class="fp-row">
+  <span class="fp-label{% if f.party==p.party_current %} own{% endif %}">{{ f.party }}{% if f.party==p.party_current %} · oma{% endif %}</span>
+  <span class="fp-bar"><i style="width:{{ f.pct }}%;background:{{ heat_color(f.pct/100) }}"></i></span>
+  <span class="fp-val">{{ f.pct }} %</span>
+  <span class="fp-n small muted">({{ f.total }} äänestystä)</span>
+</div>
+{% endfor %}
+{% endif %}
+
 {# ---- Äänestyskäyttäytyminen ---- #}
 <h2>Äänestyskäyttäytyminen</h2>
 {% set b = behavior.distribution %}

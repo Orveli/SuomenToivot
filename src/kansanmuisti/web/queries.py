@@ -478,6 +478,63 @@ def member_cards(conn, party: Optional[str] = None, sort: str = "puheet",
     return cards
 
 
+def member_party_agreement(conn, pid: int, min_total: int = 50) -> List[dict]:
+    """Edustajan 'äänestyssormenjälki': kuinka usein hän äänesti samoin kuin
+    kunkin puolueen enemmistölinja (vain substantiiviset Jaa/Ei molemmin puolin)."""
+    return _rows(conn,
+        "SELECT apl.party, SUM(vr.vote_value=apl.line) agree, COUNT(*) total,"
+        " ROUND(100.0*SUM(vr.vote_value=apl.line)/COUNT(*)) pct"
+        " FROM vote_record vr JOIN analysis_party_line apl ON apl.vote_id=vr.vote_id"
+        " WHERE vr.person_id=? AND vr.vote_value IN ('Jaa','Ei') AND apl.line IN ('Jaa','Ei')"
+        " GROUP BY apl.party HAVING total>=? ORDER BY pct DESC", pid, min_total)
+
+
+def pair_agreement(conn, a: int, b: int) -> Optional[dict]:
+    """Kahden edustajan samanmielisyys: osuus yhteisistä substantiiviäänistä, joissa sama ääni."""
+    r = _one(conn,
+        "SELECT SUM(va.vote_value=vb.vote_value) agree, COUNT(*) total"
+        " FROM vote_record va JOIN vote_record vb ON va.vote_id=vb.vote_id"
+        " WHERE va.person_id=? AND vb.person_id=? AND va.vote_value IN ('Jaa','Ei')"
+        " AND vb.vote_value IN ('Jaa','Ei')", a, b)
+    if not r or not r["total"]:
+        return None
+    return {"agree": r["agree"], "total": r["total"], "pct": round(100 * r["agree"] / r["total"])}
+
+
+def activity_scatter(conn, limit: int = 500) -> List[dict]:
+    return _rows(conn,
+        "SELECT p.person_id, p.full_name, p.party_current, s.n_speeches, s.n_votes_cast,"
+        " CASE WHEN s.n_votes_total>0 THEN 100.0*s.n_absent/s.n_votes_total END absent_pct"
+        " FROM analysis_member_summary s JOIN person p ON p.person_id=s.person_id"
+        " WHERE s.n_votes_cast>0 ORDER BY s.n_votes_cast DESC LIMIT ?", limit)
+
+
+def index_highlights(conn) -> dict:
+    spotlight = _one(conn,
+        "SELECT p.person_id, p.full_name, p.party_current, s.consistency_index,"
+        " s.n_speeches, s.n_votes_cast FROM analysis_member_summary s"
+        " JOIN person p ON p.person_id=s.person_id WHERE s.n_votes_eligible>=200"
+        " ORDER BY RANDOM() LIMIT 1")
+    if spotlight:
+        tt = _one(conn,
+            "SELECT t.label FROM analysis_member_topic amt JOIN topic t ON t.id=amt.topic_id"
+            " WHERE amt.person_id=? AND t.slug!='muu' AND amt.n_speeches>0"
+            " ORDER BY amt.n_speeches DESC LIMIT 1", spotlight["person_id"])
+        spotlight = dict(spotlight)
+        spotlight["top_topic"] = tt["label"] if tt else None
+    tight = _one(conn,
+        "SELECT vote_id, vp_year, title, legislative_item, result_yes, result_no,"
+        " ABS(result_yes-result_no) era FROM vote WHERE is_procedural=0"
+        " AND result_yes>40 AND result_no>40 ORDER BY vp_year DESC, era ASC LIMIT 1")
+    trend = _one(conn,
+        "SELECT t.label, t.slug, COUNT(*) n FROM speech s"
+        " JOIN speech_topic st ON st.speech_id=s.id AND st.is_primary=1"
+        " JOIN topic t ON t.id=st.topic_id WHERE t.slug!='muu'"
+        " AND substr(s.started_at,1,4)=(SELECT MAX(substr(started_at,1,4)) FROM speech)"
+        " GROUP BY t.slug ORDER BY n DESC LIMIT 1")
+    return {"spotlight": spotlight, "tight": tight, "trend": trend}
+
+
 def stats_overview(conn) -> dict:
     return {
         "trends": topic_trends(conn),

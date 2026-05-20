@@ -32,6 +32,13 @@ jatkokehitystä (ks. `docs/ROADMAP.md`).
 - Lupaus↔äänestys-kytkentä on toimituksellinen ja edellyttää ihmistyötä; se ei skaalaudu
   automaattisesti.
 
+## Edustajakuvat
+- **Valokuvia ei ole saatavilla avoimesta datasta.** Tutkittu: MemberOfParliament-XML ei sisällä
+  kuvaa, Attachment-taulu sisältää vain asiakirjoja (PDF), ja eduskunta.fi:n edustajasivut sekä
+  arvatut kuva-URL:t palauttavat 404. Kortit käyttävät siksi nimikirjain-monogrammeja. Jos luotettava,
+  lisensoitu kuvalähde löytyy (esim. virallinen kuva-API tai Wikidata/Wikimedia oikein attribuoituna),
+  se voidaan lisätä myöhemmin.
+
 ## Tekninen
 - **Yhtäaikainen massakeruu + web-kirjoitus** voi aiheuttaa hetkellisen SQLite-lukon
   (korjauskanava). Lieventävä uudelleenyritys + `busy_timeout` on toteutettu; tuotannossa keruu ja

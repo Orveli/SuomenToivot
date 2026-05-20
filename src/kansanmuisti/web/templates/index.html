@@ -15,6 +15,38 @@ vaalilupaukset — jokainen linkitettynä alkuperäiseen Eduskunnan aineistoon.<
   <div class="card"><div class="kpi">{{ overview.speeches }}</div><div class="muted">puheenvuoroa (tekstinä)</div></div>
 </div>
 
+{% if highlights %}
+<h2>Nostot</h2>
+<div class="grid cols-3">
+  {% if highlights.spotlight %}
+  <a class="card" href="/edustaja/{{ highlights.spotlight.person_id }}">
+    <div class="small muted">🔎 Satunnainen edustaja</div>
+    <strong>{{ highlights.spotlight.full_name }}</strong>
+    {% if highlights.spotlight.party_current %}<span class="tag party-tag">{{ highlights.spotlight.party_current }}</span>{% endif %}
+    <div class="small muted">Indeksi {{ highlights.spotlight.consistency_index if highlights.spotlight.consistency_index is not none else '—' }}*
+      · {{ highlights.spotlight.n_speeches }} puhetta
+      {% if highlights.spotlight.top_topic %}<br>★ {{ highlights.spotlight.top_topic }}{% endif %}</div>
+  </a>
+  {% endif %}
+  {% if highlights.tight %}
+  <a class="card" href="/aanestys/{{ highlights.tight.vote_id }}">
+    <div class="small muted">⚖️ Tiukin äänestys ({{ highlights.tight.vp_year }})</div>
+    <strong>{{ highlights.tight.result_yes }}–{{ highlights.tight.result_no }}</strong>
+    <span class="small muted">ero {{ highlights.tight.era }}</span>
+    <div class="small">{{ (highlights.tight.title or '')[:70] }}</div>
+  </a>
+  {% endif %}
+  {% if highlights.trend %}
+  <a class="card" href="/aihe/{{ highlights.trend.slug }}">
+    <div class="small muted">📈 Puhutuin aihe viimeisimpänä vuonna</div>
+    <strong>{{ highlights.trend.label }}</strong>
+    <div class="small muted">{{ highlights.trend.n }} puheenvuoroa</div>
+  </a>
+  {% endif %}
+</div>
+<p class="small muted">* laskennallinen indikaattori, ei arvosana.</p>
+{% endif %}
+
 <div class="notice">
   <strong>Miten luet tätä palvelua:</strong> jokainen luku perustuu julkiseen dataan ja on
   jäljitettävissä lähteeseen. Emme kerro <em>miksi</em> joku toimi tietyllä tavalla — näytämme

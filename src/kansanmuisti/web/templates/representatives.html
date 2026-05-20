@@ -47,11 +47,11 @@ auttavat vertaamaan vertailukelpoisia. Johdonmukaisuusindeksi on <strong>laskenn
   <tr>
     <td><a href="/edustaja/{{ m.person_id }}">{{ m.full_name }}</a></td>
     <td>{% if m.party_current %}<a class="party-tag" href="/puolue/{{ m.party_current }}">{{ m.party_current }}</a>{% endif %}</td>
-    <td class="right">{{ m.n_speeches }}</td>
-    <td class="right">{{ m.n_votes_cast }}</td>
-    <td class="right">{% if m.absent_pct is not none %}{{ '%.0f' % m.absent_pct }} %{% else %}—{% endif %}</td>
-    <td class="right">{% if m.deviation_rate is not none %}{% if m.deviation_rate*100 < 0.5 %}&lt;1{% else %}{{ '%.1f' % (m.deviation_rate*100) }}{% endif %} %{% else %}—{% endif %}</td>
-    <td class="right">{{ m.consistency_index if m.consistency_index is not none else '—' }}</td>
+    <td class="right"><span class="databar" style="--w:{{ (100*m.n_speeches/maxes.n_speeches)|round if maxes.n_speeches else 0 }}%"><span>{{ m.n_speeches }}</span></span></td>
+    <td class="right"><span class="databar" style="--w:{{ (100*m.n_votes_cast/maxes.n_votes_cast)|round if maxes.n_votes_cast else 0 }}%"><span>{{ m.n_votes_cast }}</span></span></td>
+    <td class="right">{% if m.absent_pct is not none %}<span class="databar" style="--w:{{ (100*m.absent_pct/maxes.absent_pct)|round if maxes.absent_pct else 0 }}%"><span>{{ '%.0f' % m.absent_pct }} %</span></span>{% else %}—{% endif %}</td>
+    <td class="right">{% if m.deviation_rate is not none %}<span class="databar" style="--w:{{ (100*m.deviation_rate/maxes.deviation_rate)|round if maxes.deviation_rate else 0 }}%"><span>{% if m.deviation_rate*100 < 0.5 %}&lt;1{% else %}{{ '%.1f' % (m.deviation_rate*100) }}{% endif %} %</span></span>{% else %}—{% endif %}</td>
+    <td class="right">{% if m.consistency_index is not none %}<span class="databar" style="--w:{{ m.consistency_index }}%"><span>{{ m.consistency_index }}</span></span>{% else %}—{% endif %}</td>
     <td class="small">{{ m.confidence_level or '—' }}</td>
   </tr>
   {% endfor %}

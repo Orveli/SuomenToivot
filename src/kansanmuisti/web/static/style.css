@@ -93,3 +93,17 @@ form.stack input,form.stack textarea,form.stack select{width:100%;padding:9px 11
 .heat td.diag{background:var(--soft);color:var(--line)}
 .heat .lbl{background:var(--soft);color:var(--muted);font-weight:700;font-variant:all-small-caps;letter-spacing:.04em}
 .chartbox{border:1px solid var(--line);border-radius:8px;padding:10px;background:#fff;overflow-x:auto}
+
+/* --- Äänestyssormenjälki (samanmielisyys per puolue) --- */
+.fp-row{display:grid;grid-template-columns:90px 1fr 52px auto;align-items:center;gap:10px;margin:4px 0;font-size:13px}
+.fp-label{font-variant:all-small-caps;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.fp-label.own{color:var(--accent)}
+.fp-bar{height:14px;background:var(--soft);border-radius:7px;overflow:hidden}
+.fp-bar>i{display:block;height:100%;border-radius:7px}
+.fp-val{text-align:right;font-weight:600}
+
+/* --- Informatiivinen datapalkki taulukkosoluissa (neutraali intensiteetti) --- */
+.databar{position:relative;display:block;padding:2px 6px;border-radius:4px;text-align:right}
+.databar::before{content:"";position:absolute;left:0;top:0;bottom:0;border-radius:4px;
+  background:var(--accent-soft);width:var(--w,0%);z-index:0}
+.databar span{position:relative;z-index:1}
