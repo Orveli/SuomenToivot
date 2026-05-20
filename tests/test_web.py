@@ -213,7 +213,7 @@ def test_cards_page(client):
     r = client.get("/kortit")
     assert r.status_code == 200
     assert "Anna Aalto" in r.text
-    assert "mp-card" in r.text and "<svg" in r.text  # kortit + tutka
+    assert "tcard" in r.text  # keräilykortit
     # puoluesuodatus
     r2 = client.get("/kortit?party=kok&sort=indeksi")
     assert r2.status_code == 200

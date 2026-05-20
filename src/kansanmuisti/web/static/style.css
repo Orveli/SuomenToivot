@@ -118,3 +118,57 @@ img.avatar{object-fit:cover}
 .profile-photo{width:96px;height:96px;border-radius:12px;object-fit:cover;border:1px solid var(--line);float:right;margin:0 0 8px 16px}
 .photo-credit{font-size:11px;color:var(--muted)}
 .photo-credit a{color:var(--muted)}
+
+/* ===================== KERÄILYKORTIT (etusivu / galleria) ===================== */
+.feed{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));margin-top:18px}
+.tcard{perspective:1000px;aspect-ratio:63/88;cursor:pointer}
+.tcard-inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.tcard.flipped .tcard-inner{transform:rotateY(180deg)}
+.tcard-face{position:absolute;inset:0;border-radius:16px;overflow:hidden;-webkit-backface-visibility:hidden;backface-visibility:hidden;
+  border:1px solid rgba(0,0,0,.12);box-shadow:0 6px 20px rgba(20,30,50,.18)}
+/* etupuoli: kuva taustana */
+.tcard-front{background:#2a3340 center/cover no-repeat;color:#fff}
+.tcard-front .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,25,.05) 35%,rgba(10,15,25,.55) 70%,rgba(10,15,25,.9) 100%)}
+.tcard-front .frame{position:absolute;inset:0;border-radius:16px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.18),inset 0 0 0 5px rgba(0,0,0,.12)}
+/* holografinen kiilto seuraa kursoria */
+.tcard-front .glare{position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.35),rgba(255,255,255,0) 45%);mix-blend-mode:overlay;opacity:0;transition:opacity .2s}
+.tcard:hover .glare{opacity:1}
+.tcard-front .holo{position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(120,170,255,.18),rgba(255,120,200,.14),transparent 70%);mix-blend-mode:color-dodge;opacity:.0;transition:opacity .2s}
+.tcard:hover .holo{opacity:.55}
+.tcard-front .mono{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:800;color:rgba(255,255,255,.22)}
+/* yläosa: rating + party */
+.tc-top{position:absolute;top:10px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start;z-index:2}
+.tc-rating{background:rgba(0,0,0,.45);backdrop-filter:blur(3px);border-radius:10px;padding:3px 9px;text-align:center;line-height:1}
+.tc-rating b{font-size:22px;display:block}
+.tc-rating span{font-size:8px;letter-spacing:.06em;opacity:.8;text-transform:uppercase}
+.tc-party{background:rgba(255,255,255,.92);color:#1a1c1f;border-radius:8px;padding:2px 8px;font-variant:all-small-caps;font-weight:800;letter-spacing:.05em;font-size:13px}
+/* alaosa: nimi + meta + badget */
+.tc-bottom{position:absolute;left:14px;right:14px;bottom:12px;z-index:2}
+.tc-name{font-size:19px;font-weight:800;line-height:1.05;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.tc-meta{font-size:11px;opacity:.9;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.tc-badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.tc-badge{background:rgba(255,255,255,.92);color:#1a1c1f;border-radius:999px;padding:2px 8px;font-size:10.5px;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.tc-badge.gold{background:linear-gradient(180deg,#ffe9a8,#f4c43c);color:#5a3e00}
+/* takapuoli */
+.tcard-back{transform:rotateY(180deg);background:linear-gradient(165deg,#fff,#eef2f7);color:var(--ink);padding:14px 15px;display:flex;flex-direction:column}
+.tcard-back h4{margin:0 0 2px;font-size:16px}
+.tcard-back .bk-stat{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:4px 0;font-size:12.5px}
+.tcard-back .bk-stat .k{color:var(--muted)}
+.tcard-back .bk-stat b{font-weight:700}
+.tcard-back .bk-open{margin-top:auto;text-align:center;background:var(--accent);color:#fff;border-radius:8px;padding:7px;font-size:13px;font-weight:600}
+.tc-hint{position:absolute;bottom:6px;right:10px;font-size:9px;opacity:.6;z-index:2}
+/* erikoiskortit (palkinto/data) */
+.tcard.award .tcard-front{background:linear-gradient(160deg,#2c3340,#11151d)}
+.tcard.datacard .tcard-front{background:linear-gradient(160deg,#1f4e79,#0d2740)}
+.tc-kicker{position:absolute;top:0;left:0;right:0;text-align:center;background:linear-gradient(180deg,#f4c43c,#e0a91f);color:#4a3300;font-size:11px;font-weight:800;letter-spacing:.04em;padding:4px;z-index:3;text-transform:uppercase}
+.datacard .tc-kicker{background:linear-gradient(180deg,#7aa7cf,#3d7ab5);color:#04243f}
+.tc-bignum{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;text-align:center;padding:0 12px}
+.tc-bignum b{font-size:46px;font-weight:800;line-height:.95;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.tc-bignum span{font-size:12px;opacity:.92;margin-top:6px;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+@media (prefers-reduced-motion: reduce){.tcard-inner{transition:none}}
+
+.tcard{transition:transform .2s}
+.tcard:hover{transform:translateY(-5px)}
+
+.tc-bignum b{font-size:36px;word-break:break-word;hyphens:auto}
+.tc-bignum{padding:30px 14px 0}

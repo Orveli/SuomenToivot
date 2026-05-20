@@ -18,6 +18,102 @@ def _one(conn, q, *p):
 
 
 # --- yleiskatsaus -----------------------------------------------------------
+def _top_topic(conn, pid):
+    r = _one(conn,
+        "SELECT t.label FROM analysis_member_topic amt JOIN topic t ON t.id=amt.topic_id"
+        " WHERE amt.person_id=? AND t.slug!='muu' AND amt.n_speeches>0"
+        " ORDER BY amt.n_speeches DESC LIMIT 1", pid)
+    return r["label"] if r else None
+
+
+def awards(conn) -> List[dict]:
+    """Leaderboardien voittajat 'palkintokortteina' (kuvailevia, ei arvosanoja)."""
+    out = []
+
+    def add(key, emoji, label, caption, row, value_text):
+        if row:
+            out.append({"key": key, "emoji": emoji, "label": label, "caption": caption,
+                        "value_text": value_text, **dict(row)})
+
+    add("speeches", "🗣️", "Puhelias", "Eniten puheenvuoroja", _one(conn,
+        "SELECT p.person_id,p.full_name,p.party_current,p.photo_url,s.n_speeches v"
+        " FROM analysis_member_summary s JOIN person p ON p.person_id=s.person_id"
+        " ORDER BY s.n_speeches DESC LIMIT 1"), None)
+    if out and out[-1]["key"] == "speeches":
+        out[-1]["value_text"] = f"{out[-1]['v']} puhetta"
+
+    add("absent", "🏃", "Useimmin poissa", "Suurin poissaolo-% (ei ministerit)", _one(conn,
+        "SELECT p.person_id,p.full_name,p.party_current,p.photo_url,"
+        " 100.0*s.n_absent/s.n_votes_total v FROM analysis_member_summary s"
+        " JOIN person p ON p.person_id=s.person_id WHERE s.n_votes_total>=500 AND p.is_minister=0"
+        " ORDER BY v DESC LIMIT 1"), None)
+    if out and out[-1]["key"] == "absent":
+        out[-1]["value_text"] = f"{out[-1]['v']:.0f} % poissa"
+
+    add("rebel", "🐴", "Itsenäisin", "Suurin poikkeama omasta ryhmästä", _one(conn,
+        "SELECT p.person_id,p.full_name,p.party_current,p.photo_url,100.0*s.deviation_rate v"
+        " FROM analysis_member_summary s JOIN person p ON p.person_id=s.person_id"
+        " WHERE s.n_votes_eligible>=200 AND s.deviation_rate IS NOT NULL ORDER BY v DESC LIMIT 1"), None)
+    if out and out[-1]["key"] == "rebel":
+        out[-1]["value_text"] = f"{out[-1]['v']:.1f} % poikkeama"
+
+    add("loyal", "🎯", "Ryhmäuskollisin", "Pienin poikkeama (väh. 1000 ääntä)", _one(conn,
+        "SELECT p.person_id,p.full_name,p.party_current,p.photo_url,100.0*s.deviation_rate v"
+        " FROM analysis_member_summary s JOIN person p ON p.person_id=s.person_id"
+        " WHERE s.n_votes_eligible>=1000 AND s.deviation_rate IS NOT NULL ORDER BY v ASC LIMIT 1"), None)
+    if out and out[-1]["key"] == "loyal":
+        out[-1]["value_text"] = f"{out[-1]['v']:.1f} % poikkeama"
+
+    for key, emoji, label, cat, cap in [
+            ("filler", "💬", "Täytesanakuningas", "filler", "Eniten täytesanoja / 1000 sanaa"),
+            ("swear", "🌶️", "Värikkäin kieli", "swear", "Eniten voimasanoja / 1000 sanaa")]:
+        add(key, emoji, label, cap, _one(conn,
+            "SELECT p.person_id,p.full_name,p.party_current,p.photo_url,u.per_1000 v"
+            " FROM analysis_word_usage u JOIN person p ON p.person_id=u.person_id"
+            " WHERE u.category=? AND u.n_words>=5000 ORDER BY u.per_1000 DESC LIMIT 1", cat), None)
+        if out and out[-1]["key"] == key:
+            out[-1]["value_text"] = f"{out[-1]['v']:.2f} / 1000 sanaa"
+
+    br = promise_breakers_persons(conn, limit=1)
+    if br:
+        b = br[0]
+        out.append({"key": "flip", "emoji": "🔄", "label": "Takinkääntäjä",
+                    "caption": "Useimmin oman ryhmän lupausta vastaan",
+                    "person_id": b["person_id"], "full_name": b["full_name"],
+                    "party_current": b.get("party_current"),
+                    "photo_url": _one(conn, "SELECT photo_url FROM person WHERE person_id=?", b["person_id"])["photo_url"],
+                    "value_text": f"{b['against']}/{b['eval']} lupausta vastaan"})
+    return out
+
+
+def front_feed(conn) -> dict:
+    from collections import defaultdict
+    aw = awards(conn)
+    holders = defaultdict(list)
+    for a in aw:
+        holders[a["person_id"]].append({"emoji": a["emoji"], "label": a["label"]})
+    mps = _rows(conn,
+        "SELECT p.person_id,p.full_name,p.party_current,p.electoral_district,p.photo_url,p.is_minister,"
+        " s.consistency_index,s.n_speeches,s.n_votes_cast,s.n_votes_total,s.n_absent,s.deviation_rate"
+        " FROM analysis_member_summary s JOIN person p ON p.person_id=s.person_id"
+        " WHERE s.n_votes_eligible>=100 ORDER BY RANDOM() LIMIT 8")
+    for m in mps:
+        m["absent_pct"] = (100.0 * m["n_absent"] / m["n_votes_total"]) if m["n_votes_total"] else None
+        m["top_topic"] = _top_topic(conn, m["person_id"])
+        m["badges"] = holders.get(m["person_id"], [])
+    parties = sorted(party_comparison(conn), key=lambda x: -(x["n_members"] or 0))
+    return {"awards": aw, "mps": mps, "parties": parties,
+            "highlights": index_highlights(conn)}
+
+
+def award_holders(conn) -> dict:
+    from collections import defaultdict
+    holders = defaultdict(list)
+    for a in awards(conn):
+        holders[a["person_id"]].append({"emoji": a["emoji"], "label": a["label"]})
+    return holders
+
+
 def overview(conn) -> dict:
     s = lambda q: conn.execute(q).fetchone()[0]  # noqa: E731
     return {

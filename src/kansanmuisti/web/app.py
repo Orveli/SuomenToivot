@@ -48,8 +48,7 @@ def index(request: Request):
     conn = _conn()
     try:
         return render(request, "index.html", overview=queries.overview(conn),
-                      topics=queries.topics(conn), parties=queries.parties(conn),
-                      highlights=queries.index_highlights(conn))
+                      topics=queries.topics(conn), feed=queries.front_feed(conn))
     finally:
         conn.close()
 
@@ -127,6 +126,9 @@ def kortit(request: Request, party: str = "", sort: str = "puheet", dir: str = "
     try:
         cards = queries.member_cards(conn, party=party or None, sort=sort, direction=dir,
                                      min_eligible=min_eligible)
+        holders = queries.award_holders(conn)
+        for cmd in cards:
+            cmd["badges"] = holders.get(cmd["person_id"], [])
         return render(request, "cards.html", cards=cards, parties=queries.parties(conn),
                       party=party, sort=sort, dir=dir, min_eligible=min_eligible)
     finally:

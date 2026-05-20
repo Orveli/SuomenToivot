@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_cards.html" as c %}
 {% block title %}Edustajakortit — SuomenToivot{% endblock %}
 {% block body %}
 <h1>Edustajakortit</h1>
@@ -21,37 +22,8 @@ kuvailevia; johdonmukaisuusindeksi on <a href="/menetelmat#6-johdonmukaisuusinde
   <span class="small muted">{{ cards|length }} korttia</span>
 </form>
 
-<div class="cardgrid">
-  {% for m in cards %}
-  {% set parts = m.full_name.split() %}
-  <a class="mp-card" href="/edustaja/{{ m.person_id }}">
-    <div class="top">
-      {% if m.photo_url %}<img class="avatar" src="{{ m.photo_url }}" alt="{{ m.full_name }}" loading="lazy">
-      {% else %}<div class="avatar">{{ parts[0][0] }}{{ parts[-1][0] if parts|length>1 else '' }}</div>{% endif %}
-      <div>
-        <div class="nm">{{ m.full_name }}</div>
-        <div class="sub">
-          {% if m.party_current %}<span class="party-tag">{{ m.party_current }}</span> · {% endif %}
-          {{ m.electoral_district|replace(' vaalipiiri','') if m.electoral_district else '' }}
-          {% if m.is_minister %} · min.{% endif %}
-        </div>
-      </div>
-      <div class="cardidx">
-        <b>{{ m.consistency_index if m.consistency_index is not none else '—' }}</b>
-        <span>indeksi*</span>
-      </div>
-    </div>
-    <div class="radar">{{ radar_svg(m.radar, 140, true)|safe }}</div>
-    <div class="statline">
-      <span class="k">Puheita</span><span class="v">{{ m.n_speeches }}</span>
-      <span class="k">Ääniä annettu</span><span class="v">{{ m.n_votes_cast }}</span>
-      <span class="k">Poissa</span><span class="v">{% if m.absent_pct is not none %}{{ '%.0f' % m.absent_pct }} %{% else %}—{% endif %}</span>
-      <span class="k">Poikkeama ryhmästä</span><span class="v">{% if m.deviation_rate is not none %}{% if m.deviation_rate*100<0.5 %}&lt;1{% else %}{{ '%.1f' % (m.deviation_rate*100) }}{% endif %} %{% else %}—{% endif %}</span>
-      <span class="k">Edustajana</span><span class="v">{{ m.active_from[:4] if m.active_from else '—' }}–</span>
-    </div>
-    {% if m.top_topic %}<span class="sig">★ Kärkiaihe: {{ m.top_topic }}</span>{% endif %}
-  </a>
-  {% endfor %}
+<div class="feed">
+  {% for m in cards %}{{ c.mp_card(m) }}{% endfor %}
 </div>
 <p class="small muted" style="margin-top:14px">* Johdonmukaisuusindeksi on laskennallinen indikaattori,
 ei arvosana — komponentit ja luottamustaso näkyvät edustajan profiilissa.</p>

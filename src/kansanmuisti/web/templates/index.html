@@ -1,73 +1,58 @@
 {% extends "base.html" %}
+{% import "_cards.html" as c %}
 {% block body %}
 <h1>Mitä päättäjäsi on oikeasti tehnyt?</h1>
-<p class="muted">Hae kansanedustaja, puolue tai aihe. Näytämme puheenvuorot, äänestykset ja
-vaalilupaukset — jokainen linkitettynä alkuperäiseen Eduskunnan aineistoon.</p>
+<p class="muted">Selaa kansanedustajia ja puolueita kortteina — <strong>klikkaa kortti kääntyäksesi</strong>.
+Jokainen luku perustuu julkiseen Eduskunnan dataan ja on jäljitettävissä lähteeseen.</p>
 
 <form class="searchbox" action="/haku" method="get">
-  <input type="text" name="q" placeholder="Esim. nimi, aihe tai säädös (HE 12/2024 vp)…" autofocus>
+  <input type="text" name="q" placeholder="Hae nimi, aihe tai säädös…" autofocus>
   <button type="submit">Hae</button>
 </form>
 
-<div class="grid cols-3" style="margin-top:18px">
-  <div class="card"><div class="kpi">{{ overview.persons }}</div><div class="muted">edustajaa aineistossa</div></div>
-  <div class="card"><div class="kpi">{{ overview.votes }}</div><div class="muted">äänestystä</div></div>
-  <div class="card"><div class="kpi">{{ overview.speeches }}</div><div class="muted">puheenvuoroa (tekstinä)</div></div>
+<div class="grid cols-3" style="margin:14px 0">
+  <a class="card" href="/edustajat"><div class="kpi">{{ overview.persons }}</div><div class="muted">edustajaa →</div></a>
+  <a class="card" href="/tilastot"><div class="kpi">{{ overview.votes }}</div><div class="muted">äänestystä →</div></a>
+  <a class="card" href="/kartta"><div class="kpi">{{ overview.speeches }}</div><div class="muted">puheenvuoroa →</div></a>
 </div>
 
-{% if highlights %}
-<h2>Nostot</h2>
-<div class="grid cols-3">
-  {% if highlights.spotlight %}
-  <a class="card" href="/edustaja/{{ highlights.spotlight.person_id }}">
-    <div class="small muted">🔎 Satunnainen edustaja</div>
-    <strong>{{ highlights.spotlight.full_name }}</strong>
-    {% if highlights.spotlight.party_current %}<span class="tag party-tag">{{ highlights.spotlight.party_current }}</span>{% endif %}
-    <div class="small muted">Indeksi {{ highlights.spotlight.consistency_index if highlights.spotlight.consistency_index is not none else '—' }}*
-      · {{ highlights.spotlight.n_speeches }} puhetta
-      {% if highlights.spotlight.top_topic %}<br>★ {{ highlights.spotlight.top_topic }}{% endif %}</div>
-  </a>
-  {% endif %}
-  {% if highlights.tight %}
-  <a class="card" href="/aanestys/{{ highlights.tight.vote_id }}">
-    <div class="small muted">⚖️ Tiukin äänestys ({{ highlights.tight.vp_year }})</div>
-    <strong>{{ highlights.tight.result_yes }}–{{ highlights.tight.result_no }}</strong>
-    <span class="small muted">ero {{ highlights.tight.era }}</span>
-    <div class="small">{{ (highlights.tight.title or '')[:70] }}</div>
-  </a>
-  {% endif %}
-  {% if highlights.trend %}
-  <a class="card" href="/aihe/{{ highlights.trend.slug }}">
-    <div class="small muted">📈 Puhutuin aihe viimeisimpänä vuonna</div>
-    <strong>{{ highlights.trend.label }}</strong>
-    <div class="small muted">{{ highlights.trend.n }} puheenvuoroa</div>
-  </a>
-  {% endif %}
+{# ---- Palkintokortit ---- #}
+{% if feed.awards %}
+<h2>🏅 Titteleitä</h2>
+<p class="small muted">Leaderboardien kärki kortteina. Kuvailevia tittelitä kerätystä datasta — eivät arvosanoja.</p>
+<div class="feed">
+  {% for a in feed.awards %}{{ c.award_card(a) }}{% endfor %}
 </div>
-<p class="small muted">* laskennallinen indikaattori, ei arvosana.</p>
 {% endif %}
 
-<div class="notice">
-  <strong>Miten luet tätä palvelua:</strong> jokainen luku perustuu julkiseen dataan ja on
-  jäljitettävissä lähteeseen. Emme kerro <em>miksi</em> joku toimi tietyllä tavalla — näytämme
-  vain mitä on tapahtunut, missä sanat ja teot ovat linjassa ja missä on ristiriitoja tai
-  puuttuvaa dataa. <a href="/kattavuus">Katso datan kattavuus.</a>
+{# ---- Satunnaiset edustaja- ja puoluekortit ---- #}
+<h2>🎴 Poimintoja</h2>
+<p class="small muted">Satunnaisia edustaja- ja puoluekortteja — lataa sivu uudelleen niin saat uudet.</p>
+<div class="feed">
+  {% for m in feed.mps[:4] %}{{ c.mp_card(m) }}{% endfor %}
+  {% if feed.highlights.tight %}
+    {{ c.data_card('⚖️', 'Tiukin äänestys ' ~ feed.highlights.tight.vp_year,
+       feed.highlights.tight.result_yes ~ '–' ~ feed.highlights.tight.result_no,
+       (feed.highlights.tight.title or '')[:54], '/aanestys/' ~ feed.highlights.tight.vote_id, 'Avaa äänestys') }}
+  {% endif %}
+  {% for p in feed.parties[:3] %}{{ c.party_card(p) }}{% endfor %}
+  {% for m in feed.mps[4:8] %}{{ c.mp_card(m) }}{% endfor %}
+  {% if feed.highlights.trend %}
+    {{ c.data_card('📈', 'Puhutuin aihe', feed.highlights.trend.label,
+       feed.highlights.trend.n ~ ' puheenvuoroa viime vuonna', '/aihe/' ~ feed.highlights.trend.slug, 'Avaa aihe') }}
+  {% endif %}
 </div>
 
-<h2>Aiheet</h2>
-<div class="grid cols-3">
-  {% for t in topics %}
-    <a class="card" href="/aihe/{{ t.slug }}">
-      <strong>{{ t.label }}</strong>
-      <div class="small muted">{{ t.n_speeches }} puhetta · {{ t.n_votes }} äänestystä</div>
-    </a>
-  {% endfor %}
+<div class="notice" style="margin-top:22px">
+  <strong>Miten luet:</strong> emme kerro <em>miksi</em> joku toimi tietyllä tavalla — näytämme mitä on
+  tapahtunut, missä sanat ja teot ovat linjassa ja missä on ristiriitoja tai puuttuvaa dataa.
+  Lasketut luvut ovat <em>läpinäkyviä indikaattoreita</em> (<a href="/menetelmat">menetelmät</a>),
+  eivät arvosanoja. <a href="/kattavuus">Datan kattavuus.</a>
 </div>
 
-<h2>Puolueet</h2>
-<p>
-{% for p in parties %}
-  <a class="tag party-tag" href="/puolue/{{ p.code }}">{{ p.code }} ({{ p.n }})</a>
-{% endfor %}
+<p class="small">
+  <a href="/kortit" class="btn secondary">Kaikki edustajakortit</a>
+  <a href="/lupausvahti" class="btn secondary">Lupausvahti</a>
+  <a href="/sanat" class="btn secondary">Täyte- &amp; kirosanat</a>
 </p>
 {% endblock %}

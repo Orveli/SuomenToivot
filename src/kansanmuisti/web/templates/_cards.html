@@ -1,0 +1,98 @@
+{# Keräilykorttimakrot. Klikkaus kääntää (cards.js). #}
+
+{% macro mp_card(m) %}
+{%- set parts = (m.full_name or '?').split() -%}
+<div class="tcard" tabindex="0" role="button" aria-label="{{ m.full_name }}">
+  <div class="tcard-inner">
+    <div class="tcard-face tcard-front"{% if m.photo_url %} style="background-image:url('{{ m.photo_url }}')"{% endif %}>
+      {% if not m.photo_url %}<div class="mono">{{ parts[0][0] }}{{ parts[-1][0] if parts|length>1 else '' }}</div>{% endif %}
+      <div class="holo"></div><div class="glare"></div><div class="scrim"></div><div class="frame"></div>
+      <div class="tc-top">
+        {% if m.party_current %}<span class="tc-party">{{ m.party_current }}</span>{% else %}<span></span>{% endif %}
+        {% if m.consistency_index is not none %}<span class="tc-rating"><b>{{ m.consistency_index }}</b><span>indeksi</span></span>{% endif %}
+      </div>
+      <div class="tc-bottom">
+        <div class="tc-name">{{ m.full_name }}</div>
+        <div class="tc-meta">{{ (m.electoral_district or '')|replace(' vaalipiiri','') }}{% if m.is_minister %} · min.{% endif %}{% if m.top_topic %} · ★ {{ m.top_topic }}{% endif %}</div>
+        {% if m.badges %}<div class="tc-badges">{% for b in m.badges %}<span class="tc-badge gold">{{ b.emoji }} {{ b.label }}</span>{% endfor %}</div>{% endif %}
+      </div>
+      <div class="tc-hint">klikkaa ⟳</div>
+    </div>
+    <div class="tcard-face tcard-back">
+      <h4>{{ m.full_name }}</h4>
+      <div class="small muted" style="margin-bottom:6px">{{ m.party_current or '' }} · {{ (m.electoral_district or '')|replace(' vaalipiiri','') }}</div>
+      <div class="bk-stat"><span class="k">Johdonm. indeksi*</span><b>{{ m.consistency_index if m.consistency_index is not none else '—' }}</b></div>
+      <div class="bk-stat"><span class="k">Puheita</span><b>{{ m.n_speeches }}</b></div>
+      <div class="bk-stat"><span class="k">Ääniä annettu</span><b>{{ m.n_votes_cast }}</b></div>
+      <div class="bk-stat"><span class="k">Poissa</span><b>{% if m.absent_pct is not none %}{{ '%.0f' % m.absent_pct }} %{% else %}—{% endif %}</b></div>
+      <div class="bk-stat"><span class="k">Poikkeama ryhmästä</span><b>{% if m.deviation_rate is not none %}{{ '%.1f' % (m.deviation_rate*100) }} %{% else %}—{% endif %}</b></div>
+      {% if m.top_topic %}<div class="bk-stat"><span class="k">Kärkiaihe</span><b>{{ m.top_topic }}</b></div>{% endif %}
+      <a class="bk-open" href="/edustaja/{{ m.person_id }}">Avaa profiili →</a>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro award_card(a) %}
+<div class="tcard award" tabindex="0" role="button" aria-label="{{ a.label }}: {{ a.full_name }}">
+  <div class="tcard-inner">
+    <div class="tcard-face tcard-front"{% if a.photo_url %} style="background-image:url('{{ a.photo_url }}')"{% endif %}>
+      <div class="holo"></div><div class="glare"></div><div class="scrim"></div><div class="frame"></div>
+      <div class="tc-kicker">{{ a.emoji }} {{ a.label }}</div>
+      <div class="tc-bignum"><b>{{ a.value_text }}</b><span>{{ a.full_name }}</span></div>
+      <div class="tc-bottom"><div class="tc-meta">{{ a.party_current or '' }}</div></div>
+      <div class="tc-hint">klikkaa ⟳</div>
+    </div>
+    <div class="tcard-face tcard-back">
+      <h4>{{ a.emoji }} {{ a.label }}</h4>
+      <div class="small muted" style="margin-bottom:6px">{{ a.caption }}</div>
+      <div class="bk-stat"><span class="k">Haltija</span><b>{{ a.full_name }}</b></div>
+      <div class="bk-stat"><span class="k">Ryhmä</span><b>{{ a.party_current or '—' }}</b></div>
+      <div class="bk-stat"><span class="k">Lukema</span><b>{{ a.value_text }}</b></div>
+      <p class="small muted" style="margin-top:8px">Kuvaileva titteli kerätystä datasta — ei arvosana.</p>
+      <a class="bk-open" href="/edustaja/{{ a.person_id }}">Avaa profiili →</a>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro party_card(p) %}
+<div class="tcard" tabindex="0" role="button" aria-label="{{ p.name }}">
+  <div class="tcard-inner">
+    <div class="tcard-face tcard-front" style="background:linear-gradient(160deg,#3a4658,#171d27)">
+      <div class="holo"></div><div class="glare"></div><div class="frame"></div>
+      <div class="mono">{{ p.code|upper }}</div>
+      <div class="tc-top"><span class="tc-party">ryhmä</span></div>
+      <div class="tc-bottom"><div class="tc-name">{{ p.name }}</div><div class="tc-meta">{{ p.n_members }} edustajaa</div></div>
+      <div class="tc-hint">klikkaa ⟳</div>
+    </div>
+    <div class="tcard-face tcard-back">
+      <h4>{{ p.name }}</h4>
+      <div class="bk-stat"><span class="k">Edustajia</span><b>{{ p.n_members }}</b></div>
+      <div class="bk-stat"><span class="k">Puheita yht.</span><b>{{ p.speeches }}</b></div>
+      <div class="bk-stat"><span class="k">Keskim. indeksi*</span><b>{{ p.avg_idx }}</b></div>
+      <div class="bk-stat"><span class="k">Keskim. poikkeama</span><b>{{ p.avg_dev }} %</b></div>
+      <div class="bk-stat"><span class="k">Keskim. poissa</span><b>{{ p.avg_absent }} %</b></div>
+      <a class="bk-open" href="/puolue/{{ p.code }}">Avaa puolue →</a>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro data_card(emoji, kicker, big, sub, href, link_label) %}
+<div class="tcard datacard" tabindex="0" role="button">
+  <div class="tcard-inner">
+    <div class="tcard-face tcard-front">
+      <div class="holo"></div><div class="glare"></div><div class="frame"></div>
+      <div class="tc-kicker">{{ emoji }} {{ kicker }}</div>
+      <div class="tc-bignum"><b>{{ big }}</b><span>{{ sub }}</span></div>
+      <div class="tc-hint">klikkaa ⟳</div>
+    </div>
+    <div class="tcard-face tcard-back">
+      <h4>{{ emoji }} {{ kicker }}</h4>
+      <div class="small muted" style="margin-bottom:8px">{{ sub }}</div>
+      <a class="bk-open" href="{{ href }}">{{ link_label }} →</a>
+    </div>
+  </div>
+</div>
+{% endmacro %}
