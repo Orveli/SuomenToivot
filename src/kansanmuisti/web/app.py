@@ -18,7 +18,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from .. import config, db
-from . import queries
+from . import queries, viz
 
 BASE = Path(__file__).resolve().parent
 app = FastAPI(title="SuomenToivot")
@@ -29,6 +29,8 @@ app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
 templates.env.globals["ATTRIBUTION"] = config.DATA_ATTRIBUTION
 templates.env.globals["LICENSE"] = config.DATA_LICENSE
 templates.env.globals["now_year"] = dt.date.today().year
+templates.env.globals["radar_svg"] = viz.radar_svg
+templates.env.globals["heat_color"] = viz.heat_color
 
 
 def _conn():
@@ -99,11 +101,32 @@ def edustajat(request: Request, sort: str = "nimi", dir: str = "asc",
         conn.close()
 
 
+@app.get("/kortit", response_class=HTMLResponse)
+def kortit(request: Request, party: str = "", sort: str = "puheet", dir: str = "desc",
+           min_eligible: int = 0):
+    conn = _conn()
+    try:
+        cards = queries.member_cards(conn, party=party or None, sort=sort, direction=dir,
+                                     min_eligible=min_eligible)
+        return render(request, "cards.html", cards=cards, parties=queries.parties(conn),
+                      party=party, sort=sort, dir=dir, min_eligible=min_eligible)
+    finally:
+        conn.close()
+
+
 @app.get("/tilastot", response_class=HTMLResponse)
 def tilastot(request: Request):
     conn = _conn()
     try:
-        return render(request, "stats.html", **queries.stats_overview(conn))
+        data = queries.stats_overview(conn)
+        # trendikäyrä (valitut keskeiset aiheet)
+        trends = data["trends"]
+        focus = ["turvallisuus", "maahanmuutto", "ilmasto", "terveydenhuolto", "energia", "talous"]
+        labels = {t["slug"]: t["label"] for t in trends["topics"]}
+        series = [(labels.get(s, s), [trends["counts"][s][y] for y in trends["years"]])
+                  for s in focus if s in trends["counts"]]
+        data["trend_chart"] = viz.line_chart_svg(series, trends["years"])
+        return render(request, "stats.html", **data)
     finally:
         conn.close()
 

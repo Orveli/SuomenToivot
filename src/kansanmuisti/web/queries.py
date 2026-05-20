@@ -330,7 +330,8 @@ def member_directory(conn, sort: str = "nimi", direction: str = "asc",
         params.append(min_eligible)
     where_sql = " AND ".join(where)
     sql = (
-        "SELECT p.person_id, p.full_name, p.party_current, s.n_speeches, s.n_votes_cast,"
+        "SELECT p.person_id, p.full_name, p.party_current, p.electoral_district, p.active_from,"
+        " p.is_minister, s.n_speeches, s.n_votes_cast,"
         " s.n_votes_total, s.n_absent, s.n_votes_eligible, s.deviation_rate,"
         " s.consistency_index, s.confidence_level,"
         " CASE WHEN s.n_votes_total>0 THEN 100.0*s.n_absent/s.n_votes_total END AS absent_pct"
@@ -397,11 +398,92 @@ def top_speakers(conn, limit: int = 12) -> List[dict]:
         " WHERE person_id IS NOT NULL GROUP BY person_id ORDER BY n DESC LIMIT ?", limit)
 
 
+def party_covote_matrix(conn, min_votes: int = 200) -> dict:
+    """Puolueiden samanmielisyys: osuus äänestyksistä, joissa kahdella ryhmällä
+    oli sama enemmistölinja (Jaa/Ei). Paljastaa blokit."""
+    from collections import defaultdict
+    lines = defaultdict(dict)
+    for r in conn.execute(
+            "SELECT DISTINCT vote_id, party, party_line FROM analysis_party_deviation"
+            " WHERE party_line IN ('Jaa','Ei')"):
+        lines[r["vote_id"]][r["party"]] = r["party_line"]
+    # vain ryhmät, joilla riittävästi linjoja
+    counts = defaultdict(int)
+    for pl in lines.values():
+        for p in pl:
+            counts[p] += 1
+    order = ["kok", "ps", "kesk", "sd", "vihr", "vas", "r", "kd", "liik", "sin"]
+    parties = [p for p in order if counts.get(p, 0) >= min_votes]
+    agree = defaultdict(lambda: [0, 0])
+    for pl in lines.values():
+        present = [p for p in parties if p in pl]
+        for i, a in enumerate(present):
+            for b in present[i + 1:]:
+                key = (a, b)
+                agree[key][1] += 1
+                if pl[a] == pl[b]:
+                    agree[key][0] += 1
+    matrix = {}
+    for a in parties:
+        for b in parties:
+            if a == b:
+                matrix[(a, b)] = None
+            else:
+                k = (a, b) if (a, b) in agree else (b, a)
+                s, t = agree[k]
+                matrix[(a, b)] = round(100 * s / t) if t else None
+    return {"parties": parties, "matrix": matrix}
+
+
+# Kortti-tutkan kiinteät akselit (luettavuus + vertailtavuus)
+RADAR_TOPICS = [
+    ("talous", "Talous"), ("terveydenhuolto", "Terv."), ("koulutus", "Koul."),
+    ("ilmasto", "Ilm."), ("maahanmuutto", "Maah."), ("turvallisuus", "Turv."),
+    ("sosiaaliturva", "Sos."), ("tyo", "Työ"),
+]
+
+
+def member_cards(conn, party: Optional[str] = None, sort: str = "puheet",
+                 direction: str = "desc", limit: int = 60, min_eligible: int = 0) -> List[dict]:
+    rows = member_directory(conn, sort=sort, direction=direction, party=party,
+                            min_eligible=min_eligible)[:limit]
+    if not rows:
+        return []
+    ids = [r["person_id"] for r in rows]
+    qmarks = ",".join("?" * len(ids))
+    # aihevektorit (puheet per aihe) valituille
+    tv = {pid: {} for pid in ids}
+    for r in conn.execute(
+            f"SELECT amt.person_id, t.slug, amt.n_speeches FROM analysis_member_topic amt"
+            f" JOIN topic t ON t.id=amt.topic_id WHERE amt.person_id IN ({qmarks})", ids):
+        tv[r["person_id"]][r["slug"]] = r["n_speeches"]
+    # kärkiaihe (eniten puheita, ei 'muu')
+    top_topic = {pid: None for pid in ids}
+    for r in conn.execute(
+            f"SELECT amt.person_id, t.label, amt.n_speeches FROM analysis_member_topic amt"
+            f" JOIN topic t ON t.id=amt.topic_id WHERE amt.person_id IN ({qmarks})"
+            f" AND t.slug!='muu' AND amt.n_speeches>0 ORDER BY amt.n_speeches DESC", ids):
+        if top_topic.get(r["person_id"]) is None:
+            top_topic[r["person_id"]] = r["label"]
+    cards = []
+    for r in rows:
+        pid = r["person_id"]
+        vec = tv.get(pid, {})
+        mx = max((vec.get(slug, 0) for slug, _ in RADAR_TOPICS), default=0) or 1
+        radar = [(short, (vec.get(slug, 0) / mx)) for slug, short in RADAR_TOPICS]
+        d = dict(r)
+        d["radar"] = radar
+        d["top_topic"] = top_topic.get(pid)
+        cards.append(d)
+    return cards
+
+
 def stats_overview(conn) -> dict:
     return {
         "trends": topic_trends(conn),
         "cohesion": party_cohesion(conn),
         "party_comparison": party_comparison(conn),
+        "covote": party_covote_matrix(conn),
         "closest": closest_votes(conn),
         "speakers": top_speakers(conn),
     }

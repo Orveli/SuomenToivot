@@ -96,6 +96,19 @@ def test_stats_page(client):
     r = client.get("/tilastot")
     assert r.status_code == 200
     assert "Puoluevertailu" in r.text and "Puoluekuri" in r.text and "Aihetrendit" in r.text
+    assert "samanmielisyys" in r.text  # heatmap-osio
+    assert "<svg" in r.text  # trendikäyrä
+
+
+def test_cards_page(client):
+    r = client.get("/kortit")
+    assert r.status_code == 200
+    assert "Anna Aalto" in r.text
+    assert "mp-card" in r.text and "<svg" in r.text  # kortit + tutka
+    # puoluesuodatus
+    r2 = client.get("/kortit?party=kok&sort=indeksi")
+    assert r2.status_code == 200
+    assert "Dan Dahl" not in r2.text  # sd ei näy kok-suodatuksessa
 
 
 def test_admin_corrections_requires_token(client):

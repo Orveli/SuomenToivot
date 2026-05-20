@@ -45,10 +45,32 @@ Korkea poikkeama <strong>ei ole "huono"</strong> — se voi heijastaa itsenäist
   {% endfor %}
 </table>
 
+{# ---- Puolueiden samanmielisyys (heatmap) ---- #}
+<h2>Puolueiden samanmielisyys — kuka äänestää kenenkin kanssa</h2>
+<p class="small muted">Osuus äänestyksistä, joissa kahdella ryhmällä oli <strong>sama enemmistölinja</strong>
+(Jaa/Ei). Tummempi = useammin samaa mieltä. Paljastaa poliittiset blokit empiirisesti.</p>
+<div class="chartbox">
+<table class="heat" style="width:auto;margin:0 auto">
+  <tr><th></th>{% for p in covote.parties %}<th class="lbl">{{ p }}</th>{% endfor %}</tr>
+  {% for a in covote.parties %}
+  <tr><td class="lbl">{{ a }}</td>
+    {% for b in covote.parties %}
+      {% set v = covote.matrix[(a,b)] %}
+      {% if v is none %}<td class="diag">—</td>
+      {% else %}<td style="background:{{ heat_color(v/100) }};color:{{ '#fff' if v>=55 else '#1a1c1f' }}">{{ v }}</td>{% endif %}
+    {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+</div>
+<p class="small muted">Esim. vas–vihr ja sd–vas korkeat (vasemmistoblokki); ps–vas ja ps–vihr matalat (ääripäät);
+keskusta ja RKP sijoittuvat siltoina väliin.</p>
+
 {# ---- Aihetrendit ---- #}
 <h2>Aihetrendit — puheenvuoroja vuodessa (primääriaihe)</h2>
-<p class="small muted">Huippuvuosi korostettu. Datassa näkyy reaalimaailma: turvallisuus ja energia
-2022, terveydenhuolto 2024.</p>
+<p class="small muted">Datassa näkyy reaalimaailma: turvallisuus ja energia 2022, terveydenhuolto 2024.</p>
+{% if trend_chart %}<div class="chartbox">{{ trend_chart|safe }}</div>{% endif %}
+<p class="small muted" style="margin-top:10px">Kaikki aiheet taulukkona (huippuvuosi lihavoitu):</p>
 <div style="overflow-x:auto">
 <table>
   <tr><th>Aihe</th>{% for y in trends.years %}<th class="right">{{ y }}</th>{% endfor %}</tr>
