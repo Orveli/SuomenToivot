@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Edustajat — Kansanmuisti{% endblock %}
+{% block title %}Edustajat — SuomenToivot{% endblock %}
 {% macro sortlink(key, label) %}
   {%- set nextdir = 'asc' if (sort==key and dir=='desc') else ('desc' if sort==key else 'desc') -%}
   {%- if key=='nimi' or key=='puolue' -%}{%- set nextdir = 'desc' if (sort==key and dir=='asc') else 'asc' -%}{%- endif -%}

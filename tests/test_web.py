@@ -4,7 +4,7 @@
 def test_index_ok(client):
     r = client.get("/")
     assert r.status_code == 200
-    assert "Kansanmuisti" in r.text
+    assert "SuomenToivot" in r.text
 
 
 def test_person_page_shows_index_and_sources(client):

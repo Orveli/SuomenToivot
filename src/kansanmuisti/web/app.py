@@ -21,7 +21,7 @@ from .. import config, db
 from . import queries
 
 BASE = Path(__file__).resolve().parent
-app = FastAPI(title="Kansanmuisti")
+app = FastAPI(title="SuomenToivot")
 templates = Jinja2Templates(directory=str(BASE / "templates"))
 app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
 

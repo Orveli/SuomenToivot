@@ -1,7 +1,10 @@
-# Kansanmuisti
+# SuomenToivot
 
 **Verkkopalvelu, joka kartoittaa, analysoi ja esittää suomalaisten poliittisten päättäjien
 julkista ja todennettavaa toimintaa**: täysistuntopuheet, äänestykset ja vaalilupaukset.
+
+> Sisäinen Python-paketti on edelleen nimeltään `kansanmuisti` (importit, `km`-komento ja
+> `KANSANMUISTI_*`-ympäristömuuttujat). Julkinen nimi on **SuomenToivot**.
 
 > **Periaate:** emme väitä tietävämme päättäjien motiiveja. Näytämme mitä on *sanottu*, miten on
 > *äänestetty*, mitä on *luvattu*, missä sanat ja teot ovat linjassa, missä on ristiriitoja, missä
