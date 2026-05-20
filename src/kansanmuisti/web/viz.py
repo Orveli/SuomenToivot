@@ -21,8 +21,10 @@ def _pt(cx: float, cy: float, r: float, ang: float) -> Tuple[float, float]:
 
 
 def radar_svg(values: Sequence[Tuple[str, float]], size: int = 150,
-              show_labels: bool = True) -> str:
-    """Tutkakaavio. values = [(lyhyt_label, arvo 0..1), ...]."""
+              show_labels: bool = True, accent: str = ACCENT, grid: str = LINE,
+              label_color: str = "#5b6168") -> str:
+    """Tutkakaavio. values = [(lyhyt_label, arvo 0..1), ...]. accent/grid/label_color
+    säädettävissä (esim. vaalea sävy tumman kuvan päälle)."""
     n = len(values)
     if n < 3:
         return ""
@@ -30,11 +32,11 @@ def radar_svg(values: Sequence[Tuple[str, float]], size: int = 150,
     r = size / 2 - (26 if show_labels else 6)
     step = 2 * math.pi / n
     start = -math.pi / 2  # ylös
-    grid = []
+    grid_el = []
     for ring in (0.33, 0.66, 1.0):
         pts = [_pt(cx, cy, r * ring, start + i * step) for i in range(n)]
-        grid.append('<polygon points="{}" fill="none" stroke="{}" stroke-width="0.6"/>'.format(
-            " ".join(f"{x:.1f},{y:.1f}" for x, y in pts), LINE))
+        grid_el.append('<polygon points="{}" fill="none" stroke="{}" stroke-width="0.7"/>'.format(
+            " ".join(f"{x:.1f},{y:.1f}" for x, y in pts), grid))
     axes = []
     labels = []
     poly = []
@@ -42,7 +44,7 @@ def radar_svg(values: Sequence[Tuple[str, float]], size: int = 150,
         v = max(0.0, min(1.0, v))
         ang = start + i * step
         ex, ey = _pt(cx, cy, r, ang)
-        axes.append(f'<line x1="{cx:.1f}" y1="{cy:.1f}" x2="{ex:.1f}" y2="{ey:.1f}" stroke="{LINE}" stroke-width="0.5"/>')
+        axes.append(f'<line x1="{cx:.1f}" y1="{cy:.1f}" x2="{ex:.1f}" y2="{ey:.1f}" stroke="{grid}" stroke-width="0.6"/>')
         px, py = _pt(cx, cy, r * v, ang)
         poly.append(f"{px:.1f},{py:.1f}")
         if show_labels:
@@ -53,13 +55,13 @@ def radar_svg(values: Sequence[Tuple[str, float]], size: int = 150,
             elif lx > cx + 4:
                 anchor = "start"
             labels.append(
-                f'<text x="{lx:.1f}" y="{ly:.1f}" font-size="7" fill="#5b6168" '
+                f'<text x="{lx:.1f}" y="{ly:.1f}" font-size="7" fill="{label_color}" '
                 f'text-anchor="{anchor}" dominant-baseline="middle">{escape(label)}</text>')
     return (
         f'<svg viewBox="0 0 {size} {size}" width="{size}" height="{size}" role="img">'
-        + "".join(grid) + "".join(axes)
-        + f'<polygon points="{" ".join(poly)}" fill="{ACCENT}" fill-opacity="0.30" '
-          f'stroke="{ACCENT}" stroke-width="1.4"/>'
+        + "".join(grid_el) + "".join(axes)
+        + f'<polygon points="{" ".join(poly)}" fill="{accent}" fill-opacity="0.35" '
+          f'stroke="{accent}" stroke-width="1.6"/>'
         + "".join(labels) + "</svg>")
 
 

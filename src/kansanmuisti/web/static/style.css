@@ -276,3 +276,31 @@ nav.main{display:flex;gap:4px;margin-left:8px}
 .tcard.mp.legendaarinen:hover .holo{opacity:.8}
 /* isommat kortit feedissä */
 .feed{grid-template-columns:repeat(auto-fill,minmax(265px,1fr))}
+
+/* ===================== KUVAVETOINEN KORTTI (lasipaneeli päällä) ===================== */
+.tcard.mp{aspect-ratio:.70;display:block;position:relative;overflow:hidden;border-radius:16px;
+  background:#2a3340 center 20%/cover no-repeat;color:#fff;text-decoration:none;
+  border:1px solid rgba(0,0,0,.15);box-shadow:0 6px 20px rgba(20,30,50,.18);padding:0}
+.tcard.mp:hover{transform:translateY(-5px);text-decoration:none}
+.tcard.mp .mono{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:800;color:rgba(255,255,255,.2)}
+.tcard.mp .holo{position:absolute;inset:0;mix-blend-mode:color-dodge;opacity:0;z-index:1;
+  background:linear-gradient(115deg,transparent 30%,rgba(120,170,255,.18),rgba(255,120,200,.14),transparent 70%)}
+.tcard.mp:hover .holo{opacity:.5}
+.tcard.mp .glare{position:absolute;inset:0;z-index:1;opacity:0;mix-blend-mode:overlay;transition:opacity .2s;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,40%),rgba(255,255,255,.4),transparent 45%)}
+.tcard.mp:hover .glare{opacity:1}
+.tc-glass{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:9px 12px 12px;
+  background:linear-gradient(180deg,rgba(10,14,22,0),rgba(10,14,22,.74) 20%,rgba(10,14,22,.93));
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.tc-glass .tc-name{font-size:16px;font-weight:800;line-height:1.05;text-shadow:0 1px 5px rgba(0,0,0,.8)}
+.tc-glass .tc-meta{font-size:10px;opacity:.92;text-shadow:0 1px 4px rgba(0,0,0,.8);margin-bottom:2px}
+.tc-grow{display:flex;gap:6px;align-items:center;margin-top:4px}
+.tc-gradar{flex:0 0 auto;line-height:0}
+.tc-gvals{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;font-size:10.5px;line-height:1.35}
+.tc-gvals span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 2px rgba(0,0,0,.7)}
+.tc-gvals b{display:inline-block;min-width:21px;color:#9fd0ff;font-weight:800}
+.tc-gidx{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.22);font-size:10.5px;text-shadow:0 1px 2px rgba(0,0,0,.7)}
+.tc-gidx b{font-size:15px;color:#fff}
+.tc-gidx i{opacity:.65;font-style:normal;font-size:9.5px}
+/* sinetti & nauha kuvavetoisessa kortissa (z-index päälle) */
+.tcard.mp .tc-corner,.tcard.mp .tc-seal,.tcard.mp .tc-winribbon{z-index:3}
