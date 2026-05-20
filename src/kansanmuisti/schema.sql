@@ -236,6 +236,16 @@ CREATE TABLE IF NOT EXISTS analysis_member_topic (
     PRIMARY KEY (person_id, topic_id)
 );
 
+CREATE TABLE IF NOT EXISTS analysis_party_words (
+    party    TEXT NOT NULL,
+    word     TEXT NOT NULL,
+    zscore   REAL,                  -- log-odds z (Monroe et al.)
+    n_party  INTEGER,               -- esiintymät ryhmän puheissa
+    n_total  INTEGER,               -- esiintymät koko aineistossa
+    rank     INTEGER,
+    PRIMARY KEY (party, word)
+);
+
 CREATE TABLE IF NOT EXISTS analysis_political_map (
     person_id      INTEGER PRIMARY KEY,
     period         TEXT,

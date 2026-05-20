@@ -67,6 +67,8 @@ def run_all(conn, period: str = "kerätty aineisto") -> dict:
     results["deviation"] = metrics.compute_party_deviation(conn)
     results["summaries"] = metrics.compute_member_summaries(conn, period=period)
     results["position_changes"] = metrics.compute_position_changes(conn)
+    from .fightinwords import compute_party_words
+    results["party_words"] = compute_party_words(conn)
     try:
         from .politmap import compute_political_map
         results["political_map"] = compute_political_map(conn)

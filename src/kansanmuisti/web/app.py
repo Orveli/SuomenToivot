@@ -175,7 +175,8 @@ def puolue(request: Request, code: str):
     conn = _conn()
     try:
         return render(request, "party.html", overview=queries.party_overview(conn, code),
-                      members=queries.party_members(conn, code))
+                      members=queries.party_members(conn, code),
+                      words=queries.party_words(conn, code))
     finally:
         conn.close()
 

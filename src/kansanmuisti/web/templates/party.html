@@ -17,6 +17,21 @@ puoluetta kokonaisuutena. Johdonmukaisuusindeksi on <strong>laskennallinen indik
 ei arvosana — luottamustaso ja komponentit näkyvät kunkin edustajan profiilissa. Katso yksittäiset
 edustajat ja heidän lähteensä.</p>
 
+{% if words %}
+<h2>Erottava kieli</h2>
+<p class="small muted">Sanat, jotka ovat tilastollisesti <strong>yliedustettuja</strong> tämän ryhmän
+täysistuntopuheissa muihin verrattuna (log-odds, Monroe ym.). Koko kuvaa erottuvuuden voimakkuutta.
+Kuvaileva — kertoo mistä ja millä sanoilla ryhmä puhuu, ei sävyä tai motiivia.
+<a href="/menetelmat">Menetelmät.</a></p>
+{% set zmax = words[0].zscore %}
+<div class="wordcloud">
+  {% for w in words %}
+  <span class="cw" title="{{ w.n_party }} esiintymää · z={{ w.zscore }}"
+        style="font-size:{{ (12 + 20*w.zscore/zmax)|round(1) }}px;opacity:{{ (0.55 + 0.45*w.zscore/zmax)|round(2) }}">{{ w.word }}</span>
+  {% endfor %}
+</div>
+{% endif %}
+
 <h2>Edustajat</h2>
 <table>
   <tr><th>Nimi</th><th>Vaalipiiri</th>

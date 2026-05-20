@@ -196,6 +196,24 @@ def party_members(conn, code: str) -> List[dict]:
         " WHERE p.party_current=? ORDER BY p.full_name", code)
 
 
+def party_words(conn, code: str, limit: int = 25) -> List[dict]:
+    """Ryhmää erottavat sanat (fightin' words), z-arvon mukaan."""
+    return _rows(conn,
+        "SELECT word, zscore, n_party, n_total FROM analysis_party_words"
+        " WHERE party=? ORDER BY rank LIMIT ?", code, limit)
+
+
+def all_party_top_words(conn, per_party: int = 6) -> List[dict]:
+    """Kunkin ryhmän kärkisanat (tilastosivun koontia varten)."""
+    rows = _rows(conn,
+        "SELECT party, word, rank FROM analysis_party_words WHERE rank<=? ORDER BY party, rank",
+        per_party)
+    out = {}
+    for r in rows:
+        out.setdefault(r["party"], []).append(r["word"])
+    return [{"party": p, "words": w} for p, w in out.items()]
+
+
 def party_overview(conn, code: str) -> dict:
     agg = _one(conn,
         "SELECT COUNT(*) n, AVG(s.consistency_index) avg_idx, AVG(s.deviation_rate) avg_dev"

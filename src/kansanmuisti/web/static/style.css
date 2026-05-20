@@ -107,3 +107,8 @@ form.stack input,form.stack textarea,form.stack select{width:100%;padding:9px 11
 .databar::before{content:"";position:absolute;left:0;top:0;bottom:0;border-radius:4px;
   background:var(--accent-soft);width:var(--w,0%);z-index:0}
 .databar span{position:relative;z-index:1}
+
+/* --- Sanapilvi (erottava kieli) --- */
+.wordcloud{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;line-height:1.5;
+  padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--soft)}
+.wordcloud .cw{color:var(--accent);font-weight:600;cursor:default}

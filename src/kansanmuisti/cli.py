@@ -93,6 +93,13 @@ def cmd_analyze(args):
         _log(f"  {k}: {v}")
 
 
+def cmd_party_words(args):
+    from .analyze.fightinwords import compute_party_words
+    with db.session() as conn:
+        res = compute_party_words(conn)
+    _log(f"Erottavat sanat laskettu: {res}")
+
+
 def cmd_political_map(args):
     from .analyze.politmap import compute_political_map
     with db.session() as conn:
@@ -158,6 +165,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("analyze", help="Aja analyysiputki")
     sp.set_defaults(func=cmd_analyze)
+
+    sp = sub.add_parser("party-words", help="Laske puolueita erottavat sanat (fightin' words)")
+    sp.set_defaults(func=cmd_party_words)
 
     sp = sub.add_parser("political-map", help="Laske poliittinen kartta (SVD)")
     sp.set_defaults(func=cmd_political_map)
