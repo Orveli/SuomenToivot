@@ -75,6 +75,38 @@ def _candidate_speeches(conn, limit, only_with_votes=True):
     return conn.execute(sql).fetchall()
 
 
+def export_candidates(conn, *, limit=40, out=None, clean_votes_only=True,
+                      max_chars=2600) -> dict:
+    """Vie analysoitavat puheet JSON-tiedostoon Claude Code -analyysiä varten
+    (ei API-avainta — analyysin tuottaa kielimalli ajon aikana). clean_votes_only
+    priorisoi puheet, joiden säädöksellä on yksiselitteinen hyväksyntä/hylkäys-
+    äänestys (M2:n hyödyllisin joukko). Ohittaa jo analysoidut puheet."""
+    import json
+    where_clean = ""
+    if clean_votes_only:
+        where_clean = (
+            " AND s.legislative_item IN (SELECT DISTINCT legislative_item FROM vote "
+            "WHERE is_procedural=0 AND (lower(title) LIKE 'hyväksyminen / hylk%' "
+            "OR (lower(title) LIKE 'mietintö /%' AND lower(title) LIKE '%hylk%')))")
+    rows = conn.execute(
+        "SELECT s.id, s.first_name, s.last_name, s.party, s.legislative_item, s.text "
+        "FROM speech s WHERE s.person_id IS NOT NULL AND s.text IS NOT NULL "
+        "AND length(s.text) > 300 AND s.legislative_item IS NOT NULL AND s.legislative_item<>'' "
+        "AND s.id NOT IN (SELECT speech_id FROM analysis_speech_stance)" + where_clean +
+        " ORDER BY s.legislative_item, s.id LIMIT ?", (int(limit),)).fetchall()
+    batch = [{"speech_id": r["id"], "legislative_item": r["legislative_item"],
+              "speaker": f"{r['first_name']} {r['last_name']} ({r['party']})",
+              "text": r["text"][:max_chars]} for r in rows]
+    payload = {"_instructions": SYSTEM, "_schema": "ks. analysis_speech_stance; "
+               "tuota tiedosto jossa model_label + stances:[{speech_id, legislative_item, "
+               "proposition, stance(puolesta/vastaan/ehdollinen/ei_kantaa), conditional_note, "
+               "evidence_quote (SANATARKKA), confidence}]", "candidates": batch}
+    text = json.dumps(payload, ensure_ascii=False, indent=1)
+    if out:
+        open(out, "w", encoding="utf-8").write(text)
+    return {"candidates": len(batch), "out": out}
+
+
 def load_stance_demo(conn, path) -> dict:
     """Lataa käsin varmennetut kannat (demo-otos) analysis_speech_stance-tauluun.
     Integriteetti: rivi hylätään, jos evidence_quote ei ole SANATARKKA osa puheen

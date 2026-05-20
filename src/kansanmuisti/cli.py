@@ -181,6 +181,14 @@ def cmd_words_votes(args):
     _log(f"Sanat vs. äänet -tilikirja (M2): {res}")
 
 
+def cmd_stance_export(args):
+    from .analyze.stance import export_candidates
+    with db.session() as conn:
+        res = export_candidates(conn, limit=args.limit, out=args.out,
+                                clean_votes_only=not args.all_speeches)
+    _log(f"Vietiin {res['candidates']} puhetta analysoitavaksi → {res['out']}")
+
+
 def cmd_load_llm_demo(args):
     from .analyze.stance import load_stance_demo
     from .analyze.wordsvotes import compute_words_votes
@@ -296,7 +304,13 @@ def build_parser() -> argparse.ArgumentParser:
     sp = sub.add_parser("words-votes", help="M2: rakenna sanat-vs-äänet-tilikirja kannoista (deterministinen)")
     sp.set_defaults(func=cmd_words_votes)
 
-    sp = sub.add_parser("load-llm-demo", help="Lataa käsin varmennettu demo-otos + rakenna tilikirja")
+    sp = sub.add_parser("stance-export", help="Vie puheet Claude Code -analyysiä varten (ei API-avainta)")
+    sp.add_argument("--limit", type=int, default=40)
+    sp.add_argument("--out", default="data/stance_batch.json")
+    sp.add_argument("--all-speeches", action="store_true", help="Älä rajaa puhtaisiin äänestyksiin")
+    sp.set_defaults(func=cmd_stance_export)
+
+    sp = sub.add_parser("load-llm-demo", help="Lataa kannat (demo tai Claude Code -analyysi) + rakenna tilikirja")
     sp.add_argument("path", nargs="?", default="seed/llm_stance_demo.json")
     sp.set_defaults(func=cmd_load_llm_demo)
 

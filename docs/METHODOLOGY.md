@@ -624,3 +624,25 @@ katkelmat. (2) Kielimalli tiivistää vastauksen **vain** haetuista katkelmista,
 viittaa numeroin, ja kieltäytyy jos tietoa ei löydy (answerable=false) — vaatii
 avaimen. Ei hallusinaatiota (vain konteksti), ei äänestysohjeita, ei motiiveja;
 vastaus merkitään tekoälyn tuottamaksi ja alkuperäinen puhe on aina linkkinä.
+
+## 11. Analyysi ilman API-avainta: Claude Code -työnkulku
+
+LLM-analyysit (M1 kannat, M24 selitykset, M23 vastaukset) voidaan tuottaa **ilman
+erillistä, maksullista API-avainta** ajamalla ne Claude Code -istunnossa:
+
+1. **Vie** analysoitavat puheet: `km stance-export --limit N --out data/stance_batch.json`
+   (priorisoi puhtaiden hyväksyntä/hylkäys-äänestysten puheet — M2:n hyödyllisin joukko;
+   ohittaa jo analysoidut).
+2. **Analysoi** ne Claude Code -ajossa: kielimalli lukee `data/stance_batch.json`:n ja
+   tuottaa tulostiedoston (model_label + stances[], jokainen sanatarkalla lainauksella).
+3. **Lataa** tulokset: `km load-llm-demo <tiedosto>` — loaderi **hylkää** rivin, jos
+   `evidence_quote` ei ole sanatarkka osa puhetta (integriteetti), ja rakentaa
+   sanat-vs-äänet-tilikirjan (M2) automaattisesti.
+
+Sama kahden vaiheen (vie → analysoi → lataa, lainausvarmennus) periaate koskee myös
+lakiselittäjää. Esimerkki: `seed/llm_stance_he100.json` on Claude Code -ajossa tuotettu
+kanta-analyysi alkoholilain (HE 100/2017 vp) salikeskustelusta — siitä M2 tunnisti sekä
+puoluerajat ylittäviä linjassa-tapauksia että aitoja puhe–ääni-ristiriitoja.
+
+Vaihtoehtoisesti analyysin voi ajaa Anthropic-rajapinnalla (`ANTHROPIC_API_KEY` +
+`km llm-stance`/`km llm-explain`); tulokset välimuistitetaan samalla tavalla.

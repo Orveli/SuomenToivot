@@ -17,19 +17,16 @@ voi tehdä: se ei tiedä, ottiko puhuja kantaa <em>puolesta vai vastaan</em>, ei
 </div>
 
 {% if not examples %}
-<div class="notice"><strong>LLM-analyysia ei ole vielä ajettu.</strong> Kanta-analyysi (M1)
-muodostetaan kielimallilla puheista; aseta <code>ANTHROPIC_API_KEY</code> ja aja
-<code>km llm-stance</code> sekä <code>km words-votes</code>. Pikademo:
-<code>km load-llm-demo</code>.</div>
+<div class="notice"><strong>Kanta-analyysia ei ole vielä ajettu.</strong> Kannat poimitaan
+puheista kielimallilla. Työnkulku ilman erillistä API-avainta: vie puheet
+<code>km stance-export</code>, analysoi ne Claude Code -ajossa, lataa tulokset
+<code>km load-llm-demo &lt;tiedosto&gt;</code>.</div>
 {% else %}
 
-{% if model and 'demo' in model %}
-<div class="notice small">⚠️ <strong>Demo-otos.</strong> Alla näkyy käsin varmennettu otos oikeita
-puheita ({{ n_persons }} edustajaa, {{ n_items }} säädöstä), joka osoittaa toiminnallisuuden.
-Koko aineiston (114&nbsp;000 puhetta) kanta-analyysi vaatii API-avaimen ja ajon
-<code>km llm-stance</code>. Tällöin myös <em>ristiriita</em>- ja <em>vastentahtoinen</em>-tapaukset
-pinnoittuvat laajemmin.</div>
-{% endif %}
+<div class="notice small">Alla on <strong>oikeaa dataa</strong>: kannat on poimittu salipuheista
+({{ n_persons }} edustajaa, {{ n_items }} säädöstä) ja sovitettu äänestyksiin. Kattavuus
+laajenee sitä mukaa kun lisää puheita analysoidaan (työnkulku: <code>km stance-export</code>
+→ Claude Code -analyysi → <code>km load-llm-demo</code>).</div>
 
 <h2>Yhteenveto</h2>
 <div class="wv-chips">

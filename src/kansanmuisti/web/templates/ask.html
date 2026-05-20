@@ -24,9 +24,9 @@ lähdeviittein. Et tarvitse oikeita hakusanoja.</p>
     <p>{{ ans.answer }}</p>
   </div>
   {% elif passages and not llm_enabled %}
-  <div class="notice small">Vastauksen automaattinen tiivistäminen vaatii kielimallin
-    (<code>ANTHROPIC_API_KEY</code>). Alla silti <strong>oikeat, lähteistetyt puhekatkelmat</strong>,
-    jotka haku löysi — voit lukea ne itse.</div>
+  <div class="notice small">Vastauksen automaattinen tiivistäminen tehdään kielimallilla
+    (Claude Code -ajossa tai API-avaimella). Alla silti <strong>oikeat, lähteistetyt
+    puhekatkelmat</strong>, jotka haku löysi — voit lukea ne itse.</div>
   {% endif %}
 
   {% if passages %}
