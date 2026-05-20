@@ -1,6 +1,6 @@
-# Data-hakemisto: ohita kaikki paitsi päätietokanta (versioidaan Git LFS:llä)
-data/*
-!data/kansanmuisti.sqlite3
+# Data: generoitu tietokanta ei versionhallintaan (jaetaan GitHub Release -liitteenä,
+# regeneroitavissa: km collect-all + km analyze)
+data/
 data/*.sqlite3-wal
 data/*.sqlite3-shm
 data/*.db
