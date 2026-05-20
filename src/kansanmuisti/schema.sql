@@ -236,6 +236,18 @@ CREATE TABLE IF NOT EXISTS analysis_member_topic (
     PRIMARY KEY (person_id, topic_id)
 );
 
+CREATE TABLE IF NOT EXISTS analysis_political_map (
+    person_id      INTEGER PRIMARY KEY,
+    period         TEXT,
+    party          TEXT,                  -- ryhmä, jota käytettiin (nykyinen)
+    dim1           REAL,                  -- pääakseli (selittää eniten vaihtelusta)
+    dim2           REAL,                  -- toinen akseli
+    dist_own       REAL,                  -- etäisyys oman ryhmän keskipisteeseen
+    nearest_party  TEXT,                  -- lähin ryhmäkeskipiste (voi olla eri kuin oma)
+    n_votes        INTEGER,
+    computed_at    TEXT
+);
+
 CREATE TABLE IF NOT EXISTS analysis_position_change (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,
     person_id    INTEGER NOT NULL,

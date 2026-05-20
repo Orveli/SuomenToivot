@@ -535,6 +535,43 @@ def index_highlights(conn) -> dict:
     return {"spotlight": spotlight, "tight": tight, "trend": trend}
 
 
+def political_map(conn) -> dict:
+    """Poliittisen kartan pisteet, ryhmäkeskipisteet ja meta (selitysosuudet)."""
+    rows = _rows(conn,
+        "SELECT m.person_id, m.dim1, m.dim2, m.party, m.dist_own, m.nearest_party, p.full_name"
+        " FROM analysis_political_map m JOIN person p ON p.person_id=m.person_id")
+    from collections import defaultdict
+    cg = defaultdict(list)
+    for r in rows:
+        cg[r["party"]].append((r["dim1"], r["dim2"]))
+    centroids = {p: (sum(x for x, _ in v) / len(v), sum(y for _, y in v) / len(v))
+                 for p, v in cg.items() if len(v) >= 3}
+    meta = get = conn.execute("SELECT n_items, note FROM ingest_state WHERE job='political_map'").fetchone()
+    var1 = var2 = period = None
+    if meta and meta["note"] and "|" in meta["note"]:
+        var1, var2, period = (meta["note"].split("|") + [None, None, None])[:3]
+    return {"points": rows, "centroids": centroids,
+            "n": len(rows), "var1": var1, "var2": var2, "period": period}
+
+
+def mavericks(conn, limit: int = 15) -> List[dict]:
+    """Edustajat kauimpana oman ryhmänsä keskipisteestä (kuvaileva itsenäisyysmittari)."""
+    return _rows(conn,
+        "SELECT m.person_id, p.full_name, m.party, m.dist_own, m.nearest_party, m.n_votes"
+        " FROM analysis_political_map m JOIN person p ON p.person_id=m.person_id"
+        " WHERE m.dist_own IS NOT NULL ORDER BY m.dist_own DESC LIMIT ?", limit)
+
+
+def party_outsiders(conn) -> List[dict]:
+    """Edustajat, joiden lähin ryhmäkeskipiste EI ole oma ryhmä — äänestävät
+    käytännössä lähempänä toista ryhmää."""
+    return _rows(conn,
+        "SELECT m.person_id, p.full_name, m.party, m.nearest_party, m.dist_own, m.n_votes"
+        " FROM analysis_political_map m JOIN person p ON p.person_id=m.person_id"
+        " WHERE m.nearest_party IS NOT NULL AND m.nearest_party!=m.party"
+        " ORDER BY m.dist_own DESC")
+
+
 def stats_overview(conn) -> dict:
     return {
         "trends": topic_trends(conn),

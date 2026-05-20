@@ -123,6 +123,22 @@ def kortit(request: Request, party: str = "", sort: str = "puheet", dir: str = "
         conn.close()
 
 
+@app.get("/kartta", response_class=HTMLResponse)
+def kartta(request: Request):
+    conn = _conn()
+    try:
+        m = queries.political_map(conn)
+        pts = [(r["dim1"], r["dim2"], f'{r["full_name"]} ({r["party"]})', r["party"])
+               for r in m["points"]]
+        chart = viz.category_scatter_svg(
+            pts, xlabel=f'Ulottuvuus 1 (selittää {m["var1"] or "?"} %)',
+            ylabel=f'Ulottuvuus 2 ({m["var2"] or "?"} %)', centroids=m["centroids"])
+        return render(request, "map.html", chart=chart, meta=m,
+                      mavericks=queries.mavericks(conn))
+    finally:
+        conn.close()
+
+
 @app.get("/tilastot", response_class=HTMLResponse)
 def tilastot(request: Request):
     conn = _conn()

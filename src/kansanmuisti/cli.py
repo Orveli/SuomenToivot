@@ -93,6 +93,13 @@ def cmd_analyze(args):
         _log(f"  {k}: {v}")
 
 
+def cmd_political_map(args):
+    from .analyze.politmap import compute_political_map
+    with db.session() as conn:
+        res = compute_political_map(conn)
+    _log(f"Poliittinen kartta laskettu: {res}")
+
+
 def cmd_coverage_report(args):
     from .report import generate_coverage_report
     path = generate_coverage_report()
@@ -151,6 +158,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("analyze", help="Aja analyysiputki")
     sp.set_defaults(func=cmd_analyze)
+
+    sp = sub.add_parser("political-map", help="Laske poliittinen kartta (SVD)")
+    sp.set_defaults(func=cmd_political_map)
 
     sp = sub.add_parser("coverage-report", help="Generoi kattavuusraportti (COVERAGE.md)")
     sp.set_defaults(func=cmd_coverage_report)

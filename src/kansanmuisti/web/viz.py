@@ -126,6 +126,58 @@ def scatter_svg(points: List[Tuple[float, float, str]], xlabel: str, ylabel: str
     return "".join(parts)
 
 
+# Neutraali kategorinen paletti (EI puolueiden brändivärejä — vain datan ryhmittely)
+CATEGORY_PALETTE = ["#1f4e79", "#b5894d", "#5a8f6b", "#8a6d9b", "#3d7ab5",
+                    "#c0673f", "#4f8a8b", "#9a8f33", "#777e87", "#7a4d6b"]
+
+
+def category_scatter_svg(points, xlabel: str, ylabel: str, centroids=None,
+                         width: int = 760, height: int = 560) -> str:
+    """Hajontakaavio värjättynä ryhmittäin. points = [(x, y, label, group), ...].
+    centroids = {group: (x, y)} piirretään merkityillä keskipisteillä."""
+    if not points:
+        return ""
+    pad = 46
+    xs = [p[0] for p in points]
+    ys = [p[1] for p in points]
+    xmin, xmax = min(xs), max(xs)
+    ymin, ymax = min(ys), max(ys)
+    xr = (xmax - xmin) or 1
+    yr = (ymax - ymin) or 1
+    pw, ph = width - 2 * pad - 90, height - 2 * pad
+    def X(v): return pad + pw * (v - xmin) / xr
+    def Y(v): return pad + ph - ph * (v - ymin) / yr
+    groups = sorted({p[3] for p in points})
+    color = {g: CATEGORY_PALETTE[i % len(CATEGORY_PALETTE)] for i, g in enumerate(groups)}
+    parts = [f'<svg viewBox="0 0 {width} {height}" width="100%" height="{height}" role="img">']
+    # nolla-akselit
+    if xmin < 0 < xmax:
+        parts.append(f'<line x1="{X(0):.1f}" y1="{pad}" x2="{X(0):.1f}" y2="{pad+ph}" stroke="{LINE}" stroke-dasharray="3 3"/>')
+    if ymin < 0 < ymax:
+        parts.append(f'<line x1="{pad}" y1="{Y(0):.1f}" x2="{pad+pw}" y2="{Y(0):.1f}" stroke="{LINE}" stroke-dasharray="3 3"/>')
+    for x, y, label, g in points:
+        parts.append(
+            f'<circle cx="{X(x):.1f}" cy="{Y(y):.1f}" r="4" fill="{color[g]}" fill-opacity="0.7" '
+            f'stroke="#fff" stroke-width="0.5"><title>{escape(label)}</title></circle>')
+    if centroids:
+        for g, (cx, cy) in centroids.items():
+            parts.append(
+                f'<circle cx="{X(cx):.1f}" cy="{Y(cy):.1f}" r="3" fill="{INK}"/>'
+                f'<text x="{X(cx):.1f}" y="{Y(cy)-6:.1f}" font-size="11" font-weight="700" '
+                f'fill="{color.get(g, INK)}" text-anchor="middle" '
+                f'stroke="#fff" stroke-width="2.5" paint-order="stroke">{escape(g)}</text>')
+    # legenda
+    lx = pad + pw + 16
+    for i, g in enumerate(groups):
+        ly = pad + 8 + i * 18
+        parts.append(f'<circle cx="{lx}" cy="{ly-3}" r="5" fill="{color[g]}"/>')
+        parts.append(f'<text x="{lx+10}" y="{ly}" font-size="11" fill="{INK}">{escape(g)}</text>')
+    parts.append(f'<text x="{pad+pw/2:.0f}" y="{height-8}" font-size="11" fill="#5b6168" text-anchor="middle">{escape(xlabel)} →</text>')
+    parts.append(f'<text x="14" y="{pad+ph/2:.0f}" font-size="11" fill="#5b6168" text-anchor="middle" transform="rotate(-90 14 {pad+ph/2:.0f})">{escape(ylabel)} →</text>')
+    parts.append("</svg>")
+    return "".join(parts)
+
+
 def heat_color(v: float) -> str:
     """0..1 -> vaalea→tumma sininen (neutraali, ei puna/vihreä-politiikkaa)."""
     v = max(0.0, min(1.0, v))

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Poliittinen kartta — SuomenToivot{% endblock %}
+{% block body %}
+<h1>Poliittinen kartta</h1>
+<p class="muted">Jokainen piste on yksi edustaja, sijoitettuna <strong>äänestyskäyttäytymisen</strong>
+perusteella. Sijainti on laskettu pelkistämällä {{ meta.period or '' }} vaalikauden kaikki
+substantiiviset äänestykset kahteen ulottuvuuteen (SVD / ideal-point — poliittisen tutkimuksen
+vakiomenetelmä). <strong>Akseleita ei ole nimetty käsin</strong> — ne nousevat suoraan datasta.
+<a href="/menetelmat">Menetelmät.</a></p>
+
+{% if meta.var1 %}
+<div class="notice small">
+  Pääakseli (ulottuvuus 1) selittää <strong>{{ meta.var1 }} %</strong> kaikesta äänestysvaihtelusta
+  ja toinen ulottuvuus {{ meta.var2 }} %. Kun yksi akseli selittää näin paljon, parlamentti on
+  vahvasti <em>yksiulotteinen</em>: tällä kaudella akseli erottaa empiirisesti hallitus- ja
+  oppositioryhmät — emme väitä sitä "oikeisto–vasemmisto"-akseliksi, vaan kuvaamme mitä data näyttää.
+</div>
+{% endif %}
+
+{% if chart %}<div class="chartbox">{{ chart|safe }}</div>{% endif %}
+<p class="small muted">Mustat pisteet = ryhmien keskipisteet. Vie hiiri pisteen päälle nähdäksesi nimen.
+Väri merkitsee ryhmää (ei puolueen brändiväri). Mukana {{ meta.n }} edustajaa, joilla riittävästi
+ääniä jaksolla.</p>
+
+<h2>🐴 Itsenäisimmin äänestäneet — kauimpana oman ryhmänsä keskipisteestä</h2>
+<p class="small muted">Suuri etäisyys = edustaja äänesti monessa asiassa toisin kuin ryhmänsä
+tyypillinen jäsen. Kuvaileva mittari — <strong>ei</strong> kerro syytä eikä ole arvosana.</p>
+<table>
+  <tr><th>Edustaja</th><th>Ryhmä</th><th class="right">Etäisyys ryhmästä</th><th>Lähin ryhmä</th><th class="right">Ääniä</th></tr>
+  {% for m in mavericks %}
+  <tr>
+    <td><a href="/edustaja/{{ m.person_id }}">{{ m.full_name }}</a></td>
+    <td><span class="party-tag">{{ m.party }}</span></td>
+    <td class="right">{{ '%.0f' % m.dist_own }}</td>
+    <td><span class="party-tag">{{ m.nearest_party }}</span>{% if m.nearest_party==m.party %} (oma){% endif %}</td>
+    <td class="right">{{ m.n_votes }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<div class="disclaimer small">Huom: tällä vaalikaudella hallitusryhmät (kok, ps, r, kd) äänestävät hyvin
+yhtenäisesti, joten niiden keskipisteet ovat lähellä toisiaan. Siksi emme tulkitse yksittäisen
+edustajan "lähintä ryhmää" loikkaukseksi — esitämme vain etäisyyden omasta ryhmästä, joka on
+luotettava itsenäisyyden mittari.</div>
+{% endblock %}

@@ -89,6 +89,20 @@ def test_index_and_scatter_render(client):
     assert "Aktiivisuus" in r.text
 
 
+def test_map_page_renders(client):
+    r = client.get("/kartta")
+    assert r.status_code == 200
+    assert "Poliittinen kartta" in r.text
+
+
+def test_category_scatter_svg():
+    from kansanmuisti.web import viz
+    pts = [(-50, 10, "A (sd)", "sd"), (60, -20, "B (kok)", "kok"), (5, 5, "C (kesk)", "kesk")]
+    svg = viz.category_scatter_svg(pts, "x", "y", centroids={"sd": (-50, 10)})
+    assert svg.startswith("<svg") and "circle" in svg
+    assert viz.category_scatter_svg([], "x", "y") == ""
+
+
 def test_correction_post(client):
     r = client.post("/korjaus", data={"message": "Testi korjaus", "page_ref": "/edustaja/1",
                                        "person_id": "1"})
