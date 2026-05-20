@@ -336,9 +336,26 @@ def aihe(request: Request, slug: str):
             return render(request, "notfound.html", what="Aihetta")
         own = queries.topic_ownership(conn, slug)
         own_chart = viz.stacked_bars_svg(own["years"], own["parties"], own["series"])
-        return render(request, "topic.html", ownership_chart=own_chart, **d)
+        return render(request, "topic.html", ownership_chart=own_chart,
+                      timeline=queries.topic_timeline(conn, slug), **d)
     finally:
         conn.close()
+
+
+@app.get("/laki", response_class=HTMLResponse)
+def laki(request: Request, item: str = ""):
+    conn = _conn()
+    try:
+        ex = queries.bill_explainer(conn, item) if item else None
+        votes = queries.votes_for_item(conn, item) if item else []
+        return render(request, "bill.html", item=item, ex=ex, votes=votes)
+    finally:
+        conn.close()
+
+
+@app.get("/sanasto", response_class=HTMLResponse)
+def sanasto(request: Request):
+    return render(request, "glossary.html", terms=queries.glossary())
 
 
 @app.get("/aanestys/{vote_id}", response_class=HTMLResponse)

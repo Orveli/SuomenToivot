@@ -5,7 +5,8 @@
 <h1>{{ vote.title }}</h1>
 <p class="muted">
   {{ vote.session_date[:10] if vote.session_date }}
-  {% if vote.legislative_item %} · {{ vote.legislative_item }}{% endif %}
+  {% if vote.legislative_item %} · {{ vote.legislative_item }}
+    · <a href="/laki?item={{ vote.legislative_item|urlencode }}">selitä arkikielellä →</a>{% endif %}
   {% if vote.item_title %} · {{ vote.item_title }}{% endif %}
   {% if vote.is_procedural %} · <span class="flag">PROCEDURAL_SUSPECT — mahdollisesti menettelyäänestys</span>{% endif %}
 </p>

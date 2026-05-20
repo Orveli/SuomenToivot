@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}{{ item }} käytännössä — SuomenToivot{% endblock %}
+{% block body %}
+<h1>{{ item }} <span class="small muted">arkikielellä</span></h1>
+
+{% if ex %}
+{% if ex.model and 'demo' in ex.model %}
+<div class="notice small">⚠️ <strong>Demo-otos.</strong> Käsin varmennettu selitys oikeasta
+esityksestä. Koko aineiston selitykset muodostetaan ajamalla <code>km llm-explain</code>
+API-avaimella.</div>
+{% endif %}
+<div class="bill-grid">
+  <section class="bill-block">
+    <h2>Mikä muuttuu</h2>
+    <p>{{ ex.what_changes }}</p>
+  </section>
+  <section class="bill-block">
+    <h2>Keitä koskee</h2>
+    <p>{{ ex.who_affected }}</p>
+  </section>
+  <section class="bill-block">
+    <h2>Mistä kiisteltiin</h2>
+    <p>{{ ex.contested }}</p>
+  </section>
+</div>
+
+{% if ex.sources %}
+<h2>Lähteet</h2>
+<p class="small muted">Jokainen yllä oleva väite nojaa näihin — sanatarkat lainaukset
+esityksestä ja salipuheista.</p>
+<ul class="bill-sources">
+  {% for s in ex.sources %}
+  <li><span class="src-type">{{ s.type }}</span>
+    {% if s.ref %}<b>{{ s.ref }}</b>{% endif %}
+    {% if s.quote %}<blockquote class="wv-quote">“{{ s.quote }}”</blockquote>{% endif %}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% else %}
+<div class="notice">
+  {% if item %}<strong>Tälle säädökselle ei ole vielä arkikielistä selitystä.</strong>
+  Selitykset muodostetaan kielimallilla esityksen sisällöstä ja salikeskustelusta;
+  aja <code>km llm-explain</code> (API-avain) tai pikademo <code>km load-explainer-demo</code>.
+  {% else %}Anna säädöstunnus, esim. <a href="/laki?item=HE 35/2023 vp">HE 35/2023 vp</a>.{% endif %}
+</div>
+{% endif %}
+
+{% if votes %}
+<h2>Aiheeseen liittyvät äänestykset</h2>
+<table>
+  <tr><th>Pvm</th><th>Tulos</th><th>Äänestys</th></tr>
+  {% for v in votes %}
+  <tr>
+    <td class="small nowrap">{{ (v.session_date or '')[:10] }}</td>
+    <td class="nowrap"><strong>{{ v.result_yes }}–{{ v.result_no }}</strong></td>
+    <td><a href="/aanestys/{{ v.vote_id }}">{{ (v.title or '')[:60] }}</a>
+      {% if v.is_procedural %}<span class="small muted"> · menettely</span>{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<div class="notice small" style="margin-top:18px">
+  Selitys on <em>kuvaileva ja lähteistetty</em> tiivistys esityksen sisällöstä ja
+  salikeskustelusta. Emme ennusta lain vaikutuksia, arvioi sen hyvyyttä emmekä esitä motiiveja.
+  {% if ex and ex.leg_url %}<a href="{{ ex.leg_url }}">Alkuperäinen esitys →</a>{% endif %}
+</div>
+{% endblock %}

@@ -1089,3 +1089,47 @@ def person_words_votes(conn, pid: int) -> List[dict]:
                             "alignment": r["alignment"], "context_note": r["context_note"],
                             "vote_title": r["vote_title"], "session_date": r["session_date"]})
     return list(items.values())
+
+
+# --- M24: Lakiselittäjä + aihe-aikajana ------------------------------------
+def bill_explainer(conn, item: str) -> Optional[dict]:
+    import json
+    r = _one(conn,
+        "SELECT e.*, l.title AS leg_title, l.summary AS leg_summary, l.url AS leg_url "
+        "FROM analysis_bill_explainer e "
+        "LEFT JOIN legislation l ON l.eduskunta_tunnus=e.legislative_item "
+        "WHERE e.legislative_item=?", item)
+    if r:
+        try:
+            r["sources"] = json.loads(r.get("sources_json") or "[]")
+        except Exception:
+            r["sources"] = []
+    return r
+
+
+def votes_for_item(conn, item: str) -> List[dict]:
+    return _rows(conn,
+        "SELECT vote_id, session_date, title, result_yes, result_no, is_procedural "
+        "FROM vote WHERE legislative_item=? ORDER BY session_date", item)
+
+
+def topic_timeline(conn, slug: str, limit: int = 40) -> List[dict]:
+    """Deterministinen, tapahtumapohjainen aikajana aiheelle: aiheeseen luokitellut
+    äänestykset aikajärjestyksessä. Ei kausaali- tai motiiviväitteitä."""
+    return _rows(conn,
+        "SELECT v.vote_id, v.session_date, v.legislative_item, v.title, "
+        "v.result_yes, v.result_no, "
+        "EXISTS(SELECT 1 FROM analysis_bill_explainer e WHERE e.legislative_item=v.legislative_item) has_explainer "
+        "FROM vote v JOIN vote_topic vt ON vt.vote_id=v.vote_id "
+        "JOIN topic t ON t.id=vt.topic_id "
+        "WHERE t.slug=? AND v.is_procedural=0 AND v.session_date IS NOT NULL "
+        "ORDER BY v.session_date LIMIT ?", slug, limit)
+
+
+def glossary() -> List[dict]:
+    import json
+    from .. import config as _cfg
+    p = _cfg.SEED_DIR / "glossary.json"
+    if not p.exists():
+        return []
+    return json.loads(p.read_text(encoding="utf-8")).get("terms", [])

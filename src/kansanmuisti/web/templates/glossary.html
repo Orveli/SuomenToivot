@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Eduskuntasanasto — SuomenToivot{% endblock %}
+{% block body %}
+<h1>Eduskuntasanasto</h1>
+<p class="muted">Politiikan kieli on usein muuri tavalliselle ihmiselle. Tässä keskeiset
+eduskuntatermit arkikielellä. Määritelmät kuvaavat <strong>menettelyä</strong> neutraalisti
+— eivät ota poliittista kantaa.</p>
+<dl class="glossary">
+  {% for t in terms %}
+  <dt>{{ t.term }}</dt>
+  <dd>{{ t.plain }}</dd>
+  {% endfor %}
+</dl>
+<div class="notice small">Lähde: eduskunnan menettelytavat (julkinen). Huomasitko epätarkkuuden?
+<a href="/korjaus">Ilmoita korjaus.</a></div>
+{% endblock %}

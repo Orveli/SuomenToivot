@@ -190,6 +190,22 @@ def cmd_load_llm_demo(args):
     _log(f"Demo-otos ladattu: {rs}; tilikirja rakennettu: {rv}")
 
 
+def cmd_llm_explain(args):
+    from .analyze.explain import compute_explainers
+    with db.session() as conn:
+        res = compute_explainers(conn, limit=args.limit, model=args.model, max_calls=args.max_calls)
+    if res.get("skipped_no_key") and not res.get("live_calls"):
+        _log("HUOM: ANTHROPIC_API_KEY puuttuu → uusia selityksiä ei muodostettu.")
+    _log(f"Lakiselittäjä (M24): {res}")
+
+
+def cmd_load_explainer_demo(args):
+    from .analyze.explain import load_explainer_demo
+    with db.session() as conn:
+        res = load_explainer_demo(conn, args.path)
+    _log(f"Lakiselittäjä-demo ladattu: {res}")
+
+
 def cmd_serve(args):
     import uvicorn
     uvicorn.run("kansanmuisti.web.app:app", host=args.host, port=args.port, reload=args.reload)
@@ -283,6 +299,16 @@ def build_parser() -> argparse.ArgumentParser:
     sp = sub.add_parser("load-llm-demo", help="Lataa käsin varmennettu demo-otos + rakenna tilikirja")
     sp.add_argument("path", nargs="?", default="seed/llm_stance_demo.json")
     sp.set_defaults(func=cmd_load_llm_demo)
+
+    sp = sub.add_parser("llm-explain", help="M24: selitä HE:t arkikielellä LLM:llä (vaatii ANTHROPIC_API_KEY)")
+    sp.add_argument("--limit", type=int)
+    sp.add_argument("--model")
+    sp.add_argument("--max-calls", type=int)
+    sp.set_defaults(func=cmd_llm_explain)
+
+    sp = sub.add_parser("load-explainer-demo", help="Lataa lakiselittäjän demo-otos")
+    sp.add_argument("path", nargs="?", default="seed/llm_explainer_demo.json")
+    sp.set_defaults(func=cmd_load_explainer_demo)
 
     sp = sub.add_parser("serve", help="Käynnistä verkkopalvelin")
     sp.add_argument("--host", default="127.0.0.1")

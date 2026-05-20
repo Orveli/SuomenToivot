@@ -1,0 +1,25 @@
+{
+  "_note": "Eduskuntasanasto: parlamentaarisen kielen termit arkikielellä. Määritelmät kuvaavat menettelyä neutraalisti (ei poliittista sisältöä). Tarkistettavissa eduskunnan virallisista lähteistä.",
+  "terms": [
+    {"term": "Hallituksen esitys (HE)", "plain": "Hallituksen eduskunnalle tekemä ehdotus uudeksi laiksi tai lain muutokseksi. Numerointi esim. 'HE 35/2023 vp' = esitys nro 35 valtiopäivävuonna 2023."},
+    {"term": "Lakialoite (LA)", "plain": "Yksittäisen kansanedustajan tai edustajaryhmän tekemä ehdotus uudeksi laiksi — ei siis hallitukselta."},
+    {"term": "Valiokunnan mietintö", "plain": "Valiokunnan (asiantuntijaryhmän) kanta esitykseen sen jälkeen, kun se on kuullut asiantuntijoita. Mietintö on pohja salin äänestykselle."},
+    {"term": "Vastalause", "plain": "Valiokunnan vähemmistöön jääneiden edustajien kirjallinen eriävä kanta, joka liitetään mietintöön. Usein opposition näkemys."},
+    {"term": "Lausumaehdotus (ponsi)", "plain": "Ehdotus, jossa eduskunta toteaa tahtonsa tai pyytää hallitusta toimimaan jollakin tavalla. Ei muuta itse lakia. Äänestys lausumasta ei ole äänestys lain hyväksymisestä."},
+    {"term": "Ensimmäinen käsittely", "plain": "Vaihe, jossa salissa keskustellaan lakiehdotuksen sisällöstä ja päätetään pykälistä valiokunnan mietinnön pohjalta."},
+    {"term": "Toinen käsittely", "plain": "Vaihe, jossa eduskunta päättää, hyväksytäänkö vai hylätäänkö lakiehdotus. Sisältöä ei enää muuteta."},
+    {"term": "Ainoa käsittely", "plain": "Joissakin asioissa (esim. valtion talousarvio, lausumat) asia ratkaistaan yhdellä käsittelyllä."},
+    {"term": "Jaa / Ei -äänestys", "plain": "Salissa äänestetään aina kahden vaihtoehdon välillä. Otsikko 'A / B' tarkoittaa: Jaa = vaihtoehto A, Ei = vaihtoehto B. Esim. 'Hyväksyminen / Hylkääminen': Jaa = laki hyväksytään, Ei = laki hylätään."},
+    {"term": "Tyhjää", "plain": "Edustaja on paikalla ja äänestää, mutta ei ota kantaa puolesta eikä vastaan."},
+    {"term": "Poissa", "plain": "Edustaja ei osallistunut äänestykseen. Syy voi olla esim. valiokuntatyö, sairaus tai 'pari' (pairing). Poissaolo ei ole kannanotto."},
+    {"term": "Välikysymys", "plain": "Opposition (väh. 20 edustajan) hallitukselle esittämä kysymys, joka johtaa keskusteluun ja usein luottamusäänestykseen."},
+    {"term": "Luottamusäänestys", "plain": "Äänestys siitä, nauttiiko hallitus tai ministeri eduskunnan luottamusta. Otsikko esim. 'Nauttii luottamusta / edustajan ehdotus'."},
+    {"term": "Lisätalousarvio", "plain": "Kesken vuoden tehtävä muutos valtion budjettiin, kun menot tai tulot poikkeavat suunnitellusta."},
+    {"term": "Hallitusohjelma", "plain": "Hallituspuolueiden yhdessä sopima ohjelma siitä, mitä vaalikaudella tehdään. Lakiesitykset toteuttavat usein sen kirjauksia."},
+    {"term": "Hallitus vs. oppositio", "plain": "Hallituspuolueilla on enemmistö ja niiden esitykset menevät yleensä läpi; oppositio on vähemmistössä ja häviää useimmat äänestykset. Sama puolue voi vaihtaa puolta vaalien jälkeen."},
+    {"term": "Ryhmäkuri", "plain": "Käytäntö, jossa puolueen edustajat äänestävät samalla tavalla ryhmän sovitun kannan mukaan."},
+    {"term": "Valtiopäivävuosi (vp)", "plain": "Eduskunnan istuntovuosi. Asiakirjat numeroidaan sen mukaan, esim. '/2023 vp'."},
+    {"term": "Täysistunto (PTK)", "plain": "Koko eduskunnan kokous salissa, jossa keskustellaan ja äänestetään. Pöytäkirja merkitään 'PTK'."},
+    {"term": "Vastauspuheenvuoro", "plain": "Lyhyt puheenvuoro, jolla edustaja vastaa edelliseen puhujaan kesken keskustelun."}
+  ]
+}

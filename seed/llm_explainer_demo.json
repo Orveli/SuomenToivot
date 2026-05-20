@@ -1,0 +1,19 @@
+{
+  "_note": "Käsin varmennettu demo M24-lakiselittäjälle. Oikea HE, selitys ja lähdelainaukset luettu manuaalisesti. Loaderi hylkää, jos lainaus ei ole sanatarkka osa säädöksen puheita/sisältöä. Korvautuu/täydentyy kun 'km llm-explain' ajetaan API-avaimella.",
+  "model_label": "käsin varmennettu demo-otos",
+  "explainers": [
+    {
+      "legislative_item": "HE 35/2023 vp",
+      "what_changes": "Henkilö- ja pakettiautojen ajoneuvoveron perusveroa kevennetään yhteensä 50 miljoonalla eurolla. Alennus kohdistetaan keski- ja suuripäästöisiin sekä vanhimpiin autoihin; uudempien, vähäpäästöisten autojen verotus ei muutu.",
+      "who_affected": "Keski- ja suuripäästöisten sekä vanhimpien henkilö- ja pakettiautojen omistajat. Uudempien, vähäpäästöisten autojen omistajiin muutos ei vaikuta.",
+      "contested": "Hallituspuolueet esittivät alennuksen tukena autoilijoille (Kaisa Garedew, ps). Oppositio arvosteli sitä velkarahalla tehtynä veronkevennyksenä heikossa taloustilanteessa (Joona Räsänen, sd) sekä ilmastotavoitteiden vastaisena (Saara Hyrkkö, vihr).",
+      "sources": [
+        {"type": "esitys", "ref": "HE 35/2023 vp", "quote": "henkilö- ja pakettiautojen ajoneuvoveron perusveron tasoa kevennettäisiin yhteensä 50 miljoonalla eurolla"},
+        {"type": "esitys", "ref": "HE 35/2023 vp", "quote": "Kevennys kohdistuisi keski- ja suuripäästöisiin autoihin"},
+        {"type": "puhe", "ref": "Kaisa Garedew (ps)", "quote": "Hallitusohjelman linjauksen mukaisesti autoveroa alennetaan 50 miljoonalla eurolla."},
+        {"type": "puhe", "ref": "Joona Räsänen (sd)", "quote": "hallitus yli 200 miljoonalla eurolla tekee aukkoja meidän veropohjaan"},
+        {"type": "puhe", "ref": "Saara Hyrkkö (vihr)", "quote": "Pidän tätä hallituksen esitystä saastuttavimpien autojen verotuksen keventämisestä vastuuttomana ja kaikin puolin aika käsittämättömänä."}
+      ]
+    }
+  ]
+}

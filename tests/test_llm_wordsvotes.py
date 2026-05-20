@@ -96,3 +96,24 @@ def test_wordsvotes_page(client):
     r = client.get("/sanat-vs-aanet")
     assert r.status_code == 200
     assert "Sanat vs. äänet" in r.text
+
+
+def test_explainer_demo_quote_check(conn, tmp_path):
+    from kansanmuisti.analyze.explain import load_explainer_demo
+    sp = conn.execute("SELECT legislative_item, text FROM speech WHERE legislative_item "
+                      "IS NOT NULL AND text IS NOT NULL LIMIT 1").fetchone()
+    payload = {"model_label": "testi-demo", "explainers": [
+        {"legislative_item": sp["legislative_item"], "what_changes": "x", "who_affected": "y",
+         "contested": "z", "sources": [{"type": "puhe", "quote": sp["text"][:25]}]},
+        {"legislative_item": sp["legislative_item"], "what_changes": "x", "who_affected": "y",
+         "contested": "z", "sources": [{"type": "puhe", "quote": "ei esiinny missään qqzz"}]},
+    ]}
+    f = tmp_path / "ex.json"
+    f.write_text(json.dumps(payload), encoding="utf-8")
+    res = load_explainer_demo(conn, str(f))
+    assert res["inserted"] == 1 and res["skipped_quote_mismatch"] == 1
+
+
+def test_glossary_and_pages(client):
+    assert client.get("/sanasto").status_code == 200
+    assert client.get("/laki?item=HE 1/2024 vp").status_code == 200  # ei selitystä → notice

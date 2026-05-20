@@ -11,6 +11,26 @@
 <div class="chartbox">{{ ownership_chart|safe }}</div>
 {% endif %}
 
+{% if timeline %}
+<h2>Aikajana <span class="small muted">(aiheen äänestykset ajassa)</span></h2>
+<p class="small muted">Kronologinen, tapahtumapohjainen näkymä — vain mitä tapahtui ja milloin.
+Emme esitä syy-seuraussuhteita. Klikkaa äänestystä lähteeseen.</p>
+<ol class="timeline">
+  {% for e in timeline %}
+  <li>
+    <span class="tl-date">{{ (e.session_date or '')[:10] }}</span>
+    <div class="tl-body">
+      <a href="/aanestys/{{ e.vote_id }}">{{ (e.title or '')[:70] }}</a>
+      <span class="nowrap"><strong>{{ e.result_yes }}–{{ e.result_no }}</strong></span>
+      {% if e.legislative_item %}<span class="small muted">{{ e.legislative_item }}</span>
+        {% if e.has_explainer %}· <a href="/laki?item={{ e.legislative_item|urlencode }}">arkikielellä →</a>{% endif %}
+      {% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ol>
+{% endif %}
+
 {% if top_speakers %}
 <h2>Aktiivisimmat puhujat</h2>
 <table>
