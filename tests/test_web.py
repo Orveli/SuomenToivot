@@ -89,6 +89,19 @@ def test_index_and_scatter_render(client):
     assert "Aktiivisuus" in r.text
 
 
+def test_search_mode_toggle(client):
+    # merkityshaku ei ole käytössä testiympäristössä (ei upotuksia) -> näytetään fallback
+    r = client.get("/haku?q=koulutus&mode=merkitys")
+    assert r.status_code == 200
+    assert "Sanahaku" in r.text and "Merkityshaku" in r.text
+
+
+def test_commons_file_url():
+    from kansanmuisti.collect.photos import _commons_file_url
+    u = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Jouni_Backman.jpg/330px-x.jpg"
+    assert _commons_file_url(u) == "https://commons.wikimedia.org/wiki/File:Jouni_Backman.jpg"
+
+
 def test_map_page_renders(client):
     r = client.get("/kartta")
     assert r.status_code == 200

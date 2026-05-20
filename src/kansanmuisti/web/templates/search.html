@@ -3,10 +3,36 @@
 {% block body %}
 <h1>Haku</h1>
 <form class="searchbox" action="/haku" method="get">
-  <input type="text" name="q" value="{{ q|e }}" placeholder="Nimi, aihe tai säädös…" autofocus>
+  <input type="text" name="q" value="{{ q|e }}" placeholder="Nimi, aihe, säädös tai vapaa kysymys…" autofocus>
+  <input type="hidden" name="mode" value="{{ mode }}">
   <button type="submit">Hae</button>
 </form>
+<p class="small" style="margin:-2px 0 10px">
+  Hakutapa:
+  <a href="/haku?q={{ q|urlencode }}&mode=sana" class="pill {{ 'follows' if mode!='merkitys' else '' }}">Sanahaku</a>
+  {% if semantic_available %}
+    <a href="/haku?q={{ q|urlencode }}&mode=merkitys" class="pill {{ 'follows' if mode=='merkitys' else '' }}">Merkityshaku 🧠</a>
+  {% else %}
+    <span class="pill epaselva" title="Vaatii upotukset (km embed)">Merkityshaku — ei käytössä</span>
+  {% endif %}
+  <span class="muted">Sanahaku etsii tarkkoja sanoja; merkityshaku ymmärtää aiheen merkityksen.</span>
+</p>
 {% if q %}
+
+{% if mode=='merkitys' and semantic is not none %}
+<h2>Merkityshaku — puheet aiheen mukaan ({{ semantic|length }})</h2>
+<p class="small muted">Lähimmät puheenvuorot merkityksen perusteella (ei pelkkä sana). Lukema =
+samankaltaisuus 0–1. <a href="/menetelmat">Menetelmä.</a> Tulokset linkittyvät alkuperäiseen puheeseen.</p>
+<ul class="clean">
+  {% for s in semantic %}
+  <li><a href="/puhe/{{ s.id }}">{{ s.first_name }} {{ s.last_name }}</a>
+    {% if s.party %}<span class="tag party-tag">{{ s.party }}</span>{% endif %}
+    <span class="small muted">{{ s.ptk_id }} · {{ s.started_at[:10] if s.started_at }} · osuvuus {{ s.score }}</span>
+    <div class="small">{{ s.snip }}…</div></li>
+  {% endfor %}
+</ul>
+<hr style="border:none;border-top:1px solid var(--line);margin:18px 0">
+{% endif %}
 <p class="muted">Hakutulokset: <strong>{{ q }}</strong></p>
 
 <h2>Edustajat ({{ results.persons|length }})</h2>

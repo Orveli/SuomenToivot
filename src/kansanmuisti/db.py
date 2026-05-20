@@ -21,9 +21,15 @@ def connect(db_path: Path | str | None = None) -> sqlite3.Connection:
 
 
 def init_db(conn: sqlite3.Connection) -> None:
-    """Luo skeema (idempotentti)."""
+    """Luo skeema (idempotentti) + kevyet migraatiot olemassa oleviin tauluihin."""
     sql = config.SCHEMA_PATH.read_text(encoding="utf-8")
     conn.executescript(sql)
+    # Migraatiot: lisää puuttuvat sarakkeet (ALTER on idempotentti try/exceptillä)
+    existing = {r[1] for r in conn.execute("PRAGMA table_info(person)")}
+    for col in ("photo_url TEXT", "photo_credit_url TEXT"):
+        name = col.split()[0]
+        if name not in existing:
+            conn.execute(f"ALTER TABLE person ADD COLUMN {col}")
     conn.commit()
 
 

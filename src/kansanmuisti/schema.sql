@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS person (
     active_from         TEXT,          -- aikaisin edustajatoimen alku
     active_to           TEXT,          -- viimeisin edustajatoimen loppu (NULL = jatkuu)
     source_url          TEXT,
+    photo_url           TEXT,          -- Wikimedia Commons -pikkukuva (hotlink)
+    photo_credit_url    TEXT,          -- Commons-tiedostosivu (attribuutio)
     fetched_at          TEXT
 );
 

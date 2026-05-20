@@ -20,6 +20,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "httpx>=0.27"]
+# Valinnainen merkityshaku (embedding-pohjainen). Ydin toimii ilmankin.
+semantic = ["sentence-transformers>=2.2"]
 
 [project.scripts]
 km = "kansanmuisti.cli:main"

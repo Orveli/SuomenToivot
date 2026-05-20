@@ -26,7 +26,8 @@ kuvailevia; johdonmukaisuusindeksi on <a href="/menetelmat#6-johdonmukaisuusinde
   {% set parts = m.full_name.split() %}
   <a class="mp-card" href="/edustaja/{{ m.person_id }}">
     <div class="top">
-      <div class="avatar">{{ parts[0][0] }}{{ parts[-1][0] if parts|length>1 else '' }}</div>
+      {% if m.photo_url %}<img class="avatar" src="{{ m.photo_url }}" alt="{{ m.full_name }}" loading="lazy">
+      {% else %}<div class="avatar">{{ parts[0][0] }}{{ parts[-1][0] if parts|length>1 else '' }}</div>{% endif %}
       <div>
         <div class="nm">{{ m.full_name }}</div>
         <div class="sub">

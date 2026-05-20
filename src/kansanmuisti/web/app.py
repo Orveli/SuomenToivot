@@ -55,10 +55,19 @@ def index(request: Request):
 
 
 @app.get("/haku", response_class=HTMLResponse)
-def haku(request: Request, q: str = ""):
+def haku(request: Request, q: str = "", mode: str = "sana"):
+    from ..analyze import embeddings
     conn = _conn()
     try:
-        return render(request, "search.html", results=queries.search(conn, q), q=q)
+        semantic_available = embeddings.is_available()
+        semantic = None
+        if q and mode == "merkitys" and semantic_available:
+            idx = embeddings.get_index()
+            if idx:
+                hits = idx.search(q, top_k=30)
+                semantic = queries.speeches_by_ids(conn, [h[0] for h in hits], scores=dict(hits))
+        return render(request, "search.html", results=queries.search(conn, q), q=q,
+                      mode=mode, semantic=semantic, semantic_available=semantic_available)
     finally:
         conn.close()
 

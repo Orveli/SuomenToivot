@@ -2,6 +2,9 @@
 {% block title %}{{ p.full_name }} — SuomenToivot{% endblock %}
 {% block body %}
 <div class="crumbs"><a href="/">Etusivu</a> › Edustaja</div>
+{% if p.photo_url %}
+<img class="profile-photo" src="{{ p.photo_url }}" alt="{{ p.full_name }}" loading="lazy">
+{% endif %}
 <h1>{{ p.full_name }}
   {% if p.party_current %}<a class="tag party-tag" href="/puolue/{{ p.party_current }}">{{ p.party_current }}</a>{% endif %}
 </h1>
@@ -213,5 +216,7 @@ Lupaus↔äänestys-yhteys on <strong>toimituksellinen tulkinta</strong>, ei aut
 </ul>
 {% endif %}
 <p class="source">Henkilötiedot: <a href="{{ p.source_url }}" rel="noopener">Eduskunta — MemberOfParliament</a>.
-Haettu {{ p.fetched_at[:10] if p.fetched_at }}. {{ ATTRIBUTION }}</p>
+Haettu {{ p.fetched_at[:10] if p.fetched_at }}. {{ ATTRIBUTION }}
+{% if p.photo_url %}<br>Kuva: <a href="{{ p.photo_credit_url }}" rel="noopener">Wikimedia Commons</a>
+(lisenssi tiedostosivulla).{% endif %}</p>
 {% endblock %}

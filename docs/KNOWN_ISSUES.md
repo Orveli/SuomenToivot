@@ -33,11 +33,19 @@ jatkokehitystä (ks. `docs/ROADMAP.md`).
   automaattisesti.
 
 ## Edustajakuvat
-- **Valokuvia ei ole saatavilla avoimesta datasta.** Tutkittu: MemberOfParliament-XML ei sisällä
-  kuvaa, Attachment-taulu sisältää vain asiakirjoja (PDF), ja eduskunta.fi:n edustajasivut sekä
-  arvatut kuva-URL:t palauttavat 404. Kortit käyttävät siksi nimikirjain-monogrammeja. Jos luotettava,
-  lisensoitu kuvalähde löytyy (esim. virallinen kuva-API tai Wikidata/Wikimedia oikein attribuoituna),
-  se voidaan lisätä myöhemmin.
+- **Kuvat haetaan Wikimedia Commonsista** (`km photos`, Wikipedian pageimages-API), ~75 % edustajista
+  (329/438). Eduskunnan avoimessa datassa ei ole kuvia (XML:ssä ei kuvaa, Attachment = vain PDF:t,
+  eduskunta.fi-sivut 404). Ne joille ei löydy kuvaa, näytetään nimikirjain-monogrammilla.
+- **Lisenssi/attribuutio:** Commons-kuvilla on kullakin oma lisenssinsä (pääosin CC/PD). Näytämme
+  kuvalähde­linkin (Commons-tiedostosivu), mutta **kuvakohtaiset lisenssi- ja tekijätiedot tulisi
+  varmistaa ennen laajaa tuotantokäyttöä** — k. LEGAL_ETHICS.md. Kuvat ovat ulkoinen rikaste, eivät
+  Eduskunnan avointa dataa.
+
+## Merkityshaku (semanttinen)
+- Valinnainen embedding-pohjainen haku (`km embed` + sentence-transformers). Käyttää neuroverkkomallia
+  ("musta laatikko") — siksi sitä käytetään **vain haun apuna**, ei väitteiden tai pisteytysten
+  perustana; tulokset linkittyvät aina alkuperäiseen puheeseen. Ydin (FTS-sanahaku) toimii ilman tätä.
+  Upotukset (~175 MB) eivät ole versionhallinnassa; ne lasketaan komennolla `km embed`.
 
 ## Tekninen
 - **Yhtäaikainen massakeruu + web-kirjoitus** voi aiheuttaa hetkellisen SQLite-lukon

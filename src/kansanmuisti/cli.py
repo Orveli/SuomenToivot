@@ -93,6 +93,20 @@ def cmd_analyze(args):
         _log(f"  {k}: {v}")
 
 
+def cmd_photos(args):
+    from .collect.photos import collect_photos
+    with db.session() as conn:
+        res = collect_photos(conn, only_missing=not args.refresh)
+    _log(f"Kuvat: tarkistettu {res['checked']}, löytyi {res['found']} (Wikimedia Commons).")
+
+
+def cmd_embed(args):
+    from .analyze.embeddings import embed_speeches
+    with db.session() as conn:
+        res = embed_speeches(conn, limit=args.limit)
+    _log(f"Puheet upotettu (merkityshaku): {res}")
+
+
 def cmd_party_words(args):
     from .analyze.fightinwords import compute_party_words
     with db.session() as conn:
@@ -165,6 +179,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("analyze", help="Aja analyysiputki")
     sp.set_defaults(func=cmd_analyze)
+
+    sp = sub.add_parser("photos", help="Hae edustajien kuvat Wikimedia Commonsista")
+    sp.add_argument("--refresh", action="store_true", help="Hae myös jo löydetyt uudelleen")
+    sp.set_defaults(func=cmd_photos)
+
+    sp = sub.add_parser("embed", help="Upota puheet merkityshakua varten (valinnainen, vaatii sentence-transformers)")
+    sp.add_argument("--limit", type=int, help="Rajoita puheiden määrää (testaus)")
+    sp.set_defaults(func=cmd_embed)
 
     sp = sub.add_parser("party-words", help="Laske puolueita erottavat sanat (fightin' words)")
     sp.set_defaults(func=cmd_party_words)

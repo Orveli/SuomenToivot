@@ -58,6 +58,22 @@ def search(conn, q: str) -> dict:
     return {"persons": persons, "speeches": speeches, "votes": votes, "q": q}
 
 
+def speeches_by_ids(conn, ids, scores=None) -> List[dict]:
+    """Hae puheet annetussa järjestyksessä (merkityshaun tuloksille)."""
+    if not ids:
+        return []
+    order = {sid: i for i, sid in enumerate(ids)}
+    qmarks = ",".join("?" * len(ids))
+    rows = _rows(conn,
+        f"SELECT id, person_id, first_name, last_name, party, ptk_id, started_at,"
+        f" legislative_item, substr(text,1,220) AS snip FROM speech WHERE id IN ({qmarks})", *ids)
+    rows.sort(key=lambda r: order.get(r["id"], 1e9))
+    if scores:
+        for r in rows:
+            r["score"] = round(scores.get(r["id"], 0), 3)
+    return rows
+
+
 def _fts_query(q: str) -> str:
     # turvallinen FTS5-kysely: lainausmerkitään tokenit
     tokens = [t for t in q.replace('"', " ").split() if t]
@@ -349,7 +365,7 @@ def member_directory(conn, sort: str = "nimi", direction: str = "asc",
     where_sql = " AND ".join(where)
     sql = (
         "SELECT p.person_id, p.full_name, p.party_current, p.electoral_district, p.active_from,"
-        " p.is_minister, s.n_speeches, s.n_votes_cast,"
+        " p.is_minister, p.photo_url, s.n_speeches, s.n_votes_cast,"
         " s.n_votes_total, s.n_absent, s.n_votes_eligible, s.deviation_rate,"
         " s.consistency_index, s.confidence_level,"
         " CASE WHEN s.n_votes_total>0 THEN 100.0*s.n_absent/s.n_votes_total END AS absent_pct"
