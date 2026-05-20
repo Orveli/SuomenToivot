@@ -18,6 +18,53 @@ def _one(conn, q, *p):
 
 
 # --- yleiskatsaus -----------------------------------------------------------
+# Korttien attribuuttiarvot (1–99) — kuvaileva sijoittuminen muihin edustajiin nähden.
+ATTR_LABELS = {"puhe": "Puheliaisuus", "las": "Äänestysaktiivisuus",
+               "aihe": "Aihelaajuus", "kok": "Kokemus", "its": "Itsenäisyys"}
+ATTR_ABBR = {"puhe": "PUH", "las": "LÄS", "aihe": "AIH", "kok": "KOK", "its": "ITS"}
+ATTR_ORDER = ["puhe", "las", "aihe", "kok", "its"]
+
+
+def _percentile_ratings(values: dict) -> dict:
+    """Muunna {pid: arvo} -> {pid: 1..99} persentiilisijan mukaan (suurempi arvo = suurempi luku)."""
+    items = sorted((v, pid) for pid, v in values.items() if v is not None)
+    n = len(items)
+    out = {}
+    for i, (_v, pid) in enumerate(items):
+        out[pid] = round(1 + 98 * i / (n - 1)) if n > 1 else 50
+    return out
+
+
+def member_attributes(conn) -> dict:
+    """Laske jokaiselle edustajalle 1–99 attribuuttiarvot (persentiili). Pelimäinen,
+    kuvaileva: kertoo missä edustaja sijoittuu muihin nähden, ei arvota."""
+    rows = _rows(conn,
+        "SELECT s.person_id, s.n_speeches, s.n_votes_cast, s.n_votes_total, s.deviation_rate"
+        " FROM analysis_member_summary s")
+    active_from = {r["person_id"]: r["active_from"] for r in
+                   _rows(conn, "SELECT person_id, active_from FROM person")}
+    breadth = {}
+    for r in conn.execute("SELECT person_id, COUNT(*) c FROM analysis_member_topic"
+                          " WHERE n_speeches>0 GROUP BY person_id"):
+        breadth[r["person_id"]] = r["c"]
+    raw = {"puhe": {}, "las": {}, "aihe": {}, "kok": {}, "its": {}}
+    this_year = 2025
+    for r in rows:
+        pid = r["person_id"]
+        raw["puhe"][pid] = r["n_speeches"] or 0
+        raw["las"][pid] = (100.0 * r["n_votes_cast"] / r["n_votes_total"]) if r["n_votes_total"] else None
+        raw["aihe"][pid] = breadth.get(pid, 0)
+        af = active_from.get(pid)
+        raw["kok"][pid] = (this_year - int(str(af)[:4])) if af else None
+        raw["its"][pid] = r["deviation_rate"]
+    ratings = {k: _percentile_ratings(v) for k, v in raw.items()}
+    out = {}
+    for r in rows:
+        pid = r["person_id"]
+        out[pid] = {k: ratings[k].get(pid) for k in ATTR_ORDER}
+    return out
+
+
 def card_flair(m: dict) -> dict:
     """Lisää korttiin harvinaisuustaso, ominaisuusmerkit ja korttinumero (pelillisyys).
     Kaikki kuvailevia, faktapohjaisia — eivät arvosanoja."""
@@ -125,10 +172,12 @@ def front_feed(conn) -> dict:
         " p.active_from,s.consistency_index,s.n_speeches,s.n_votes_cast,s.n_votes_total,s.n_absent,"
         " s.deviation_rate FROM analysis_member_summary s JOIN person p ON p.person_id=s.person_id"
         " WHERE s.n_votes_eligible>=100 ORDER BY RANDOM() LIMIT 8")
+    attrs = member_attributes(conn)
     for m in mps:
         m["absent_pct"] = (100.0 * m["n_absent"] / m["n_votes_total"]) if m["n_votes_total"] else None
         m["top_topic"] = _top_topic(conn, m["person_id"])
         m["badges"] = holders.get(m["person_id"], [])
+        m["attrs"] = attrs.get(m["person_id"])
         card_flair(m)
     parties = sorted(party_comparison(conn), key=lambda x: -(x["n_members"] or 0))
     return {"awards": aw, "mps": mps, "parties": parties,

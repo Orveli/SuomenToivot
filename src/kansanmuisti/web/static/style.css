@@ -212,3 +212,37 @@ nav.main{display:flex;gap:4px;margin-left:8px}
 .tcard.legendaarinen:hover .holo{opacity:.85}
 @keyframes holoShift{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}
 @media (prefers-reduced-motion: reduce){.tcard.legendaarinen .holo{animation:none}}
+
+/* ===================== LÄTKÄKORTTI: kuva + statspaneeli ===================== */
+.tcard-front:has(.tc-photo){display:flex;flex-direction:column;background:#0d1117;padding:0}
+.tc-photo{position:relative;flex:1 1 56%;min-height:0;background:#2a3340 center 22%/cover no-repeat;color:#fff}
+.tc-photo .mono{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:60px;font-weight:800;color:rgba(255,255,255,.22)}
+.tc-photo-scrim{position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(180deg,transparent,rgba(8,12,20,.85));z-index:1}
+.tc-corner{position:absolute;top:9px;left:10px;display:flex;gap:5px;align-items:center;z-index:3}
+.tc-corner .tc-party{background:rgba(255,255,255,.92);color:#1a1c1f;border-radius:7px;padding:1px 7px;font-variant:all-small-caps;font-weight:800;font-size:12px}
+.tc-corner .tc-no{position:static;color:rgba(255,255,255,.85);font-size:10px;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.tc-seal{position:absolute;top:7px;right:9px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;z-index:3;
+  background:radial-gradient(circle at 35% 30%,#fff3c4,#f4c43c 60%,#caa01f);box-shadow:0 2px 6px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,255,255,.5)}
+.tc-winribbon{position:absolute;top:0;left:0;right:0;z-index:3;text-align:center;font-size:10px;font-weight:800;letter-spacing:.03em;color:#3a2400;
+  background:linear-gradient(180deg,#ffe08a,#f4c43c);padding:3px 4px;text-transform:uppercase}
+.tc-namebar{position:absolute;left:11px;right:11px;bottom:9px;z-index:2}
+.tc-namebar .tc-name{font-size:18px;font-weight:800;line-height:1.05;text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.tc-namebar .tc-meta{font-size:10.5px;opacity:.92;text-shadow:0 1px 4px rgba(0,0,0,.7)}
+.tc-panel{flex:0 0 auto;background:linear-gradient(180deg,#ffffff,#eef2f7);color:var(--ink);
+  display:flex;align-items:center;gap:8px;padding:9px 11px;border-top:2px solid var(--accent)}
+.tc-attrs{display:flex;flex:1;justify-content:space-between}
+.tc-attr{text-align:center;line-height:1}
+.tc-attr b{font-size:16px;font-weight:800;color:var(--accent);display:block}
+.tc-attr span{font-size:8px;letter-spacing:.03em;color:var(--muted)}
+.tc-idx{text-align:center;border-left:1px solid var(--line);padding-left:9px;line-height:1}
+.tc-idx b{font-size:24px;font-weight:800;display:block}
+.tc-idx span{font-size:7.5px;letter-spacing:.05em;color:var(--muted)}
+/* takapuolen spektri */
+.bk-award{background:linear-gradient(90deg,#ffe08a,#f4c43c);color:#3a2400;font-weight:700;font-size:12px;border-radius:7px;padding:4px 8px;margin-bottom:7px}
+.bk-spectrum{margin:2px 0}
+.bk-bar{display:grid;grid-template-columns:84px 1fr 22px;align-items:center;gap:7px;margin:3px 0;font-size:10.5px}
+.bk-lab{color:var(--muted)}
+.bk-track{height:7px;background:var(--soft);border-radius:4px;overflow:hidden}
+.bk-track>i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.bk-val{text-align:right;font-weight:700;font-size:11px}
+.bk-raw{margin-top:6px}

@@ -31,6 +31,9 @@ templates.env.globals["LICENSE"] = config.DATA_LICENSE
 templates.env.globals["now_year"] = dt.date.today().year
 templates.env.globals["radar_svg"] = viz.radar_svg
 templates.env.globals["heat_color"] = viz.heat_color
+templates.env.globals["ATTR_LABELS"] = queries.ATTR_LABELS
+templates.env.globals["ATTR_ABBR"] = queries.ATTR_ABBR
+templates.env.globals["ATTR_ORDER"] = queries.ATTR_ORDER
 
 
 def _conn():
@@ -127,8 +130,10 @@ def kortit(request: Request, party: str = "", sort: str = "puheet", dir: str = "
         cards = queries.member_cards(conn, party=party or None, sort=sort, direction=dir,
                                      min_eligible=min_eligible)
         holders = queries.award_holders(conn)
+        attrs = queries.member_attributes(conn)
         for cmd in cards:
             cmd["badges"] = holders.get(cmd["person_id"], [])
+            cmd["attrs"] = attrs.get(cmd["person_id"])
             queries.card_flair(cmd)
         return render(request, "cards.html", cards=cards, parties=queries.parties(conn),
                       party=party, sort=sort, dir=dir, min_eligible=min_eligible)
