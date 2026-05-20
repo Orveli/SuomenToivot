@@ -408,3 +408,38 @@ tbody tr:hover td,tr:hover td{background:var(--accent-tint)}
 .truststrip a:hover{color:var(--accent)}
 .truststrip b{display:block;font-size:24px;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
 @media(max-width:600px){.hero{padding:var(--s6) var(--s4)}.truststrip{gap:var(--s4)}}
+
+/* ============================================================
+   REVIEW-FIX (2026-05): palkinto- & datakorttien luettavuus,
+   kasvojen näkyvyys, taulukoiden ryhti. Lisätty loppuun.
+   ============================================================ */
+
+/* --- Palkintokortit: numero pois kasvojen päältä, alapaneeliin --- */
+/* Kuvarajaus suosii kasvoja (ylhäältä), ei keskeltä leikkaava luku. */
+.tcard.award .tcard-front{background-position:center 16%}
+/* Vahvempi pohjahäive jotta valkoinen teksti erottuu kuvasta */
+.tcard.award .scrim{background:linear-gradient(180deg,
+  rgba(8,12,20,0) 30%,rgba(8,12,20,.55) 58%,rgba(8,12,20,.94) 100%)}
+/* Iso lukema ankkuroidaan alas (ei enää keskelle kasvoja) */
+.tcard.award .tc-bignum{inset:auto 0 0 0;top:auto;justify-content:flex-end;
+  align-items:flex-start;text-align:left;padding:0 14px 38px;z-index:2}
+.tcard.award .tc-bignum b{font-size:30px;line-height:1;letter-spacing:-.01em;
+  text-shadow:0 1px 8px rgba(0,0,0,.85)}
+.tcard.award .tc-bignum span{font-size:13px;font-weight:600;opacity:1;margin-top:5px;
+  text-shadow:0 1px 5px rgba(0,0,0,.9)}
+/* Puolue + vihje samalle alariville, ei päällekkäin */
+.tcard.award .tc-bottom{bottom:14px;left:14px;right:14px;display:flex;
+  justify-content:space-between;align-items:center;gap:8px}
+.tcard.award .tc-bottom .tc-meta{font-variant:all-small-caps;font-weight:800;
+  letter-spacing:.05em;font-size:12px;opacity:.95;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.tcard.award .tc-hint{position:absolute;left:auto;right:11px;bottom:13px;opacity:.65;font-size:9px;white-space:nowrap;z-index:2;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+/* Datakortti (ei valokuvaa): iso luku saa olla keskellä, mutta hillitymmin */
+.tcard.datacard .tc-bignum{padding:34px 16px 0}
+.tcard.datacard .tc-bignum b{letter-spacing:-.01em}
+
+/* --- Tilastotaulukot: numerosarakkeiden otsikot oikealle (kohdistus lukuihin) --- */
+th.right,th.num{text-align:right}
+
+/* --- Profiilin komponenttirivit: label & arvo eivät liimaudu mobiilissa --- */
+.component{gap:10px}
+.component>span:first-child{margin-right:auto}
