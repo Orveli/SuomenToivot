@@ -599,6 +599,70 @@ def person_word_style(conn, pid: int) -> dict:
     return out
 
 
+def power_overview(conn) -> dict:
+    """#1 vallan vaikutus + #6 hallituksen läpimeno."""
+    eff = {}
+    for r in conn.execute("SELECT party, status, win_pct, n_votes FROM analysis_power_effect"):
+        eff.setdefault(r["party"], {})[r["status"]] = {"win_pct": r["win_pct"], "n": r["n_votes"]}
+    # vain ryhmät joilla molemmat tai iso n
+    parties = [{"party": p, **d} for p, d in eff.items()
+               if (d.get("gov", {}).get("n", 0) + d.get("opp", {}).get("n", 0)) >= 2000]
+    parties.sort(key=lambda x: -(x.get("gov", {}).get("n", 0)))
+    winrate = _rows(conn, "SELECT vp_year, n_votes, gov_wins, pct FROM analysis_gov_winrate ORDER BY vp_year")
+    lost = _rows(conn,
+        "SELECT l.vote_id, l.margin, v.vp_year, v.title, v.legislative_item, v.result_yes, v.result_no"
+        " FROM analysis_gov_lost l JOIN vote v ON v.vote_id=l.vote_id ORDER BY l.margin")
+    return {"parties": parties, "winrate": winrate, "lost": lost}
+
+
+def rhetoric_map_data(conn) -> dict:
+    rows = _rows(conn,
+        "SELECT r.person_id, r.dim1, r.dim2, r.party, r.nearest_party, p.full_name"
+        " FROM analysis_rhetoric_map r JOIN person p ON p.person_id=r.person_id")
+    from collections import defaultdict
+    cg = defaultdict(list)
+    for r in rows:
+        cg[r["party"]].append((r["dim1"], r["dim2"]))
+    centroids = {p: (sum(x for x, _ in v) / len(v), sum(y for _, y in v) / len(v))
+                 for p, v in cg.items() if len(v) >= 3}
+    return {"points": rows, "centroids": centroids, "n": len(rows)}
+
+
+def rhetoric_mismatch(conn, limit: int = 25) -> List[dict]:
+    """Edustajat, joiden retoriikka on lähinnä eri ryhmää kuin oma (puhuu kuin X, kuuluu Y:hyn)."""
+    return _rows(conn,
+        "SELECT r.person_id, p.full_name, r.party, r.nearest_party FROM analysis_rhetoric_map r"
+        " JOIN person p ON p.person_id=r.person_id WHERE r.nearest_party!=r.party"
+        " ORDER BY p.full_name LIMIT ?", limit)
+
+
+_OWN_PARTIES = ["kok", "ps", "kesk", "sd", "vihr", "vas", "r", "kd"]
+
+
+def topic_ownership(conn, slug: str) -> dict:
+    """#2 kuka 'omistaa' aiheen ajassa: puolueiden osuus aiheen puheista vuosittain."""
+    from collections import defaultdict
+    years = list(range(2015, 2025))
+    raw = defaultdict(lambda: defaultdict(int))  # year -> party -> n
+    for r in conn.execute(
+            "SELECT CAST(substr(s.started_at,1,4) AS INT) y, s.party, COUNT(*) n"
+            " FROM speech s JOIN speech_topic st ON st.speech_id=s.id AND st.is_primary=1"
+            " JOIN topic t ON t.id=st.topic_id WHERE t.slug=? AND s.party IS NOT NULL"
+            " AND s.started_at IS NOT NULL GROUP BY y, s.party", (slug,)):
+        if r["y"] in years:
+            party = r["party"] if r["party"] in _OWN_PARTIES else "muut"
+            raw[r["y"]][party] += r["n"]
+    parties = _OWN_PARTIES + ["muut"]
+    series = {p: [] for p in parties}
+    totals = []
+    for y in years:
+        tot = sum(raw[y].values()) or 1
+        totals.append(sum(raw[y].values()))
+        for p in parties:
+            series[p].append(round(100 * raw[y].get(p, 0) / tot, 1))
+    return {"years": years, "parties": parties, "series": series, "totals": totals}
+
+
 def political_map(conn) -> dict:
     """Poliittisen kartan pisteet, ryhmäkeskipisteet ja meta (selitysosuudet)."""
     rows = _rows(conn,

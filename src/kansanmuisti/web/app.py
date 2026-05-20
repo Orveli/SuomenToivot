@@ -133,6 +133,32 @@ def kortit(request: Request, party: str = "", sort: str = "puheet", dir: str = "
         conn.close()
 
 
+@app.get("/valta", response_class=HTMLResponse)
+def valta(request: Request):
+    conn = _conn()
+    try:
+        return render(request, "power.html", **queries.power_overview(conn))
+    finally:
+        conn.close()
+
+
+@app.get("/retoriikka", response_class=HTMLResponse)
+def retoriikka(request: Request):
+    conn = _conn()
+    try:
+        m = queries.rhetoric_map_data(conn)
+        chart = ""
+        if m["points"]:
+            pts = [(r["dim1"], r["dim2"], f'{r["full_name"]} ({r["party"]})', r["party"])
+                   for r in m["points"]]
+            chart = viz.category_scatter_svg(pts, "Retoriikka-ulottuvuus 1",
+                                             "Retoriikka-ulottuvuus 2", centroids=m["centroids"])
+        return render(request, "rhetoric.html", chart=chart, meta=m,
+                      mismatch=queries.rhetoric_mismatch(conn))
+    finally:
+        conn.close()
+
+
 @app.get("/sanat", response_class=HTMLResponse)
 def sanat(request: Request):
     conn = _conn()
@@ -230,7 +256,9 @@ def aihe(request: Request, slug: str):
         d = queries.topic_detail(conn, slug)
         if not d:
             return render(request, "notfound.html", what="Aihetta")
-        return render(request, "topic.html", **d)
+        own = queries.topic_ownership(conn, slug)
+        own_chart = viz.stacked_bars_svg(own["years"], own["parties"], own["series"])
+        return render(request, "topic.html", ownership_chart=own_chart, **d)
     finally:
         conn.close()
 

@@ -178,6 +178,38 @@ def category_scatter_svg(points, xlabel: str, ylabel: str, centroids=None,
     return "".join(parts)
 
 
+def stacked_bars_svg(years, parties, series, width: int = 760, height: int = 320) -> str:
+    """Pinotut palkit: kunkin vuoden 100 % jaettuna ryhmittäin (osuus-%)."""
+    if not years:
+        return ""
+    pad_l, pad_r, pad_t, pad_b = 30, 110, 12, 26
+    pw, ph = width - pad_l - pad_r, height - pad_t - pad_b
+    n = len(years)
+    bw = pw / n * 0.7
+    gap = pw / n
+    color = {p: CATEGORY_PALETTE[i % len(CATEGORY_PALETTE)] for i, p in enumerate(parties)}
+    parts = [f'<svg viewBox="0 0 {width} {height}" width="100%" height="{height}" role="img">']
+    for xi, y in enumerate(years):
+        x = pad_l + xi * gap + (gap - bw) / 2
+        acc = 0.0
+        for p in parties:
+            val = series[p][xi]
+            if val <= 0:
+                continue
+            h = ph * val / 100.0
+            yy = pad_t + ph - acc - h
+            parts.append(f'<rect x="{x:.1f}" y="{yy:.1f}" width="{bw:.1f}" height="{h:.1f}" '
+                         f'fill="{color[p]}"><title>{escape(p)} {val:.0f}% ({y})</title></rect>')
+            acc += h
+        parts.append(f'<text x="{x+bw/2:.1f}" y="{height-10}" font-size="9" fill="#5b6168" text-anchor="middle">{y}</text>')
+    for i, p in enumerate(parties):
+        ly = pad_t + 8 + i * 16
+        parts.append(f'<rect x="{pad_l+pw+12}" y="{ly-8}" width="10" height="10" fill="{color[p]}"/>')
+        parts.append(f'<text x="{pad_l+pw+26}" y="{ly}" font-size="10" fill="{INK}">{escape(p)}</text>')
+    parts.append("</svg>")
+    return "".join(parts)
+
+
 def heat_color(v: float) -> str:
     """0..1 -> vaalea→tumma sininen (neutraali, ei puna/vihreä-politiikkaa)."""
     v = max(0.0, min(1.0, v))

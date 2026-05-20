@@ -71,9 +71,13 @@ def run_all(conn, period: str = "kerätty aineisto") -> dict:
     results["party_words"] = compute_party_words(conn)
     from .wordstyle import compute_word_style
     results["word_style"] = compute_word_style(conn)
+    from .government import compute_power_analysis
+    results["power"] = compute_power_analysis(conn)
     try:
         from .politmap import compute_political_map
         results["political_map"] = compute_political_map(conn)
+        from .rhetoricmap import compute_rhetoric_map
+        results["rhetoric_map"] = compute_rhetoric_map(conn)
     except ImportError:
         results["political_map"] = {"skipped": "numpy puuttuu"}
     compute_coverage(conn)

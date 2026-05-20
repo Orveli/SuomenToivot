@@ -93,6 +93,20 @@ def cmd_analyze(args):
         _log(f"  {k}: {v}")
 
 
+def cmd_power_analysis(args):
+    from .analyze.government import compute_power_analysis
+    with db.session() as conn:
+        res = compute_power_analysis(conn)
+    _log(f"Vallan vaikutus + hallituksen läpimeno laskettu: {res}")
+
+
+def cmd_rhetoric_map(args):
+    from .analyze.rhetoricmap import compute_rhetoric_map
+    with db.session() as conn:
+        res = compute_rhetoric_map(conn)
+    _log(f"Retoriikkakartta laskettu: {res}")
+
+
 def cmd_word_style(args):
     from .analyze.wordstyle import compute_word_style
     with db.session() as conn:
@@ -189,6 +203,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("word-style", help="Laske täyte- ja kirosanat per edustaja")
     sp.set_defaults(func=cmd_word_style)
+
+    sp = sub.add_parser("power-analysis", help="Vallan vaikutus + hallituksen läpimeno")
+    sp.set_defaults(func=cmd_power_analysis)
+
+    sp = sub.add_parser("rhetoric-map", help="Retoriikkakartta puheupotuksista (vaatii km embed)")
+    sp.set_defaults(func=cmd_rhetoric_map)
 
     sp = sub.add_parser("photos", help="Hae edustajien kuvat Wikimedia Commonsista")
     sp.add_argument("--refresh", action="store_true", help="Hae myös jo löydetyt uudelleen")

@@ -102,6 +102,32 @@ def test_commons_file_url():
     assert _commons_file_url(u) == "https://commons.wikimedia.org/wiki/File:Jouni_Backman.jpg"
 
 
+def test_power_page_renders(client):
+    r = client.get("/valta")
+    assert r.status_code == 200
+    assert "Hallitus" in r.text and "läpimeno" in r.text.lower()
+
+
+def test_rhetoric_page_renders(client):
+    r = client.get("/retoriikka")
+    assert r.status_code == 200
+    assert "Retoriikkakartta" in r.text
+
+
+def test_gov_periods():
+    from kansanmuisti.analyze.government import gov_parties_at
+    assert "kok" in gov_parties_at("2024-01-15")   # Orpo
+    assert "sd" in gov_parties_at("2021-03-01")    # Marin
+    assert "ps" in gov_parties_at("2016-05-01")    # Sipilä I
+    assert "sin" in gov_parties_at("2018-05-01")   # Sipilä II
+    assert "kok" not in gov_parties_at("2021-03-01")  # oppositiossa
+
+
+def test_topic_ownership_chart(client):
+    r = client.get("/aihe/terveydenhuolto")
+    assert r.status_code == 200
+
+
 def test_words_page_renders(client):
     r = client.get("/sanat")
     assert r.status_code == 200

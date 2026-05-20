@@ -4,6 +4,13 @@
 <div class="crumbs"><a href="/aiheet">Aiheet</a> › {{ topic.label }}</div>
 <h1>{{ topic.label }}</h1>
 
+{% if ownership_chart %}
+<h2>Kuka puhuu tästä — ryhmien osuus ajassa</h2>
+<p class="small muted">Osuus aiheen primääriaihe-puheenvuoroista vuosittain. Paljastaa, mikä ryhmä
+"omistaa" teeman ja miten se on muuttunut. Kuvaileva.</p>
+<div class="chartbox">{{ ownership_chart|safe }}</div>
+{% endif %}
+
 {% if top_speakers %}
 <h2>Aktiivisimmat puhujat</h2>
 <table>

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Retoriikkakartta — SuomenToivot{% endblock %}
+{% block body %}
+<h1>Retoriikkakartta — mitä edustajat puhuvat</h1>
+<p class="muted">Tämä kartta sijoittaa edustajat sen mukaan <strong>mitä he puhuvat</strong> (puheiden
+merkitys, upotuksista) — erotuksena <a href="/kartta">poliittisesta kartasta</a>, joka perustuu
+siihen <em>miten he äänestävät</em>. Vertaamalla karttoja näkee, kuka puhuu kuin yksi ryhmä mutta
+äänestää kuin toinen. Akseleita ei nimetä käsin. Kuvaileva. <a href="/menetelmat">Menetelmät.</a></p>
+
+{% if chart %}
+<div class="chartbox">{{ chart|safe }}</div>
+<p class="small muted">Mustat pisteet = ryhmien retoriikkakeskipisteet. Hover näyttää nimen.
+Mukana {{ meta.n }} edustajaa, joilla riittävästi puheita. Väri = ryhmä (ei brändiväri).</p>
+{% else %}
+<div class="notice">Retoriikkakartta vaatii puheupotukset (<code>km embed</code> + sentence-transformers).
+Niitä ei ole laskettu tässä ympäristössä.</div>
+{% endif %}
+
+{% if mismatch %}
+<h2>Puhuu kuin eri ryhmä kuin äänestää</h2>
+<p class="small muted">Näiden edustajien <strong>lähin retoriikkaryhmä</strong> (mistä ja miten he puhuvat)
+on eri kuin oma ryhmä. Voi heijastaa erikoisalaa (esim. ulkopolitiikka, talous), henkilökohtaista
+tyyliä tai ryhmän reunalla oloa — ei kannanottoa. Tarkista profiili ja lähteet.</p>
+<table>
+  <tr><th>Edustaja</th><th>Oma ryhmä</th><th>Puhuu kuin</th></tr>
+  {% for m in mismatch %}
+  <tr><td><a href="/edustaja/{{ m.person_id }}">{{ m.full_name }}</a></td>
+    <td><span class="party-tag">{{ m.party }}</span></td>
+    <td><span class="party-tag">{{ m.nearest_party }}</span></td></tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% endblock %}

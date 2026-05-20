@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Vallan vaikutus — SuomenToivot{% endblock %}
+{% block body %}
+<h1>Hallitus vai oppositio — vallan vaikutus</h1>
+<p class="muted">Suomalainen enemmistöparlamentarismi näkyy datassa kirkkaasti. Mittari:
+kuinka usein puolueen <strong>ryhmälinja oli äänestyksen voittavalla puolella</strong> (vain
+substantiiviset äänestykset). Hallituksessa lähes aina, oppositiossa harvoin — sama puolue
+kääntyy kun valta vaihtuu. Kuvaileva, ei arvottava.</p>
+
+<h2>Voittavalla puolella: hallituksessa vs. oppositiossa</h2>
+<p class="small muted">Sama ryhmä molemmissa rooleissa kun se on ollut sekä hallituksessa että
+oppositiossa 2015–2024 (esim. kok, ps, sd, kesk, vihr, vas vaihtoivat puolta).</p>
+<table>
+  <tr><th>Ryhmä</th><th>Hallituksessa</th><th>Oppositiossa</th></tr>
+  {% for p in parties %}
+  <tr>
+    <td><span class="party-tag">{{ p.party }}</span></td>
+    <td style="width:38%">
+      {% if p.gov %}<div class="fp-row" style="grid-template-columns:1fr 52px auto">
+        <span class="fp-bar"><i style="width:{{ p.gov.win_pct }}%;background:{{ heat_color(p.gov.win_pct/100) }}"></i></span>
+        <span class="fp-val">{{ '%.0f' % p.gov.win_pct }} %</span>
+        <span class="small muted">n={{ p.gov.n }}</span></div>
+      {% else %}<span class="muted">— ei hallituskautta</span>{% endif %}
+    </td>
+    <td style="width:38%">
+      {% if p.opp %}<div class="fp-row" style="grid-template-columns:1fr 52px auto">
+        <span class="fp-bar"><i style="width:{{ p.opp.win_pct }}%;background:{{ heat_color(p.opp.win_pct/100) }}"></i></span>
+        <span class="fp-val">{{ '%.0f' % p.opp.win_pct }} %</span>
+        <span class="small muted">n={{ p.opp.n }}</span></div>
+      {% else %}<span class="muted">— ei oppositiokautta</span>{% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+<div class="notice small">Tämä ei tarkoita että hallituspuolueet olisivat "useammin oikeassa" — vaan
+että hallituksella on enemmistö, joten sen kanta voittaa lähes aina. Oppositiossa sama puolue
+häviää valtaosan äänestyksistä. Luku mittaa <strong>valta-asemaa</strong>, ei kannan laatua.</div>
+
+<h2>Hallituksen läpimenoprosentti</h2>
+<p class="small muted">Kuinka usein hallituksen enemmistölinja voitti substantiiviäänestyksen, vuosittain.</p>
+<table>
+  <tr><th>Vuosi</th><th class="right">Läpimeno-%</th><th class="right">Voitot / äänestykset</th></tr>
+  {% for w in winrate %}
+  <tr><td>{{ w.vp_year }}</td><td class="right">{{ w.pct }} %</td>
+    <td class="right small muted">{{ w.gov_wins }} / {{ w.n_votes }}</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Harvinaiset hallituksen tappiot</h2>
+<p class="small muted">Substantiiviäänestykset, joissa <strong>hallituksen enemmistölinja hävisi</strong>
+koko 10 vuoden aikana — näitä on vain kourallinen.</p>
+{% if lost %}
+<table>
+  <tr><th>Vuosi</th><th>Tulos</th><th>Säädös</th><th>Asia</th></tr>
+  {% for v in lost %}
+  <tr><td>{{ v.vp_year }}</td>
+    <td class="nowrap"><strong>{{ v.result_yes }}–{{ v.result_no }}</strong></td>
+    <td class="small">{{ v.legislative_item or '' }}</td>
+    <td><a href="/aanestys/{{ v.vote_id }}">{{ (v.title or '')[:60] }}</a></td></tr>
+  {% endfor %}
+</table>
+{% else %}<p class="muted">Ei tappioita kerätyssä aineistossa.</p>{% endif %}
+{% endblock %}

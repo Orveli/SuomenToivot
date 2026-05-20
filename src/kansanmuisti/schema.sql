@@ -238,6 +238,35 @@ CREATE TABLE IF NOT EXISTS analysis_member_topic (
     PRIMARY KEY (person_id, topic_id)
 );
 
+CREATE TABLE IF NOT EXISTS analysis_power_effect (
+    party     TEXT NOT NULL,
+    status    TEXT NOT NULL,            -- 'gov' | 'opp'
+    n_votes   INTEGER,
+    win_pct   REAL,                     -- osuus, jossa puoluelinja == voittava puoli
+    PRIMARY KEY (party, status)
+);
+
+CREATE TABLE IF NOT EXISTS analysis_gov_winrate (
+    vp_year   INTEGER PRIMARY KEY,
+    n_votes   INTEGER,
+    gov_wins  INTEGER,
+    pct       REAL
+);
+
+CREATE TABLE IF NOT EXISTS analysis_gov_lost (
+    vote_id   INTEGER PRIMARY KEY,        -- substantiiviäänestys, jossa hallituslinja hävisi
+    margin    INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS analysis_rhetoric_map (
+    person_id  INTEGER PRIMARY KEY,
+    party      TEXT,
+    dim1       REAL,
+    dim2       REAL,
+    nearest_party TEXT,                  -- lähin retoriikkakeskipiste
+    computed_at TEXT
+);
+
 CREATE TABLE IF NOT EXISTS analysis_word_usage (
     person_id        INTEGER NOT NULL,
     category         TEXT NOT NULL,          -- 'filler' | 'swear'
