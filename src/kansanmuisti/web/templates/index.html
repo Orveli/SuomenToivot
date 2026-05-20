@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Mitä päättäjäsi on oikeasti tehnyt?</h1>
+<p class="muted">Hae kansanedustaja, puolue tai aihe. Näytämme puheenvuorot, äänestykset ja
+vaalilupaukset — jokainen linkitettynä alkuperäiseen Eduskunnan aineistoon.</p>
+
+<form class="searchbox" action="/haku" method="get">
+  <input type="text" name="q" placeholder="Esim. nimi, aihe tai säädös (HE 12/2024 vp)…" autofocus>
+  <button type="submit">Hae</button>
+</form>
+
+<div class="grid cols-3" style="margin-top:18px">
+  <div class="card"><div class="kpi">{{ overview.persons }}</div><div class="muted">edustajaa aineistossa</div></div>
+  <div class="card"><div class="kpi">{{ overview.votes }}</div><div class="muted">äänestystä</div></div>
+  <div class="card"><div class="kpi">{{ overview.speeches }}</div><div class="muted">puheenvuoroa (tekstinä)</div></div>
+</div>
+
+<div class="notice">
+  <strong>Miten luet tätä palvelua:</strong> jokainen luku perustuu julkiseen dataan ja on
+  jäljitettävissä lähteeseen. Emme kerro <em>miksi</em> joku toimi tietyllä tavalla — näytämme
+  vain mitä on tapahtunut, missä sanat ja teot ovat linjassa ja missä on ristiriitoja tai
+  puuttuvaa dataa. <a href="/kattavuus">Katso datan kattavuus.</a>
+</div>
+
+<h2>Aiheet</h2>
+<div class="grid cols-3">
+  {% for t in topics %}
+    <a class="card" href="/aihe/{{ t.slug }}">
+      <strong>{{ t.label }}</strong>
+      <div class="small muted">{{ t.n_speeches }} puhetta · {{ t.n_votes }} äänestystä</div>
+    </a>
+  {% endfor %}
+</div>
+
+<h2>Puolueet</h2>
+<p>
+{% for p in parties %}
+  <a class="tag party-tag" href="/puolue/{{ p.code }}">{{ p.code }} ({{ p.n }})</a>
+{% endfor %}
+</p>
+{% endblock %}

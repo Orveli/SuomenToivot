@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{ topic.label }} — Kansanmuisti{% endblock %}
+{% block body %}
+<div class="crumbs"><a href="/aiheet">Aiheet</a> › {{ topic.label }}</div>
+<h1>{{ topic.label }}</h1>
+
+{% if top_speakers %}
+<h2>Aktiivisimmat puhujat</h2>
+<table>
+  <tr><th>Edustaja</th><th>Ryhmä</th><th class="right">Puheita aiheesta</th></tr>
+  {% for s in top_speakers %}
+  <tr><td><a href="/edustaja/{{ s.person_id }}">{{ s.first_name }} {{ s.last_name }}</a></td>
+    <td><span class="party-tag">{{ s.party or '' }}</span></td><td class="right">{{ s.n }}</td></tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<h2>Puheenvuorot</h2>
+<ul class="clean">
+  {% for s in speeches %}
+  <li><a href="/puhe/{{ s.id }}">{{ s.first_name }} {{ s.last_name }}</a>
+    <span class="party-tag">{{ s.party or '' }}</span>
+    <span class="small muted">{{ s.started_at[:10] if s.started_at }} · osuvuus {{ '%.2f' % s.score }}</span>
+    <div class="small">{{ s.preview }}…</div></li>
+  {% endfor %}
+</ul>
+
+<h2>Äänestykset</h2>
+<ul class="clean">
+  {% for v in votes %}
+  <li><a href="/aanestys/{{ v.vote_id }}">{{ v.title }}</a>
+    <span class="small muted">{{ v.legislative_item or '' }} · {{ v.session_date[:10] if v.session_date }}</span></li>
+  {% endfor %}
+</ul>
+{% endblock %}

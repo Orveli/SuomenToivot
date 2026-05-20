@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Aiheet — Kansanmuisti{% endblock %}
+{% block body %}
+<h1>Aiheet</h1>
+<p class="muted">Aiheet tunnistetaan läpinäkyvällä avainsanaluokittimella. Jokainen aiheosuma on
+jäljitettävissä avainsanaan. <a href="/menetelmat#1-aihetaksonomia-ja-tägäys-lexicon-luokitin">Menetelmä</a>.</p>
+<div class="grid cols-3">
+  {% for t in topics %}
+  <a class="card" href="/aihe/{{ t.slug }}">
+    <strong>{{ t.label }}</strong>
+    <div class="small muted">{{ t.n_speeches }} puhetta · {{ t.n_votes }} äänestystä</div>
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Korjauspyynnöt — ylläpito{% endblock %}
+{% block body %}
+<h1>Korjauspyynnöt (ylläpito)</h1>
+<p class="muted">Käsittele oikaisupyynnöt. Virheellinen tieto korjataan ensisijaisesti lähdettä
+vasten (ks. <a href="/tietosuoja">tietosuojaseloste</a>).</p>
+{% if not corrections %}
+<p class="muted">Ei korjauspyyntöjä.</p>
+{% else %}
+<table>
+  <tr><th>Saapunut</th><th>Tila</th><th>Kohde</th><th>Viesti</th><th>Yhteys</th><th>Toiminto</th></tr>
+  {% for c in corrections %}
+  <tr>
+    <td class="small nowrap">{{ c.created_at[:16] }}</td>
+    <td><span class="pill {{ 'follows' if c.status=='resolved' else 'deviates' if c.status=='rejected' else '' }}">{{ c.status }}</span></td>
+    <td class="small">{{ c.page_ref or '' }}{% if c.person_id %}<br>edustaja {{ c.person_id }}{% endif %}</td>
+    <td>{{ c.message }}</td>
+    <td class="small">{{ c.contact or '—' }}</td>
+    <td>
+      <form method="post" action="/yllapito/korjaukset" style="display:flex;gap:4px">
+        <input type="hidden" name="token" value="{{ token|e }}">
+        <input type="hidden" name="correction_id" value="{{ c.id }}">
+        <select name="status">
+          <option value="open" {{ 'selected' if c.status=='open' }}>open</option>
+          <option value="resolved" {{ 'selected' if c.status=='resolved' }}>resolved</option>
+          <option value="rejected" {{ 'selected' if c.status=='rejected' }}>rejected</option>
+        </select>
+        <button class="btn secondary" type="submit">Tallenna</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% endblock %}

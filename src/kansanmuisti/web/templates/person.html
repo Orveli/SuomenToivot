@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% block title %}{{ p.full_name }} — Kansanmuisti{% endblock %}
+{% block body %}
+<div class="crumbs"><a href="/">Etusivu</a> › Edustaja</div>
+<h1>{{ p.full_name }}
+  {% if p.party_current %}<a class="tag party-tag" href="/puolue/{{ p.party_current }}">{{ p.party_current }}</a>{% endif %}
+</h1>
+<p class="muted">
+  {% if p.electoral_district %}{{ p.electoral_district }}{% endif %}
+  {% if p.birth_year %} · s. {{ p.birth_year }}{% endif %}
+  {% if p.is_minister %} · on toiminut ministerinä{% endif %}
+  {% if p.active_from %} · edustajana {{ p.active_from }}{% if p.active_to %}–{{ p.active_to }}{% else %}–{% endif %}{% endif %}
+</p>
+<p class="small">
+  <a class="btn secondary" href="/vertailu?a={{ p.person_id }}">Vertaa toiseen edustajaan</a>
+  <a class="source" href="/korjaus?person_id={{ p.person_id }}&page_ref=/edustaja/{{ p.person_id }}">Ilmoita korjaus</a>
+</p>
+
+{# ---- Johdonmukaisuusindeksi ---- #}
+<h2>Johdonmukaisuusindeksi</h2>
+{% if summary and summary.consistency_index is not none %}
+<div class="indicator">
+  <div style="display:flex;align-items:baseline;gap:12px">
+    <span class="bigscore">{{ summary.consistency_index }}</span><span class="muted">/ 100</span>
+    <span class="badge">laskennallinen indikaattori</span>
+  </div>
+  <p class="small muted" style="margin:.4em 0">
+    Yhdistää kaksi kuvailevaa signaalia. <strong>Ei arvosana</strong> edustajan rehellisyydestä tai
+    pätevyydestä. <a href="/menetelmat#6-johdonmukaisuusindeksi-0100">Laskentakaava</a>.
+  </p>
+  {% if summary.speech_vote_alignment is not none %}
+  <div class="component"><span>A · puhe–ääni-linjaus <span class="muted">(paino 0.5)</span></span>
+    <span>{{ '%.2f' % summary.speech_vote_alignment }}</span></div>
+  {% endif %}
+  {% if summary.party_line_score is not none %}
+  <div class="component"><span>B · puoluelinjavakaus <span class="muted">(paino 0.5; poikkeama {{ '%.0f' % (summary.deviation_rate*100) }} %)</span></span>
+    <span>{{ '%.2f' % summary.party_line_score }}</span></div>
+  {% endif %}
+  <div class="component"><span>Luottamus</span>
+    <span><strong>{{ summary.confidence_level }}</strong>
+      <span class="muted">(äänestyksiä {{ summary.n_votes_eligible }}, puheita {{ summary.n_speeches }})</span></span></div>
+  {% if summary.flags %}
+  <div style="margin-top:8px">
+    {% for f in summary.flags.split(',') %}<span class="flag" title="ks. menetelmät §7">{{ f }}</span>{% endfor %}
+  </div>
+  {% endif %}
+</div>
+<div class="disclaimer small">
+  <strong>Tärkeää:</strong> korkea poikkeamaprosentti ei ole "huono" — se voi heijastaa itsenäistä
+  harkintaa. Matala poikkeama heijastaa ryhmäkuria. Esitämme luvun neutraalisti.
+</div>
+{% else %}
+<p class="muted">Ei riittävästi dataa indeksin laskemiseen tällä aineistolla.</p>
+{% endif %}
+
+{# ---- Äänestyskäyttäytyminen ---- #}
+<h2>Äänestyskäyttäytyminen</h2>
+{% set b = behavior.distribution %}
+<table>
+  <tr><th>Jaa</th><th>Ei</th><th>Tyhjää</th><th>Poissa</th></tr>
+  <tr><td>{{ b.get('Jaa',0) }}</td><td>{{ b.get('Ei',0) }}</td><td>{{ b.get('Tyhjää',0) }}</td><td>{{ b.get('Poissa',0) }}</td></tr>
+</table>
+
+{% if deviations %}
+<h3>Poikkeamat oman ryhmän enemmistöstä</h3>
+<p class="small muted">Äänestykset, joissa edustaja äänesti toisin kuin oman ryhmänsä enemmistö
+(vain substantiiviset Jaa/Ei-äänet, ryhmä äänestyshetkellä).</p>
+<table>
+  <tr><th>Pvm</th><th>Asia</th><th>Edustaja</th><th>Ryhmän linja</th><th></th></tr>
+  {% for d in deviations %}
+  <tr>
+    <td class="nowrap">{{ d.session_date[:10] }}</td>
+    <td>{{ d.title }}{% if d.legislative_item %} <span class="small muted">{{ d.legislative_item }}</span>{% endif %}</td>
+    <td><span class="pill">{{ d.member_value }}</span></td>
+    <td>{{ d.party_line }}</td>
+    <td><a class="small" href="/aanestys/{{ d.vote_id }}">äänestys →</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+{# ---- Kannanmuutosten aikajana ---- #}
+{% if position_changes %}
+<h2>Kannanmuutosten aikajana</h2>
+<p class="small muted">Tapaukset, joissa edustajan ääni <strong>samasta säädöskohteesta</strong>
+muuttui Jaa↔Ei ajan myötä. Emme väitä mielipiteen muuttuneen — kuvaamme äänten muutoksen.
+Lue molemmat äänestykset ja arvioi, onko kyse samasta kysymyksestä.</p>
+<table>
+  <tr><th>Säädöskohde</th><th>Aihe</th><th>Ennen</th><th>Jälkeen</th><th>Väli</th></tr>
+  {% for c in position_changes %}
+  <tr>
+    <td>{{ c.item_base }}</td>
+    <td>{{ c.topic or '—' }}</td>
+    <td><span class="pill">{{ c.from_value }}</span> <span class="small muted">{{ c.from_date }}</span></td>
+    <td><span class="pill">{{ c.to_value }}</span> <span class="small muted">{{ c.to_date }}</span></td>
+    <td class="small">{{ c.gap_days }} vrk</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+{# ---- Lupaukset vs. teot ---- #}
+<h2>Lupaukset vs. teot</h2>
+{% if promises %}
+<p class="small muted">Kuratoituja, lähteistettyjä lupauksia verrattuna edustajan ääniin.
+Lupaus↔äänestys-yhteys on <strong>toimituksellinen tulkinta</strong>, ei automaattinen totuus
+(<a href="/menetelmat#3-lupaustoiminta-vertailu">menetelmä</a>).</p>
+{% for item in promises %}
+<div class="card" style="margin-bottom:10px">
+  <div style="display:flex;justify-content:space-between;gap:10px;align-items:start">
+    <div>
+      <strong>{{ item.promise.text }}</strong>
+      <div class="source">Lähde:
+        {% if item.promise.source_url %}<a href="{{ item.promise.source_url }}" rel="noopener">{{ item.promise.source_title or item.promise.source_url }}</a>{% else %}{{ item.promise.source_title }}{% endif %}
+        {% if item.promise.source_year %}({{ item.promise.source_year }}){% endif %} · kuratoinut {{ item.promise.curated_by }}</div>
+    </div>
+    <span class="pill {{ 'tukee' if item.alignment=='tukee' else 'ristiriidassa' if item.alignment=='ristiriidassa' else 'epaselva' }}">{{ item.alignment }}</span>
+  </div>
+  {% if item.unmapped %}
+    <p class="small flag">UNMAPPED_PROMISE — lupaukselle ei ole vielä kartoitettu äänestyksiä tässä aineistossa.</p>
+  {% else %}
+  <table class="small">
+    <tr><th>Äänestys</th><th>Lupausta tukeva ääni</th><th>Edustajan ääni</th><th>Tulkinta</th></tr>
+    {% for d in item.details %}
+    <tr>
+      <td><a href="/aanestys/{{ d.vote_id }}">{{ d.title }}</a> <span class="muted">{{ d.session_date[:10] }}</span>
+        {% if d.rationale %}<div class="source">Peruste: {{ d.rationale }}</div>{% endif %}</td>
+      <td>{{ d.expected_value }}</td>
+      <td>{{ d.member_value or '—' }}</td>
+      <td><span class="pill {{ 'tukee' if d.per_vote=='tukee' else 'ristiriidassa' if d.per_vote=='ristiriidassa' else 'epaselva' }}">{{ d.per_vote }}</span></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+{% endfor %}
+{% else %}
+<p class="muted">Tälle edustajalle/puolueelle ei ole vielä kuratoituja lupauksia.
+<a href="/lupaukset">Katso kaikki lupaukset.</a></p>
+{% endif %}
+
+{# ---- Aihekohtainen aktiivisuus ---- #}
+{% if topic_activity %}
+<h2>Aihekohtainen aktiivisuus</h2>
+<table>
+  <tr><th>Aihe</th><th class="right">Puheita</th><th class="right">Äänestyksiä</th></tr>
+  {% for t in topic_activity %}
+  <tr><td><a href="/aihe/{{ t.slug }}">{{ t.label }}</a></td>
+    <td class="right">{{ t.n_speeches }}</td><td class="right">{{ t.n_votes }}</td></tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+{# ---- Puheenvuorot ---- #}
+{% if speeches %}
+<h2>Viimeisimmät puheenvuorot</h2>
+<ul class="clean">
+  {% for s in speeches %}
+  <li>
+    <a href="/puhe/{{ s.id }}">{{ s.started_at[:10] }} · {{ s.ptk_id }}</a>
+    <span class="small muted">({{ s.word_count }} sanaa{% if s.legislative_item %}, {{ s.legislative_item }}{% endif %})</span>
+    <div class="small">{{ s.preview }}…</div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{# ---- Viimeisimmät äänet ---- #}
+{% if recent_votes %}
+<h2>Viimeisimmät äänet</h2>
+<table>
+  <tr><th>Pvm</th><th>Asia</th><th>Ääni</th><th>Ryhmän linja</th></tr>
+  {% for v in recent_votes %}
+  <tr>
+    <td class="nowrap">{{ v.session_date[:10] }}</td>
+    <td><a href="/aanestys/{{ v.vote_id }}">{{ v.title }}</a>
+      {% if v.legislative_item %}<span class="small muted">{{ v.legislative_item }}</span>{% endif %}</td>
+    <td><span class="pill {{ 'deviates' if v.classification=='deviates' else 'follows' if v.classification=='follows' else '' }}">{{ v.vote_value }}</span></td>
+    <td class="small">{{ v.party_line or '—' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+{# ---- historia / lähteet ---- #}
+<h2>Tausta ja lähteet</h2>
+{% if party_history %}
+<h3>Ryhmähistoria</h3>
+<ul class="clean small">
+  {% for h in party_history %}<li>{{ h.group_name or h.group_code }} <span class="muted">{{ h.start_date or '?' }} – {{ h.end_date or '' }}</span></li>{% endfor %}
+</ul>
+{% endif %}
+{% if minister_roles %}
+<h3>Ministeritehtävät</h3>
+<ul class="clean small">
+  {% for m in minister_roles %}<li>{{ m.title }}{% if m.government %} — {{ m.government }}{% endif %} <span class="muted">{{ m.start_date or '' }} – {{ m.end_date or '' }}</span></li>{% endfor %}
+</ul>
+{% endif %}
+<p class="source">Henkilötiedot: <a href="{{ p.source_url }}" rel="noopener">Eduskunta — MemberOfParliament</a>.
+Haettu {{ p.fetched_at[:10] if p.fetched_at }}. {{ ATTRIBUTION }}</p>
+{% endblock %}

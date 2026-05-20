@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Datan kattavuus — Kansanmuisti{% endblock %}
+{% block body %}
+<h1>Datan kattavuus</h1>
+<div class="notice">Näytämme avoimesti, mitä aineistoa palvelussa on ja mitä puuttuu. Tämä kuvaa
+<strong>kerättyä</strong> dataa. Lähteen koko 10 vuoden potentiaali on kuvattu
+dokumentissa <code>docs/DATA_SOURCES.md</code>, ja tunnetut puutteet sekä jatkotyölista
+tiedostoissa <code>docs/KNOWN_ISSUES.md</code> ja <code>docs/ROADMAP.md</code>.</div>
+
+<div class="grid cols-3">
+  <div class="card"><div class="kpi">{{ overview.persons }}</div><div class="muted">edustajaa</div></div>
+  <div class="card"><div class="kpi">{{ overview.votes }}</div><div class="muted">äänestystä</div></div>
+  <div class="card"><div class="kpi">{{ overview.speeches }}</div><div class="muted">puheenvuoroa</div></div>
+  <div class="card"><div class="kpi">{{ overview.vote_records }}</div><div class="muted">edustajaääntä</div></div>
+</div>
+
+<h2>Kattavuusmittarit</h2>
+<table>
+  <tr><th>Mittari</th><th>Ulottuvuus</th><th class="right">Arvo</th></tr>
+  {% for c in coverage %}
+  <tr><td>{{ c.metric }}</td><td>{{ c.dimension }}</td><td class="right">{{ c.value }}</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

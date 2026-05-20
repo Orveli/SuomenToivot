@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Haku — Kansanmuisti{% endblock %}
+{% block body %}
+<h1>Haku</h1>
+<form class="searchbox" action="/haku" method="get">
+  <input type="text" name="q" value="{{ q|e }}" placeholder="Nimi, aihe tai säädös…" autofocus>
+  <button type="submit">Hae</button>
+</form>
+{% if q %}
+<p class="muted">Hakutulokset: <strong>{{ q }}</strong></p>
+
+<h2>Edustajat ({{ results.persons|length }})</h2>
+{% if results.persons %}
+<ul class="clean">
+  {% for p in results.persons %}
+  <li><a href="/edustaja/{{ p.person_id }}">{{ p.full_name }}</a>
+    {% if p.party_current %}<span class="tag party-tag">{{ p.party_current }}</span>{% endif %}
+    <span class="small muted">{{ p.electoral_district or '' }}</span></li>
+  {% endfor %}
+</ul>
+{% else %}<p class="muted">Ei osumia.</p>{% endif %}
+
+<h2>Puheenvuorot ({{ results.speeches|length }})</h2>
+{% if results.speeches %}
+<ul class="clean">
+  {% for s in results.speeches %}
+  <li><a href="/puhe/{{ s.id }}">{{ s.first_name }} {{ s.last_name }}</a>
+    {% if s.party %}<span class="tag party-tag">{{ s.party }}</span>{% endif %}
+    <span class="small muted">{{ s.ptk_id }} · {{ s.started_at[:10] if s.started_at }}</span>
+    <div class="small">{{ s.snip|safe }}</div></li>
+  {% endfor %}
+</ul>
+{% else %}<p class="muted">Ei osumia puheista.</p>{% endif %}
+
+<h2>Äänestykset ({{ results.votes|length }})</h2>
+{% if results.votes %}
+<ul class="clean">
+  {% for v in results.votes %}
+  <li><a href="/aanestys/{{ v.vote_id }}">{{ v.title }}</a>
+    <span class="small muted">{{ v.legislative_item or '' }} · {{ v.session_date[:10] if v.session_date }}</span></li>
+  {% endfor %}
+</ul>
+{% else %}<p class="muted">Ei osumia äänestyksistä.</p>{% endif %}
+{% endif %}
+{% endblock %}

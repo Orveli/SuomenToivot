@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Puheenvuoro — Kansanmuisti{% endblock %}
+{% block body %}
+<div class="crumbs"><a href="/">Etusivu</a> › Puheenvuoro</div>
+<h1>
+  {% if speech.person_id and speech.last_name %}<a href="/edustaja/{{ speech.person_id }}">{{ speech.first_name }} {{ speech.last_name }}</a>
+  {% elif speech.last_name %}{{ speech.first_name }} {{ speech.last_name }}
+  {% else %}<span class="muted">Puhuja (ei eduskunnan jäsenrekisterissä)</span>{% endif %}
+  {% if speech.party %}<span class="tag party-tag">{{ speech.party }}</span>{% endif %}
+</h1>
+<p class="muted">
+  {{ speech.ptk_id }} · {{ speech.started_at[:16] if speech.started_at }}
+  {% if speech.legislative_item %} · {{ speech.legislative_item }}{% endif %}
+  · {{ speech.word_count }} sanaa
+  {% if speech.speech_type %} · tyyppi {{ speech.speech_type }}{% endif %}
+</p>
+{% for t in topics %}<a class="tag" href="/aihe/{{ t.slug }}">{{ t.label }}{% if t.is_primary %} ★{% endif %} <span class="muted">{{ '%.2f' % t.score }}</span></a>{% endfor %}
+
+<div class="speech-text" style="margin-top:14px">{{ speech.text }}</div>
+
+{% if related_votes %}
+<h2>Saman säädöksen äänestykset</h2>
+<ul class="clean">
+  {% for v in related_votes %}
+  <li><a href="/aanestys/{{ v.vote_id }}">{{ v.title }}</a> <span class="small muted">{{ v.session_date[:10] if v.session_date }}</span></li>
+  {% endfor %}
+</ul>
+<p class="small muted">Huom: emme päättele puheen sävystä, tukeeko se Jaa- vai Ei-ääntä — se olisi
+tulkintaa. Näytämme molemmat, jotta voit itse arvioida.</p>
+{% endif %}
+
+<p class="source">Lähde: <a href="{{ speech.url }}" rel="noopener">Eduskunta — {{ speech.ptk_id }} (täysistunnon pöytäkirja)</a>.
+Haettu {{ speech.fetched_at[:10] if speech.fetched_at }}. {{ ATTRIBUTION }}</p>
+{% endblock %}

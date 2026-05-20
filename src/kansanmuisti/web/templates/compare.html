@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Vertailu — Kansanmuisti{% endblock %}
+{% block body %}
+<h1>Vertaa kahta edustajaa</h1>
+<form class="searchbox" method="get" action="/vertailu">
+  <select name="a">
+    <option value="0">— valitse A —</option>
+    {% for p in persons %}<option value="{{ p.person_id }}" {{ 'selected' if p.person_id==a }}>{{ p.full_name }} ({{ p.party_current or '' }})</option>{% endfor %}
+  </select>
+  <select name="b">
+    <option value="0">— valitse B —</option>
+    {% for p in persons %}<option value="{{ p.person_id }}" {{ 'selected' if p.person_id==b }}>{{ p.full_name }} ({{ p.party_current or '' }})</option>{% endfor %}
+  </select>
+  <button type="submit">Vertaa</button>
+</form>
+
+{% if data %}
+{% macro col(side) %}
+  {% set s = side.summary %}
+  <div class="card">
+    <h3><a href="/edustaja/{{ side.person.person_id }}">{{ side.person.full_name }}</a>
+      <span class="party-tag">{{ side.person.party_current or '' }}</span></h3>
+    {% if s and s.consistency_index is not none %}
+    <p><span class="bigscore">{{ s.consistency_index }}</span><span class="muted">/100
+      <span class="badge">laskennallinen indikaattori</span>
+      <a class="small" href="/menetelmat#6-johdonmukaisuusindeksi-0100">menetelmä</a></span></p>
+    <div class="component"><span>A puhe–ääni</span><span>{{ '%.2f' % s.speech_vote_alignment if s.speech_vote_alignment is not none else '—' }}</span></div>
+    <div class="component"><span>B puoluelinjavakaus</span><span>{{ '%.2f' % s.party_line_score if s.party_line_score is not none else '—' }}</span></div>
+    <div class="component"><span>Poikkeama ryhmästä</span><span>{{ '%.0f' % (s.deviation_rate*100) if s.deviation_rate is not none else '—' }} %</span></div>
+    <div class="component"><span>Luottamus</span><span>{{ s.confidence_level }}</span></div>
+    <div class="component"><span>Puheita / äänestyksiä</span><span>{{ s.n_speeches }} / {{ s.n_votes_eligible }}</span></div>
+    {% else %}<p class="muted">Ei riittävästi dataa.</p>{% endif %}
+    <h4 class="small">Aihekohtainen aktiivisuus</h4>
+    <table class="small">
+      {% for t in side.topics[:8] %}<tr><td>{{ t.label }}</td><td class="right">{{ t.n_speeches }}p / {{ t.n_votes }}ä</td></tr>{% endfor %}
+    </table>
+  </div>
+{% endmacro %}
+<div class="grid cols-2">{{ col(data.a) }}{{ col(data.b) }}</div>
+<p class="small disclaimer">Vertailu yhdistää eri laajuisia aineistoja; lue molempien edustajien
+profiilit ja lähteet ennen johtopäätöksiä. Indeksi on indikaattori, ei arvosana.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Lupaukset — Kansanmuisti{% endblock %}
+{% block body %}
+<h1>Kuratoidut vaalilupaukset</h1>
+<div class="disclaimer">
+  Lupaukset ovat ihmisen kuratoimia ja lähteistettyjä (puolueohjelma tai julkinen kannanotto).
+  Lupauksen ja äänestyksen yhteys on <strong>toimituksellinen tulkinta</strong>, ei algoritminen
+  totuus. "Lupausta tukeva ääni" kertoo, kumpi äänestyspuoli on linjassa lupauksen kanssa
+  kyseisessä äänestyksessä — perusteluineen. <a href="/menetelmat#3-lupaustoiminta-vertailu">Menetelmä.</a>
+</div>
+{% if not promises %}
+<p class="muted">Lupauksia ei ole vielä ladattu. (Lataus: <code>km load-promises seed/promises.json</code>.)</p>
+{% endif %}
+{% for p in promises %}
+<div class="card" style="margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;gap:10px">
+    <strong>{{ p.text }}</strong>
+    {% if p.party_code %}<span class="tag party-tag">{{ p.party_code }}</span>{% endif %}
+  </div>
+  <div class="source">Lähde:
+    {% if p.source_url %}<a href="{{ p.source_url }}" rel="noopener">{{ p.source_title or p.source_url }}</a>{% else %}{{ p.source_title }}{% endif %}
+    {% if p.source_year %}({{ p.source_year }}){% endif %}
+    {% if p.topic_slug %} · aihe <a href="/aihe/{{ p.topic_slug }}">{{ p.topic_slug }}</a>{% endif %}
+    · kuratoinut {{ p.curated_by }}</div>
+  {% if p.note %}<p class="small muted">{{ p.note }}</p>{% endif %}
+  {% if p.mappings %}
+  <table class="small">
+    <tr><th>Kartoitettu äänestys</th><th>Lupausta tukeva ääni</th><th>Peruste</th></tr>
+    {% for m in p.mappings %}
+    <tr><td><a href="/aanestys/{{ m.vote_id }}">{{ m.title }}</a> <span class="muted">{{ m.session_date[:10] if m.session_date }}</span></td>
+      <td>{{ m.expected_value }}</td><td>{{ m.rationale or '' }}</td></tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p class="small flag">UNMAPPED_PROMISE — ei vielä kartoitettuja äänestyksiä tässä aineistossa.</p>
+  {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

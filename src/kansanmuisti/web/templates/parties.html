@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Puolueet — Kansanmuisti{% endblock %}
+{% block body %}
+<h1>Puolueet ja eduskuntaryhmät</h1>
+<p class="muted">Ryhmätunnukset Eduskunnan aineistosta. Luvut kuvaavat kerättyä aineistoa.</p>
+<table>
+  <tr><th>Ryhmä</th><th>Nimi</th><th class="right">Edustajia</th></tr>
+  {% for p in parties %}
+  <tr><td><a class="party-tag" href="/puolue/{{ p.code }}">{{ p.code }}</a></td>
+    <td>{{ p.name }}</td><td class="right">{{ p.n }}</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

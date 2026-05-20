@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{ overview.name }} — Kansanmuisti{% endblock %}
+{% block body %}
+<div class="crumbs"><a href="/puolue">Puolueet</a> › {{ overview.code }}</div>
+<h1>{{ overview.name }} <span class="tag party-tag">{{ overview.code }}</span></h1>
+<div class="grid cols-3">
+  <div class="card"><div class="kpi">{{ overview.n or 0 }}</div><div class="muted">edustajaa aineistossa</div></div>
+  <div class="card"><div class="kpi">{% if overview.avg_idx %}{{ '%.0f' % overview.avg_idx }}{% else %}—{% endif %}</div>
+    <div class="muted">keskim. johdonmukaisuusindeksi
+      <span class="badge">laskennallinen indikaattori</span>
+      <a class="small" href="/menetelmat#6-johdonmukaisuusindeksi-0100">menetelmä</a></div></div>
+  <div class="card"><div class="kpi">{% if overview.avg_dev is not none %}{% if overview.avg_dev*100 < 0.5 %}&lt;1{% else %}{{ '%.1f' % (overview.avg_dev*100) }}{% endif %} %{% else %}—{% endif %}</div>
+    <div class="muted">keskim. poikkeama ryhmälinjasta</div></div>
+</div>
+<p class="small disclaimer">Keskiarvot ovat karkeita yhteenvetoja kerätystä aineistosta eivätkä kuvaa
+puoluetta kokonaisuutena. Johdonmukaisuusindeksi on <strong>laskennallinen indikaattori</strong>,
+ei arvosana — luottamustaso ja komponentit näkyvät kunkin edustajan profiilissa. Katso yksittäiset
+edustajat ja heidän lähteensä.</p>
+
+<h2>Edustajat</h2>
+<table>
+  <tr><th>Nimi</th><th>Vaalipiiri</th>
+    <th class="right">Indeksi <a href="/menetelmat#6-johdonmukaisuusindeksi-0100" title="laskennallinen indikaattori, ks. menetelmä">ⓘ</a></th>
+    <th class="right">Poikkeama</th><th>Luottamus</th></tr>
+  {% for m in members %}
+  <tr>
+    <td><a href="/edustaja/{{ m.person_id }}">{{ m.full_name }}</a></td>
+    <td class="small">{{ m.electoral_district or '' }}</td>
+    <td class="right">{{ m.consistency_index if m.consistency_index is not none else '—' }}</td>
+    <td class="right">{% if m.deviation_rate is not none %}{% if m.deviation_rate*100 < 0.5 %}&lt;1{% else %}{{ '%.1f' % (m.deviation_rate*100) }}{% endif %} %{% else %}—{% endif %}</td>
+    <td class="small">{{ m.confidence_level or '—' }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

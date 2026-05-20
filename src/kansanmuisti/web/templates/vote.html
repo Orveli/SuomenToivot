@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Äänestys {{ vote.vote_id }} — Kansanmuisti{% endblock %}
+{% block body %}
+<div class="crumbs"><a href="/">Etusivu</a> › Äänestys</div>
+<h1>{{ vote.title }}</h1>
+<p class="muted">
+  {{ vote.session_date[:10] if vote.session_date }}
+  {% if vote.legislative_item %} · {{ vote.legislative_item }}{% endif %}
+  {% if vote.item_title %} · {{ vote.item_title }}{% endif %}
+  {% if vote.is_procedural %} · <span class="flag">PROCEDURAL_SUSPECT — mahdollisesti menettelyäänestys</span>{% endif %}
+</p>
+{% for t in topics %}<a class="tag" href="/aihe/{{ t.slug }}">{{ t.label }}{% if t.is_primary %} ★{% endif %}</a>{% endfor %}
+
+<h2>Tulos</h2>
+<table>
+  <tr><th>Jaa</th><th>Ei</th><th>Tyhjää</th><th>Poissa</th><th>Yhteensä</th></tr>
+  <tr><td>{{ vote.result_yes }}</td><td>{{ vote.result_no }}</td><td>{{ vote.result_empty }}</td>
+    <td>{{ vote.result_absent }}</td><td>{{ vote.result_total }}</td></tr>
+</table>
+
+<h2>Ryhmittäin</h2>
+<table>
+  <tr><th>Ryhmä</th><th>Jaa</th><th>Ei</th><th>Tyhjää</th><th>Poissa</th></tr>
+  {% for party, d in by_party.items() %}
+  <tr><td><span class="party-tag">{{ party }}</span></td>
+    <td>{{ d.get('Jaa',0) }}</td><td>{{ d.get('Ei',0) }}</td>
+    <td>{{ d.get('Tyhjää',0) }}</td><td>{{ d.get('Poissa',0) }}</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Edustajakohtaiset äänet ({{ records|length }})</h2>
+<table>
+  <tr><th>Edustaja</th><th>Ryhmä</th><th>Ääni</th></tr>
+  {% for r in records %}
+  <tr>
+    <td>{% if r.person_id %}<a href="/edustaja/{{ r.person_id }}">{{ r.first_name }} {{ r.last_name }}</a>{% else %}{{ r.first_name }} {{ r.last_name }}{% endif %}</td>
+    <td><span class="party-tag">{{ r.party or '' }}</span></td>
+    <td><span class="pill">{{ r.vote_value }}</span></td>
+  </tr>
+  {% endfor %}
+</table>
+
+<p class="source">Lähde:
+  {% if vote.url %}<a href="{{ vote.url }}" rel="noopener">Eduskunta — äänestys {{ vote.vote_id }}</a>{% else %}Eduskunta — SaliDBAanestys {{ vote.vote_id }}{% endif %}.
+  {% if vote.minutes_url %} <a href="{{ vote.minutes_url }}" rel="noopener">Pöytäkirja</a>.{% endif %}
+  {{ ATTRIBUTION }}</p>
+{% endblock %}

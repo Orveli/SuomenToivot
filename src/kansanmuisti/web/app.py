@@ -1,0 +1,252 @@
+"""FastAPI-sovellus: äänestäjälle ymmärrettävä, neutraali käyttöliittymä.
+
+Periaatteet (UX + LEGAL_ETHICS):
+- Jokaisella sivulla lähdeattribuutio ja linkit alkuperäisaineistoon.
+- Lasketut tunnusluvut merkitään aina "laskennallinen indikaattori" ja näytetään
+  komponentteineen + luottamustasoineen.
+- Neutraali ulkoasu: ei puoluevärejä, ei ohjailevaa järjestystä.
+"""
+from __future__ import annotations
+
+import datetime as dt
+from pathlib import Path
+
+import markdown as _md
+from fastapi import FastAPI, Form, Request
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+from .. import config, db
+from . import queries
+
+BASE = Path(__file__).resolve().parent
+app = FastAPI(title="Kansanmuisti")
+templates = Jinja2Templates(directory=str(BASE / "templates"))
+app.mount("/static", StaticFiles(directory=str(BASE / "static")), name="static")
+
+# yhteinen template-konteksti
+templates.env.globals["ATTRIBUTION"] = config.DATA_ATTRIBUTION
+templates.env.globals["LICENSE"] = config.DATA_LICENSE
+templates.env.globals["now_year"] = dt.date.today().year
+
+
+def _conn():
+    conn = db.connect()
+    db.init_db(conn)
+    return conn
+
+
+def render(request: Request, name: str, **ctx) -> HTMLResponse:
+    return templates.TemplateResponse(request, name, ctx)
+
+
+@app.get("/", response_class=HTMLResponse)
+def index(request: Request):
+    conn = _conn()
+    try:
+        return render(request, "index.html", overview=queries.overview(conn),
+                      topics=queries.topics(conn), parties=queries.parties(conn))
+    finally:
+        conn.close()
+
+
+@app.get("/haku", response_class=HTMLResponse)
+def haku(request: Request, q: str = ""):
+    conn = _conn()
+    try:
+        return render(request, "search.html", results=queries.search(conn, q), q=q)
+    finally:
+        conn.close()
+
+
+@app.get("/edustaja/{pid}", response_class=HTMLResponse)
+def edustaja(request: Request, pid: int):
+    conn = _conn()
+    try:
+        p = queries.person(conn, pid)
+        if not p:
+            return render(request, "notfound.html", what="Edustajaa")
+        return render(request, "person.html",
+                      p=p,
+                      party_history=queries.person_party_history(conn, pid),
+                      terms=queries.person_terms(conn, pid),
+                      minister_roles=queries.person_minister_roles(conn, pid),
+                      summary=queries.person_summary(conn, pid),
+                      topic_activity=queries.person_topic_activity(conn, pid),
+                      behavior=queries.person_vote_behavior(conn, pid),
+                      deviations=queries.person_deviations(conn, pid),
+                      speeches=queries.person_speeches(conn, pid),
+                      recent_votes=queries.person_recent_votes(conn, pid),
+                      position_changes=queries.person_position_changes(conn, pid),
+                      promises=queries.person_promise_alignment(conn, pid))
+    finally:
+        conn.close()
+
+
+@app.get("/puolue", response_class=HTMLResponse)
+def puolueet(request: Request):
+    conn = _conn()
+    try:
+        return render(request, "parties.html", parties=queries.parties(conn))
+    finally:
+        conn.close()
+
+
+@app.get("/puolue/{code}", response_class=HTMLResponse)
+def puolue(request: Request, code: str):
+    conn = _conn()
+    try:
+        return render(request, "party.html", overview=queries.party_overview(conn, code),
+                      members=queries.party_members(conn, code))
+    finally:
+        conn.close()
+
+
+@app.get("/aiheet", response_class=HTMLResponse)
+def aiheet(request: Request):
+    conn = _conn()
+    try:
+        return render(request, "topics.html", topics=queries.topics(conn))
+    finally:
+        conn.close()
+
+
+@app.get("/aihe/{slug}", response_class=HTMLResponse)
+def aihe(request: Request, slug: str):
+    conn = _conn()
+    try:
+        d = queries.topic_detail(conn, slug)
+        if not d:
+            return render(request, "notfound.html", what="Aihetta")
+        return render(request, "topic.html", **d)
+    finally:
+        conn.close()
+
+
+@app.get("/aanestys/{vote_id}", response_class=HTMLResponse)
+def aanestys(request: Request, vote_id: int):
+    conn = _conn()
+    try:
+        d = queries.vote_detail(conn, vote_id)
+        if not d:
+            return render(request, "notfound.html", what="Äänestystä")
+        return render(request, "vote.html", **d)
+    finally:
+        conn.close()
+
+
+@app.get("/puhe/{sid}", response_class=HTMLResponse)
+def puhe(request: Request, sid: int):
+    conn = _conn()
+    try:
+        d = queries.speech_detail(conn, sid)
+        if not d:
+            return render(request, "notfound.html", what="Puhetta")
+        return render(request, "speech.html", **d)
+    finally:
+        conn.close()
+
+
+@app.get("/lupaukset", response_class=HTMLResponse)
+def lupaukset(request: Request):
+    conn = _conn()
+    try:
+        promises = queries.all_promises(conn)
+        for pr in promises:
+            pr["mappings"] = queries.promise_mappings(conn, pr["id"])
+        return render(request, "promises.html", promises=promises)
+    finally:
+        conn.close()
+
+
+@app.get("/vertailu", response_class=HTMLResponse)
+def vertailu(request: Request, a: int = 0, b: int = 0):
+    conn = _conn()
+    try:
+        data = None
+        if a and b:
+            data = queries.compare(conn, a, b)
+        return render(request, "compare.html", data=data,
+                      persons=queries.list_persons(conn), a=a, b=b)
+    finally:
+        conn.close()
+
+
+@app.get("/kattavuus", response_class=HTMLResponse)
+def kattavuus(request: Request):
+    conn = _conn()
+    try:
+        return render(request, "coverage.html", coverage=queries.coverage(conn),
+                      overview=queries.overview(conn))
+    finally:
+        conn.close()
+
+
+@app.get("/menetelmat", response_class=HTMLResponse)
+def menetelmat(request: Request):
+    md_path = config.ROOT / "docs" / "METHODOLOGY.md"
+    html = _md.markdown(md_path.read_text(encoding="utf-8"), extensions=["tables","fenced_code","toc"]) if md_path.exists() else "<p>Puuttuu.</p>"
+    return render(request, "doc.html", title="Menetelmäkuvaus", body=html)
+
+
+@app.get("/etiikka", response_class=HTMLResponse)
+def etiikka(request: Request):
+    md_path = config.ROOT / "docs" / "LEGAL_ETHICS.md"
+    html = _md.markdown(md_path.read_text(encoding="utf-8"), extensions=["tables","fenced_code","toc"]) if md_path.exists() else "<p>Puuttuu.</p>"
+    return render(request, "doc.html", title="Juridiikka ja etiikka", body=html)
+
+
+@app.get("/tietosuoja", response_class=HTMLResponse)
+def tietosuoja(request: Request):
+    md_path = config.ROOT / "docs" / "PRIVACY.md"
+    html = _md.markdown(md_path.read_text(encoding="utf-8"), extensions=["tables","fenced_code","toc"]) if md_path.exists() else "<p>Puuttuu.</p>"
+    return render(request, "doc.html", title="Tietosuojaseloste", body=html)
+
+
+@app.get("/korjaus", response_class=HTMLResponse)
+def korjaus_form(request: Request, page_ref: str = "", person_id: str = ""):
+    return render(request, "correction.html", page_ref=page_ref, person_id=person_id, sent=False)
+
+
+@app.post("/korjaus", response_class=HTMLResponse)
+def korjaus_post(request: Request, page_ref: str = Form(""), person_id: str = Form(""),
+                 contact: str = Form(""), message: str = Form(...)):
+    conn = _conn()
+    try:
+        queries.add_correction(conn, page_ref, person_id or None, contact, message)
+        return render(request, "correction.html", page_ref=page_ref, person_id=person_id, sent=True)
+    finally:
+        conn.close()
+
+
+@app.get("/yllapito/korjaukset", response_class=HTMLResponse)
+def admin_corrections(request: Request, token: str = ""):
+    if not config.ADMIN_TOKEN or token != config.ADMIN_TOKEN:
+        return HTMLResponse(
+            "<p>Pääsy estetty. Aseta KANSANMUISTI_ADMIN_TOKEN ja anna ?token=…</p>",
+            status_code=403)
+    conn = _conn()
+    try:
+        return render(request, "admin_corrections.html",
+                      corrections=queries.list_corrections(conn), token=token)
+    finally:
+        conn.close()
+
+
+@app.post("/yllapito/korjaukset", response_class=HTMLResponse)
+def admin_corrections_update(request: Request, token: str = Form(""),
+                             correction_id: int = Form(...), status: str = Form(...)):
+    if not config.ADMIN_TOKEN or token != config.ADMIN_TOKEN:
+        return HTMLResponse("Pääsy estetty.", status_code=403)
+    conn = _conn()
+    try:
+        queries.set_correction_status(conn, correction_id, status)
+        return RedirectResponse(f"/yllapito/korjaukset?token={token}", status_code=303)
+    finally:
+        conn.close()
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}

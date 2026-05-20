@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Ilmoita korjaus — Kansanmuisti{% endblock %}
+{% block body %}
+<h1>Virheilmoitus ja korjauskanava</h1>
+{% if sent %}
+<div class="notice">Kiitos! Ilmoituksesi on tallennettu ja se käsitellään. Korjaamme virheet ja
+päivitämme datan lähteistä.</div>
+<p><a href="/">Takaisin etusivulle</a></p>
+{% else %}
+<p class="muted">Näetkö virheen datassa, lähteessä tai tulkinnassa? Kerro siitä. Käsittelemme
+oikaisupyynnöt ja datan virheet (ks. <a href="/etiikka">tietosuoja ja oikaisuoikeus</a>).</p>
+<form class="stack" method="post" action="/korjaus">
+  <label>Mitä sivua tai tietoa korjaus koskee?</label>
+  <input type="text" name="page_ref" value="{{ page_ref|e }}" placeholder="esim. /edustaja/123">
+  <label>Edustajan tunniste (jos tiedossa)</label>
+  <input type="text" name="person_id" value="{{ person_id|e }}">
+  <label>Yhteystieto (vapaaehtoinen, vastaamista varten)</label>
+  <input type="text" name="contact" placeholder="sähköposti">
+  <label>Kuvaus virheestä *</label>
+  <textarea name="message" rows="6" required placeholder="Kerro mahdollisimman tarkasti, mikä on virheellistä ja mikä on oikea tieto lähteineen."></textarea>
+  <p><button class="btn" type="submit">Lähetä korjausilmoitus</button></p>
+</form>
+{% endif %}
+{% endblock %}
