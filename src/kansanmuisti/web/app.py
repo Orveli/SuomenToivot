@@ -129,6 +129,7 @@ def kortit(request: Request, party: str = "", sort: str = "puheet", dir: str = "
         holders = queries.award_holders(conn)
         for cmd in cards:
             cmd["badges"] = holders.get(cmd["person_id"], [])
+            queries.card_flair(cmd)
         return render(request, "cards.html", cards=cards, parties=queries.parties(conn),
                       party=party, sort=sort, dir=dir, min_eligible=min_eligible)
     finally:

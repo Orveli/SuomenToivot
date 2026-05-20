@@ -22,3 +22,13 @@
   document.addEventListener('pointermove', onMove);
   document.addEventListener('keydown', onKey);
 })();
+
+// Navigaatiovalikot: sulje muut kun yksi avataan / klikkaus ulkopuolelle.
+(function () {
+  document.addEventListener('click', function (e) {
+    var inGroup = e.target.closest && e.target.closest('.navgroup');
+    document.querySelectorAll('.navgroup[open]').forEach(function (g) {
+      if (g !== inGroup) g.removeAttribute('open');
+    });
+  });
+})();

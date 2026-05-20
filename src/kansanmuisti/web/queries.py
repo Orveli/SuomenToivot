@@ -18,6 +18,34 @@ def _one(conn, q, *p):
 
 
 # --- yleiskatsaus -----------------------------------------------------------
+def card_flair(m: dict) -> dict:
+    """Lisää korttiin harvinaisuustaso, ominaisuusmerkit ja korttinumero (pelillisyys).
+    Kaikki kuvailevia, faktapohjaisia — eivät arvosanoja."""
+    badges = m.get("badges") or []
+    yr = None
+    if m.get("active_from"):
+        try:
+            yr = int(str(m["active_from"])[:4])
+        except ValueError:
+            yr = None
+    if badges or m.get("is_minister"):
+        m["rarity"] = "legendaarinen"
+    elif (m.get("n_speeches") or 0) >= 400 or (yr and yr <= 2011):
+        m["rarity"] = "harvinainen"
+    else:
+        m["rarity"] = "perus"
+    traits = []
+    if m.get("is_minister"):
+        traits.append("Ministeri")
+    if yr and yr <= 2011:
+        traits.append("Konkari")
+    if m.get("absent_pct") is not None and m["absent_pct"] < 8:
+        traits.append("Ahkera äänestäjä")
+    m["traits"] = traits
+    m["cardno"] = m.get("person_id")
+    return m
+
+
 def _top_topic(conn, pid):
     r = _one(conn,
         "SELECT t.label FROM analysis_member_topic amt JOIN topic t ON t.id=amt.topic_id"
@@ -94,13 +122,14 @@ def front_feed(conn) -> dict:
         holders[a["person_id"]].append({"emoji": a["emoji"], "label": a["label"]})
     mps = _rows(conn,
         "SELECT p.person_id,p.full_name,p.party_current,p.electoral_district,p.photo_url,p.is_minister,"
-        " s.consistency_index,s.n_speeches,s.n_votes_cast,s.n_votes_total,s.n_absent,s.deviation_rate"
-        " FROM analysis_member_summary s JOIN person p ON p.person_id=s.person_id"
+        " p.active_from,s.consistency_index,s.n_speeches,s.n_votes_cast,s.n_votes_total,s.n_absent,"
+        " s.deviation_rate FROM analysis_member_summary s JOIN person p ON p.person_id=s.person_id"
         " WHERE s.n_votes_eligible>=100 ORDER BY RANDOM() LIMIT 8")
     for m in mps:
         m["absent_pct"] = (100.0 * m["n_absent"] / m["n_votes_total"]) if m["n_votes_total"] else None
         m["top_topic"] = _top_topic(conn, m["person_id"])
         m["badges"] = holders.get(m["person_id"], [])
+        card_flair(m)
     parties = sorted(party_comparison(conn), key=lambda x: -(x["n_members"] or 0))
     return {"awards": aw, "mps": mps, "parties": parties,
             "highlights": index_highlights(conn)}

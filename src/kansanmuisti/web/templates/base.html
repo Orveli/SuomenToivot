@@ -11,23 +11,42 @@
 <header class="site">
   <div class="wrap">
     <a class="brand" href="/">SuomenToivot<small>Päättäjien todennettava toiminta — lähteistettynä</small></a>
+    <form class="navsearch" action="/haku" method="get" role="search">
+      <input type="text" name="q" placeholder="🔍 Hae päättäjä tai aihe…" aria-label="Haku">
+    </form>
     <nav class="main">
-      <a href="/haku">Haku</a>
-      <a href="/edustajat">Edustajat</a>
-      <a href="/kortit">Kortit</a>
-      <a href="/puolue">Puolueet</a>
-      <a href="/aiheet">Aiheet</a>
-      <a href="/lupausvahti">Lupausvahti</a>
-      <a href="/vaalikone">Vaalikone</a>
-      <a href="/tilastot">Tilastot</a>
-      <a href="/kartta">Kartta</a>
-      <a href="/retoriikka">Retoriikka</a>
-      <a href="/valta">Valta</a>
-      <a href="/sanat">Sanat</a>
-      <a href="/vertailu">Vertailu</a>
-      <a href="/kattavuus">Kattavuus</a>
-      <a href="/menetelmat">Menetelmät</a>
-      <a href="/etiikka">Etiikka</a>
+      <details class="navgroup">
+        <summary>Selaa</summary>
+        <div class="navmenu">
+          <a href="/kortit">🎴 Edustajakortit</a>
+          <a href="/edustajat">📋 Edustajalista</a>
+          <a href="/puolue">🏛️ Puolueet</a>
+          <a href="/aiheet">🏷️ Aiheet</a>
+          <a href="/vertailu">⚖️ Vertaile kahta</a>
+        </div>
+      </details>
+      <details class="navgroup">
+        <summary>Analyysit</summary>
+        <div class="navmenu">
+          <a href="/tilastot">📊 Tilastot &amp; vertailut</a>
+          <a href="/kartta">🗺️ Poliittinen kartta</a>
+          <a href="/retoriikka">🧭 Retoriikkakartta</a>
+          <a href="/valta">🏛️ Vallan vaikutus</a>
+          <a href="/lupausvahti">🎯 Lupausvahti</a>
+          <a href="/vaalikone">🗳️ Vaalikone</a>
+          <a href="/sanat">🗣️ Täyte- &amp; kirosanat</a>
+        </div>
+      </details>
+      <details class="navgroup">
+        <summary>Tietoa</summary>
+        <div class="navmenu">
+          <a href="/kattavuus">📈 Datan kattavuus</a>
+          <a href="/menetelmat">📐 Menetelmät</a>
+          <a href="/etiikka">⚖️ Juridiikka &amp; etiikka</a>
+          <a href="/tietosuoja">🔒 Tietosuoja</a>
+          <a href="/korjaus">✉️ Ilmoita korjaus</a>
+        </div>
+      </details>
     </nav>
   </div>
 </header>

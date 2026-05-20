@@ -172,3 +172,43 @@ img.avatar{object-fit:cover}
 
 .tc-bignum b{font-size:36px;word-break:break-word;hyphens:auto}
 .tc-bignum{padding:30px 14px 0}
+
+/* ===================== NAVIGAATIO: kategoriavalikot ===================== */
+header.site .wrap{align-items:center}
+.navsearch{margin-left:auto;flex:0 1 300px}
+.navsearch input{width:100%;padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-size:14px;background:#fff}
+nav.main{display:flex;gap:4px;margin-left:8px}
+.navgroup{position:relative}
+.navgroup>summary{list-style:none;cursor:pointer;padding:8px 13px;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink);user-select:none}
+.navgroup>summary::-webkit-details-marker{display:none}
+.navgroup>summary::after{content:"▾";color:var(--muted);font-size:10px;margin-left:5px}
+.navgroup>summary:hover{background:var(--accent-soft)}
+.navgroup[open]>summary{background:var(--accent);color:#fff}
+.navgroup[open]>summary::after{color:rgba(255,255,255,.8)}
+.navmenu{position:absolute;top:100%;right:0;min-width:230px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;box-shadow:0 10px 30px rgba(20,30,50,.18);padding:7px;z-index:50;
+  display:flex;flex-direction:column;gap:1px;margin-top:7px}
+.navmenu a{padding:9px 12px;border-radius:8px;color:var(--ink);font-size:14px;white-space:nowrap}
+.navmenu a:hover{background:var(--soft);text-decoration:none}
+@media (max-width:760px){
+  .navsearch{order:3;flex:1 1 100%;margin:6px 0 0}
+  nav.main{order:2;margin-left:auto;flex-wrap:wrap}
+  .navmenu{right:auto;left:0}
+}
+
+/* ===================== KORTTIEN HARVINAISUUS (pelillisyys) ===================== */
+.tc-left{display:flex;flex-direction:column;gap:3px;align-items:flex-start;z-index:3}
+.tc-tier{font-size:8px;font-weight:800;letter-spacing:.07em;padding:2px 6px;border-radius:5px;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.tc-tier.leg{background:linear-gradient(90deg,#ffd86b,#ff9ad6,#8db4ff);color:#3a2400}
+.tc-tier.rare{background:#f4c43c;color:#5a3e00}
+.tc-badge.trait{background:rgba(18,26,40,.72);color:#fff}
+.tc-no{position:absolute;bottom:7px;right:11px;font-size:9px;font-weight:700;opacity:.6;z-index:2;color:#fff}
+.tc-hint{left:11px;right:auto}
+/* harvinainen = kultakehys */
+.tcard.harvinainen .tcard-front{box-shadow:inset 0 0 0 3px rgba(244,196,60,.85),0 0 12px rgba(244,196,60,.3)}
+/* legendaarinen = hohtava, vaihtuvasävyinen holo + kultakehys */
+.tcard.legendaarinen .tcard-front{box-shadow:inset 0 0 0 3px rgba(255,228,140,.9),0 0 22px rgba(170,120,255,.55)}
+.tcard.legendaarinen .holo{opacity:.6;animation:holoShift 5s linear infinite}
+.tcard.legendaarinen:hover .holo{opacity:.85}
+@keyframes holoShift{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.tcard.legendaarinen .holo{animation:none}}

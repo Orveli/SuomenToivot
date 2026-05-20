@@ -2,20 +2,27 @@
 
 {% macro mp_card(m) %}
 {%- set parts = (m.full_name or '?').split() -%}
-<div class="tcard" tabindex="0" role="button" aria-label="{{ m.full_name }}">
+<div class="tcard {{ m.rarity or 'perus' }}" tabindex="0" role="button" aria-label="{{ m.full_name }}">
   <div class="tcard-inner">
     <div class="tcard-face tcard-front"{% if m.photo_url %} style="background-image:url('{{ m.photo_url }}')"{% endif %}>
       {% if not m.photo_url %}<div class="mono">{{ parts[0][0] }}{{ parts[-1][0] if parts|length>1 else '' }}</div>{% endif %}
       <div class="holo"></div><div class="glare"></div><div class="scrim"></div><div class="frame"></div>
       <div class="tc-top">
-        {% if m.party_current %}<span class="tc-party">{{ m.party_current }}</span>{% else %}<span></span>{% endif %}
+        <span class="tc-left">
+          {% if m.party_current %}<span class="tc-party">{{ m.party_current }}</span>{% endif %}
+          {% if m.rarity=='legendaarinen' %}<span class="tc-tier leg">★ LEGENDAARINEN</span>{% elif m.rarity=='harvinainen' %}<span class="tc-tier rare">HARVINAINEN</span>{% endif %}
+        </span>
         {% if m.consistency_index is not none %}<span class="tc-rating"><b>{{ m.consistency_index }}</b><span>indeksi</span></span>{% endif %}
       </div>
       <div class="tc-bottom">
         <div class="tc-name">{{ m.full_name }}</div>
-        <div class="tc-meta">{{ (m.electoral_district or '')|replace(' vaalipiiri','') }}{% if m.is_minister %} · min.{% endif %}{% if m.top_topic %} · ★ {{ m.top_topic }}{% endif %}</div>
-        {% if m.badges %}<div class="tc-badges">{% for b in m.badges %}<span class="tc-badge gold">{{ b.emoji }} {{ b.label }}</span>{% endfor %}</div>{% endif %}
+        <div class="tc-meta">{{ (m.electoral_district or '')|replace(' vaalipiiri','') }}{% if m.top_topic %} · ★ {{ m.top_topic }}{% endif %}</div>
+        {% if m.badges or m.traits %}<div class="tc-badges">
+          {% for b in m.badges %}<span class="tc-badge gold">{{ b.emoji }} {{ b.label }}</span>{% endfor %}
+          {% for t in (m.traits or []) %}<span class="tc-badge trait">{{ t }}</span>{% endfor %}
+        </div>{% endif %}
       </div>
+      {% if m.cardno %}<div class="tc-no">#{{ m.cardno }}</div>{% endif %}
       <div class="tc-hint">klikkaa ⟳</div>
     </div>
     <div class="tcard-face tcard-back">
