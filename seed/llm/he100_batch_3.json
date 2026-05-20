@@ -1,0 +1,185 @@
+{
+ "model_label": "Claude Code -agentti",
+ "stances": [
+  {
+   "speech_id": 48158,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen (HE 100/2017 vp)",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Muutoin ilmeisen laajaa hyväksyntää nauttiva kokonaisuudistus on raami",
+   "confidence": 0.4
+  },
+  {
+   "speech_id": 48159,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen; epäilee esityksen terveyshyötyjä",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää byrokratian purkua hyvänä mutta ei ymmärrä, miten esitys parantaa kansalaisten terveyttä ja hyvinvointia.",
+   "evidence_quote": "Ymmärrän hyvin, että tämä esitys purkaa kyllä byrokratiaa. Mutta se, mitä en ymmärrä ja mitä haluaisin kysyä myös arvoisalta ministeriltä, on, miten tämä esitys parantaa kansalaisten terveyttä ja hyvinvointia. Mielestäni ei mitenkään.",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 48160,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; pitää uudistusta tarpeellisena mutta vastustaa prosenttinostoa",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää alkoholilain uudistusta tarpeellisena mutta ei kannata vahvempien oluiden tuomista vähittäismyyntiin.",
+   "evidence_quote": "minä en kannata sitä, että nämä vahvemmat oluet tuodaan sinne vähittäismyyntiin",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48161,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; kiittää elinkeinopuolta mutta huoli kansanterveydestä ja prosenttinostosta",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää pienpanimoiden ulosmyyntiä ilahduttavana mutta katsoo, että kansanterveys on jäänyt liian vähälle ja että prosenttirajan nostossa on iso ongelma.",
+   "evidence_quote": "Itse näen, että tässä nyt kuitenkin tämä kansanterveys on jäänyt pienemmälle",
+   "confidence": 0.5
+  },
+  {
+   "speech_id": 48162,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen kokonaisuutena",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Mutta tämä on kuitenkin hyvä askel oikeaan suuntaan.",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 48163,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; kiittää pienpanimoiden ja ravintoloiden sääntelyn purkua",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Hallituksen esityksessä on hyvää pienpanimoiden toiminnan helpottaminen ja ravintoloita ja yleisötapahtumia koskevan vanhentuneen sääntelyn purkaminen.",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 48164,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; suhtautuu kiistanalaisiin kohtiin (kaupan myynti) varauksellisesti",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää monia esityksen kohtia hyvinä mutta tulisi mielellään toimeen ilman kaupan myyntiä koskevia muutoksia, vaikka pitää niitä esim. pienpanimoiden kannalta perusteltuina.",
+   "evidence_quote": "Själv klarar jag mig gärna utan de förändringarna, även om jag tycker att det är motiverat ur till exempel småbryggeriernas synpunkt.",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48165,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen kokonaisuutena",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Elikkä tämä ei ole hyvä asia tältä osalta.",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48166,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta hallituksen esitykseen kokonaisuutena",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Kannatan hallituksen esitystä.",
+   "confidence": 0.95
+  },
+  {
+   "speech_id": 48167,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; kyseenalaistaa väitteen saatavuuden lisäämisen vaikutuksesta kulutukseen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Vaikka saatavuus on parantunut, se ei ole vaikuttanut myyntiin.",
+   "confidence": 0.45
+  },
+  {
+   "speech_id": 48168,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; esittää tilastoja nuorten alkoholinkäytöstä ottamatta kantaa esitykseen",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Meidän huomiomme tulisi kiinnittyä myös lukiolaisten ja ammattikoululaisten eroihin, mitä tulee alkoholinkäyttöön.",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48169,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen kokonaisuutena",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Uudistusta on odotettu kauan, ja on varsin hienoa, jos eduskunnassa kykenemme näkemään tämän uudistuksen kokonaisuuden",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48170,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; esittää saatavuuden, kulutuksen ja haittojen kasvua",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Ja THL:n mukaan tämä lisäisi alkoholin kokonaiskulutusta 6 prosenttia.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48171,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; kannattaa lakia mutta prosenttipykälän STM:n alkuperäisessä muodossa",
+   "stance": "ehdollinen",
+   "conditional_note": "Kannattaa nykyaikaistetun alkoholilainsäädännön hyväksymistä, mutta vaatii kaupan alkoholin pitoisuusrajaa koskevan pykälän pitämistä STM:n alun perin valmistelemassa (matalammassa) muodossa.",
+   "evidence_quote": "Korostan, että tämä nykyaikaistettu alkoholilainsäädäntö on syytä hyväksyä mutta puheena olevan ja alkoholipoliittisesti ylivoimaisesti tärkeimmän pykälän osalta STM:n alun perin valmistelemassa muodossa.",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48172,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen kokonaisuutena",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Tämä lakiesitys on suurilta osin tarpeeton.",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48173,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; kannattaa monia kohtia mutta 5,5 % kaupassa on kynnyskysymys",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää useimpia lain kohtia hyvinä ja tarpeellisina mutta 5,5-prosenttisten juomien tuominen kauppoihin on hänelle kynnyskysymys ja ristiriidassa lain tarkoituksen kanssa.",
+   "evidence_quote": "Tämä on myös minulle tämän lakiehdotuksen kynnyskysymys ja vahvasti ristiriidassa lain tarkoituksen kanssa.",
+   "confidence": 0.8
+  },
+  {
+   "speech_id": 48174,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; pitää vahvempien juomien myyntiä kaupassa vaarallisimpana",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Kaikkein vaarallisimpana ehdotuksena on tuoda ruokakauppoihin, kioskeihin ja huoltoasemille vahvemmat alkoholijuomat",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48175,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; pitää kokonaisuudistusta tervetulleena mutta sisältöä tavoitteen vastaisena",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää kokonaisuudistusta tervetulleena, mutta katsoo lain sisällön (erityisesti oluen vahvuuden noston ja juomasekoitusten myynnin) taistelevan haittojen vähentämisen tavoitetta vastaan.",
+   "evidence_quote": "Kokonaisuudistus on kuitenkin tervetullut, onhan lainsäädäntömme pohja jo 30-luvulta",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 48176,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; ei ota kantaa prosentteihin vaan vastustaa muuta sisältöä",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "En ota nyt kantaa prosentteihin vaan muuhun hallituksen esityksen sisältöön.",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48177,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta uudistukseen; kannattaa laajan yhteisymmärryksen osia, prosenteista epävarma",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää esitystä valtaosin kannatettavana ja haluaisi viedä eteenpäin osat, joista on laaja yhteisymmärrys, mutta prosenttirajan osalta ehdottaa tarkempaa harkintaa, aikalisää tai aluekokeilua.",
+   "evidence_quote": "valtaosin se on hyvinkin kannatettava",
+   "confidence": 0.55
+  }
+ ]
+}

@@ -1,0 +1,185 @@
+{
+ "model_label": "Claude Code -agentti",
+ "stances": [
+  {
+   "speech_id": 48112,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen (HE 100/2017 vp)",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "och då är frågan vad vi behöver göra och vad vi inte behöver göra.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48119,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. prosenttinosto",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "tuntuu hyvin erikoiselta, että tällainen maltillinen 0,8 prosentin nosto aiheuttaa näin kovan väännön.",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48120,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. prosenttinosto",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "itse en ole tässä nähnyt ongelmaa — monia muita epäkohtia sen sijaan löytyy.",
+   "confidence": 0.4
+  },
+  {
+   "speech_id": 48121,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. prosenttinosto",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "En oikein ymmärrä tätä ikään kuin hehkutusta tämän lakipaketin ympärillä",
+   "confidence": 0.4
+  },
+  {
+   "speech_id": 48122,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. prosenttinosto",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "tässä esityksessä on haettu tasapainoa elinkeinoelämän ja kansanterveyden välimaastossa.",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 48123,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen: kannattaa muuta paitsi prosenttinostoa",
+   "stance": "ehdollinen",
+   "conditional_note": "Kannattaa esitystä muilta osin (\"Kannatan kaikkea muuta\"), mutta vastustaa prosenttinostoa asiantuntijoihin vedoten.",
+   "evidence_quote": "Tämä on sikäli valitettavaa, että tämä esitys on muuten hyvä. Kannatan kaikkea muuta, mitä siellä on.",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48124,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. saatavuuden vapauttaminen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Jos, puhemies, haluamme päästä kohti yleiseurooppalaista tilannetta, meidän pitää edetä hitaasti ja vastuullisesti mutta johdonmukaisesti",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48125,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. prosenttinosto",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Kannatan kuitenkin alkoholilainsäädännön muuttamista hieman vapaampaan suuntaan, kuten yli 60 prosenttia kansalaisistamme. 5,5 prosenttia on sopiva raja.",
+   "confidence": 0.9
+  },
+  {
+   "speech_id": 48126,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. prosenttinosto",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää lain tuomista myönteisenä mutta vastustaa nimenomaan alkoholiprosentin nostoa terveyshaittojen vuoksi.",
+   "evidence_quote": "sen takia en kannata alkoholiprosentin nostoa.",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48127,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Hallituksen esityksen perustelut ovat oikeastaan täynnä, pullollaan suorastaan, niitä syitä, minkä tähden tätä esitystä ei tällaisenaan tulisi viedä läpi.",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48128,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen: kannattaa elementtejä, vastustaa prosenttinostoa",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää monia lakiesityksen elementtejä hyvinä, mutta vastustaa kaupan alkoholin prosenttirajan nostoa asiantuntija-arvioihin vedoten.",
+   "evidence_quote": "Lakiesitykseen sisältyy paljon hyviä elementtejä, kuten pienpanimoiden ulosmyyntioikeus ja kaljakarsinoiden siirtäminen historiaan.",
+   "confidence": 0.8
+  },
+  {
+   "speech_id": 48129,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Tämä lainsäädäntöpaketti on pääsääntöisesti aivan erinomainen",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48130,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. kulutuksen lisääntyminen",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Käytön lisäys lisää myös käytön haittoja ja myös sosiaali- ja terveystoimen työtä, sille ei vain voi mitään, näin se menee.",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48131,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen: kannattaa muuta, vastustaa vahvojen oluiden myyntiä kaupoissa",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää lakiesityksessä paljon hyvää, mutta ei voi kannattaa vahvojen oluiden ja juomasekoitusten myyntiä päivittäistavarakaupoissa.",
+   "evidence_quote": "Siksi en mitenkään voi kannattaa nimenomaan vahvojen oluiden ja juomasekoitusten myynnin sallimista päivittäistavarakaupoissa.",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48132,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. prosenttinosto",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Esityksessä on paljon hyvää mutta myös hieman huonoa elikkä se, kuinka se alkoholiprosentin vähittäiskaupan nosto pääsikin vähän vesittymään.",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48133,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. prosenttinosto",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Emme siis ole juottamassa tai houkuttelemassa nuoria sen enempää alkoholin pariin kuin tänäkään päivänä.",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48134,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. prosenttinosto",
+   "stance": "ehdollinen",
+   "conditional_note": "Ei mielellään hyväksy 5,5 prosentin rajaa, vaikka muista osista ei nimenomaisesti vastusta.",
+   "evidence_quote": "niin että minä en mielelläni tätä 5,5:tä prosenttia ole hyväksymässä.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48135,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen, ml. prosenttinosto",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "ja se on hämmästyttävää, että tätä ei kuitenkaan tässä esityksessä ole otettu huomioon.",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 48136,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Ensin pari nopeaa kysymystä ministereille.",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48137,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "vaikutukset yksilöihin ja perheisiin tulevat olemaan negatiivisia",
+   "confidence": 0.75
+  }
+ ]
+}

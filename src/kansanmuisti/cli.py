@@ -190,12 +190,21 @@ def cmd_stance_export(args):
 
 
 def cmd_load_llm_demo(args):
+    import glob
+    import os
     from .analyze.stance import load_stance_demo
     from .analyze.wordsvotes import compute_words_votes
+    paths = (sorted(glob.glob(os.path.join(args.path, "*.json")))
+             if os.path.isdir(args.path) else [args.path])
     with db.session() as conn:
-        rs = load_stance_demo(conn, args.path)
+        tot = {"inserted": 0, "skipped_quote_mismatch": 0}
+        for p in paths:
+            rs = load_stance_demo(conn, p)
+            tot["inserted"] += rs["inserted"]
+            tot["skipped_quote_mismatch"] += rs["skipped_quote_mismatch"]
+            _log(f"  {p}: {rs}")
         rv = compute_words_votes(conn)
-    _log(f"Demo-otos ladattu: {rs}; tilikirja rakennettu: {rv}")
+    _log(f"Kannat ladattu (yht {tot}); tilikirja rakennettu: {rv}")
 
 
 def cmd_llm_explain(args):

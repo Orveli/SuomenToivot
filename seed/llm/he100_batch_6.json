@@ -1,0 +1,185 @@
+{
+ "model_label": "Claude Code -agentti",
+ "stances": [
+  {
+   "speech_id": 53609,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain uudistukseen kokonaisuutena",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "uudistuksen varsinaiset pykälät tekevät jotain aivan muuta",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 53610,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta hallituksen esitykseen ja valiokunnan tekemiin muutoksiin",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "tähän uuteen ja hyvään alkoholilakiin",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 53611,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain hyväksymiseen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Tämä on elinkeinopolitiikkaa enemmän kuin terveyspolitiikkaa, mutta tällä mennään nyt eteenpäin.",
+   "confidence": 0.8
+  },
+  {
+   "speech_id": 53612,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta etämyyntipykälän selkeyteen / lain valmisteluun",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Miksi pykälään ei kirjoiteta niin selkeästi, että tuomioistuimet voivat tulkita tämän ristiriitaisen tilanteen?",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 53613,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta vähittäismyynnin prosenttirajan nostoon / mietinnön linjaan",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Olen itse tämän mietinnön kannalla siinä suhteessa, että siinä ei olla vapauttamassa Alkoista päivittäistavarakauppoihin näitä 5,5-prosenttisia alkoholituotteita.",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 53614,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta hallituksen esityksen valmisteluun ja käsittelyyn",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Tämä ei ole missään nimessä hyvää lainsäädäntöä.",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 53615,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta lain valmistelun laatuun ja etämyyntipykälän ristiriitaan",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "eikä tämä mitenkään mielestäni täytä hyvän lainvalmistelun kriteerejä",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 53616,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta päivittäistavarakaupan alkoholimyynnin prosentin nostoon",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Hyvät tavoitteet, mutta mitä hallitus tekee?",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 53617,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta hallituksen esitykseen ja etämyyntipykälän puuttumiseen",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Minun mielestä tämä on todella vastuutonta toimintaa.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 53618,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta prosenttirajan nostoon hallituksen esityksessä",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Siksi en kannata prosenttirajan nostoa.",
+   "confidence": 0.9
+  },
+  {
+   "speech_id": 53619,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta prosentin säilyttämiseen ja hallituksen esityksen nostoon",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Sosiaali- ja terveysvaliokunta on tehnyt perusteellista työtä ja esittää tässä aivan oikein, että prosentti säilyy ennallaan.",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 53620,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta hallituksen esitykseen ja sen vaikutukseen Alkon monopoliin",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "tällä lakiesityksellä, joka nyt on käsittelyssä, ei murreta Alkon yksinoikeutta vahvempien alkoholijuomien myyntiin",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 53621,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta hallituksen esitykseen kokonaisuutena",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "On selvää, että tämä hallituksen esitys tulee heikentämään lasten asemaa niissä perheissä, joissa alkoholista kärsitään.",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 53622,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta esityksen hyväksymiseen ja prosentin korotukseen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Silti katson, että tätä esitystä voi kannattaa.",
+   "confidence": 0.8
+  },
+  {
+   "speech_id": 53623,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta prosenttirajojen nostoon ja lain valmistelun laatuun",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Ei todellakaan kestä päivänvaloa.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 53624,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta päivittäistavarakaupan alkoholin vahvuuden nostoon",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Asiantuntijat ovat laajasti todenneet, että päivittäistavarakaupassa myytävän alkoholin vahvuuden nostaminen on haitallista kansanterveyden ja kansantalouden kannalta.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 53625,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta tilavuusprosentin nostoon ja valiokunnan mietintöön",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Sen takia olen valiokunnan mietinnön kannalla.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 53626,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta prosenttirajan nostamiseen",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "En kannata prosenttirajan nostamista, aivan kuten valiokunta on linjannut.",
+   "confidence": 0.9
+  },
+  {
+   "speech_id": 53627,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta esitykseen elinkeinon näkökulmasta",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää joitakin uudistuksia hyvinä elinkeinon kannalta mutta arvostelee useita kohtia huonoiksi (suoramyynti, verkkomyynti vientiin), eikä ilmaise selvää kantaa koko esityksen hyväksymiseen.",
+   "evidence_quote": "Mutta siellä oli myöskin mielenkiintoisia, vähän huonoja asioita.",
+   "confidence": 0.5
+  },
+  {
+   "speech_id": 53628,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta hallituksen esityksen läpiviemiseen",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "on oletettavaa, että tästä myös monia haittoja tulee",
+   "confidence": 0.5
+  }
+ ]
+}

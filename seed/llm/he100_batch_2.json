@@ -1,0 +1,185 @@
+{
+ "model_label": "Claude Code -agentti",
+ "stances": [
+  {
+   "speech_id": 48138,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kannattaa esityksen monia muutoksia mutta pitää sitä osin viallisena (ravintolat)",
+   "stance": "ehdollinen",
+   "conditional_note": "Kannattaa monia lakiesityksen muutoksia, mutta katsoo esityksessä olevan valuvika ja ravintoloiden osalta sen olevan huolestuttava.",
+   "evidence_quote": "Siksi kannatan monia tämän lakiesityksen muutoksia",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48139,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Vastustaa vahvempien alkoholijuomien myynnin sallimista kaupoissa kulutuksen ja ongelmien lisääntymisen vuoksi",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "jos sen lain perusteella kaupoissa ja muualla ruvetaan myymään vahvempia alkoholijuomia, kulutus ja ongelmat lisääntyvät",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48140,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Korostaa että muutosten myötä saatavuus, kulutus ja haitat kasvavat",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "mikäli kaikilta osin muutokset viedään läpi, niin saatavuus ja sitä kautta myös kulutus tulevat kasvamaan. Ja kun kulutus kasvaa, niin silloin haitat kasvavat.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48141,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kannattaa byrokratian purkua mutta haluaa pitää prosentit ennallaan",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää byrokratian purkua ja pienpanimoiden helpotuksia hyvinä, mutta kallistuu sille kannalle että alkoholiprosentit säilytetään ennallaan.",
+   "evidence_quote": "olen kyllä kallistumassa sille kannalle, että prosentit voisi säilyttää ennallaan",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48142,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Esittää lähinnä kysymyksiä alkoholin myynnistä maaseudulla, ei selvää kantaa esitykseen",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Olisiko jo korkea aika kumota kieltolaki lopullisesti kautta Suomen?",
+   "confidence": 0.5
+  },
+  {
+   "speech_id": 48143,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kannattaa muutosta, joka tukisi suomalaista maataloutta",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Tämä muutos, joka nyt tulee, tukisi nimenomaan suomalaista maataloutta.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48144,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Vastustaa esityksestä vastuun ottamista vahvempien juomien ja limuviinien tuonnin vuoksi",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "miettikää, voitteko todella ottaa vastuun tästä lakiesityksestä. Ette voi!",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48145,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Vastustaa alkoholin saatavuuden parantamista yhteiskunnallisten haittojen vuoksi",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Yksilönvapaus tässä tapauksessa aiheuttaa myös merkittävää yhteiskunnallista haittaa ja mittavia kustannuksia",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48146,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Pitää esitystä kokonaisuutena hyvänä mutta vastustaa prosenttiongelmaa",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää lakiesitystä kokonaisuudessaan hyvänä, mutta katsoo prosenttiongelman lisäävän kustannuksia, ongelmia ja turvattomuutta.",
+   "evidence_quote": "tämä lakiesitys kokonaisuudessaan sinällään, niin kuin edustaja Puska totesi, on hyvä, mutta tässä on tämä prosenttiongelma",
+   "confidence": 0.8
+  },
+  {
+   "speech_id": 48147,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Pitää hallituksen esitystä tasapainoisena elinkeinopolitiikan ja kansanterveyden kannalta",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Hallituksen esitys on tasapainoinen esitys elinkeinopolitiikan ja kansanterveyden näkökulmasta.",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 48148,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kannattaa esityksen hyviä puolia mutta vastustaa vahvemman oluen myyntiä kaupoissa",
+   "stance": "ehdollinen",
+   "conditional_note": "Voi kannattaa esityksessä esitettyä hyvää, mutta ei ymmärrä miksi vahvempaa olutta pitäisi saada ostaa vähittäiskaupoista.",
+   "evidence_quote": "Hallituksen esityksessä esitetään paljon hyvää, mitä voin aivan hyvin kannattaa. En kuitenkaan ymmärrä, miksi vahvempaa olutta pitäisi saada ostaa vähittäiskaupoista",
+   "confidence": 0.8
+  },
+  {
+   "speech_id": 48149,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Vastustaa esitystä koska se asettaa vähittäiskaupan edut kansanterveyden edelle",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "se, minkä välillä me oikeastaan tasapainoilemme päättäjinä tässä, on vähittäistavarakaupan edut ja kansanterveys. Ja kun tämän asetelman näin muotoilee, niin mielestäni tämä ei ole lainkaan vaikea valinta.",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48150,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kiistää väitteen että uusi laki parantaisi juomakulttuuria, mutta ei totea selvää kantaa koko esitykseen",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "uusi alkoholilaki parantaisi suomalaisten juomakulttuuria. Se ei todellakaan pidä paikkaansa.",
+   "confidence": 0.5
+  },
+  {
+   "speech_id": 48151,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Vastustaa esitystä alkoholihaittojen ja poliisikustannusten vuoksi",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Tästä syystä en voi millään ymmärtää, että tässä kohtaa ei tätä huomioida.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48152,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Vastustaa kohtuukäyttäjien juomiskulttuurin rajoittamista, kannattaa myynnin vapauttamista kauppaan",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Jos moni haluaa juoda Alkon lonkeroa, kerta se maistuu paljon paremmalta kuin kaupan, niin miksi se tarvitsee hakea Alkosta, miksei voi hakea sitä kaupasta?",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48153,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kannattaa byrokratian purkua ja pienpanimoiden asemaa, suhtautuu varauksellisesti viinien siirtoon kauppaan",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää uudistuksen byrokratian purkua ja pienpanimoiden helpotuksia hyvinä, mutta epäilee viinien siirtämistä ruokakauppoihin Alkon valikoiman ja asiantuntemuksen vuoksi.",
+   "evidence_quote": "En hetkeäkään usko, että jos esimerkiksi viinit olisi siirretty ruokakauppoihin, meillä olisi samanlainen valikoima ja samanlainen asiantuntemus siellä käytössä",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 48154,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Esittää avoimia kysymyksiä prosentin vaikutuksista, jättää johtopäätökset valiokuntaan",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Tätä arviota meidän tulee tehdä ja sen kautta arvioida myös sitä, mitä seurauksia sillä on myöskin kansanterveyden näkökulmasta.",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 48155,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Hyväksyy norminpurun mutta vastustaa ehdottomasti alkoholiprosenttirajan nostamista",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää tehtyjä norminpurkuja hyvinä, mutta pitää ehdottoman tärkeänä ettei alkoholiprosenttirajaa nosteta.",
+   "evidence_quote": "pidän ehdottomasti tärkeänä sitä, että tätä alkoholiprosenttirajaa",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48156,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Vastustaa esitystä koska se lisää alkoholinkulutusta ja pahoinvointia; toivoo kulutuksen vähentämistä",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Eikö meidän lainsäätäjinä pitäisi nimenomaan vaikuttaa siihen suuntaan, että alkoholinkulutus vähenisi",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 48157,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kannattaa pienpanimoiden suoramyyntiä mutta arvostelee 500 000 litran rajaa",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "pienpanimoilla olisi mahdollisuus myydä tuotteitaan suoraan panimolta. Se on erittäin hyvä asia.",
+   "confidence": 0.6
+  }
+ ]
+}

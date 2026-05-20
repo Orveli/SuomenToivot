@@ -1,0 +1,185 @@
+{
+ "model_label": "Claude Code -agentti",
+ "stances": [
+  {
+   "speech_id": 48199,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus, erityisesti kaupan myynnin tilavuusprosentin nosto 5,5:een",
+   "stance": "ehdollinen",
+   "conditional_note": "Vastustaa keskeistä prosenttirajan nostoa (5,5 %) ja pitää sitä haitallisena, mutta pitää esityksessä myös hyviä asioita (mm. verkkoesittely); toivoo lisäksi valmistuspaikalta myyntiä.",
+   "evidence_quote": "Onhan tässä esityksessä hyviäkin asioita, todella hyviä asioita.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48200,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus ja sen vaikutus alkoholinkäyttöön",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Tässä esityksessä, jonka hallitus toi tänne esille, olen itse pohtinut sitä asiaa",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 48201,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus ja suomalaisten suhde alkoholiin",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Men frågan är, herr talman: Måste det vara så här i all evighet?",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48202,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus ja sen rajoitusten purkaminen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "että ei annettaisi liikaa sille pelolle valtaa",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 48203,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus, erityisesti 5,5 prosentin juomien tuominen vähittäiskauppaan",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "jos nämä 5,5 prosentin juomat tulevat vähittäiskauppaan myyntiin, niin se ihan varmasti vaikuttaa maaseutukuntien Alkon myyntiverkon harvenemiseen ja voimakkaasti",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48204,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain kokonaisuudistus ja sen tarpeellisuus perustuslain mukaisena",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Tämä laki on täysin välttämätön.",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48205,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus, jossa elinkeinopolitiikka korostuu terveyspolitiikan yli ja Alkon monopoli vaarantuu",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "se on tie, joka johtaa Alkon vähittäismonopolin murtumiseen. Väitän näin.",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48206,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus, erityisesti väkevämpien juomien tuominen vähittäiskauppaan",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Käytännössä kaikki asiantuntijalausunnot varoittavat niistä vaikutuksista, mitä tämä lakiesitys tuo tullessaan.",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48207,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus, mukaan lukien prosenttirajan nosto 5,5:een",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Nyt tämä meidän mahdollinen uudistus 4,7:stä 5,5:een on äärimaltillinen",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48208,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholin saatavuuden lisääminen ja sääntelyn vapauttaminen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "aivan mitä tahansa juomia vaikka ruokakaupassa, eikä siitä seuraisi kansallista katastrofia",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 48209,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus ja sääntelyn purkaminen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Tämä hallituksen esitys on erittäin tervetullut",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48210,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus, erityisesti anniskelulupien yhdistäminen yhdeksi luvaksi",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "ei ole ihan pieni muutos se, että jatkossa tässä maassa on vain yksi lupa, jonka anniskelija tarvitsee",
+   "confidence": 0.5
+  },
+  {
+   "speech_id": 48211,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholin etämyyntiä koskeva sääntely uudistuksessa",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Eli nykyistä säännöstä koskien tätä etämyyntiä ei uudistuksessa ole muutettu.",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 53600,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain kokonaisuudistus (valiokunnan mietinnön esittely)",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Sosiaali- ja terveysvaliokunta pitää alkoholilain tavoitteita yhteiskunnallisesti erittäin merkittävinä.",
+   "confidence": 0.5
+  },
+  {
+   "speech_id": 53601,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus, erityisesti alkoholipitoisuuden nosto vähittäiskaupan tuotteissa",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "lain sisältö vaikuttaisi täysin päinvastaisesti. Faktat ovat kovat",
+   "confidence": 0.8
+  },
+  {
+   "speech_id": 53602,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Hallituksen alkoholilakiesitys ja prosenttirajan nosto",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Katsomme, että esitetty alkoholilaki on ristiriidassa näiden tavoitteiden kanssa.",
+   "confidence": 0.8
+  },
+  {
+   "speech_id": 53603,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilakiesitys ja prosenttiraja; kannattaa valiokunnan tekemiä parannuksia",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Ennen muuta tämä prosenttipäätös on oikea",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 53606,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Esityksen käsittelyn pöydällepano kiireellisen aikataulun vuoksi",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "kannatan edustaja Räsäsen ehdotusta pöydällepanosta huomiseen kello 10 alkavaan istuntoon",
+   "confidence": 0.5
+  },
+  {
+   "speech_id": 53607,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain uudistus ja tilavuusprosentin nosto 5,5:een hallituksen esityksen mukaisesti",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "on aika uskaltaa ottaa tämä pieni askel eli vahvuuden korotus maltillisesti 0,8 prosenttiyksikköä",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 53608,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Alkoholilain kokonaisuudistus haittojen vähentämiseksi",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Kaikkien näiden haittojen ja ongelmien vähentäminen on täysistunnon käsiteltäväksi tulevan alkoholilain tarkoitus.",
+   "confidence": 0.6
+  }
+ ]
+}

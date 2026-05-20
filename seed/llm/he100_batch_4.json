@@ -1,0 +1,185 @@
+{
+ "model_label": "Claude Code -agentti",
+ "stances": [
+  {
+   "speech_id": 48178,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Tämä nyt ei ole vastauspuheenvuoro, tämä on vastauskysymysvuoro.",
+   "confidence": 0.9
+  },
+  {
+   "speech_id": 48179,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Meidän tehtävämme on suodattaa sitä tietoa, mitä eri suunnista saamme",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48180,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen; byrokratian purku ja pienpanimoiden ulosmyynti hyviä, mutta litergränsi ongelmallinen",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää esityksen byrokratian purkua ja pienpanimoiden ulosmyyntiä hyvänä, mutta vaatii 500 000 litran rajan poistamista tai nostoa 10 miljoonaan litraan kilpailun vääristymisen takia.",
+   "evidence_quote": "Det finns dock ett problem med förslaget",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48181,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen; uudistus tarpeellinen mutta saatavuuden lisäys haitaksi kansanterveydelle",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää lain kokonaisuudistusta ja norminpurkua tarpeellisena, mutta vastustaa saatavuuden lisäämistä, jonka katsoo heikentävän kansanterveyttä.",
+   "evidence_quote": "alkoholilain kokonais-uudistus, jota viime kaudella sain olla itsekin osaltani vetämässä, on tarpeellinen",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48182,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "ehdollinen",
+   "conditional_note": "Esityksessä on kannatettavia asioita, mutta sitä on terveyspoliittisesta näkökulmasta mahdotonta hyväksyä tällaisenaan vahvempien juomien ja limuviinojen kauppamyynnin takia.",
+   "evidence_quote": "Tässä lakiesityksessä on paljon kannatettaviakin asioita, mutta terveyspoliittisesta näkökulmasta katsoen tätä on mahdotonta tällaisenaan hyväksyä.",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48183,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "erittäin kehnosti valmisteltu, täysin alkoholipolitiikan muutosta estävä",
+   "confidence": 0.75
+  },
+  {
+   "speech_id": 48184,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen; vahvempien oluiden myynti ravintoloiden ulkopuolella takapakkia",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "nykyistä vahvempien oluiden myyminen ravintoloiden ulkopuolella on takapakkia ravintoloiden kannalta",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 48185,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää lain päivittämistä perusteltuna mutta on huolissaan saatavuuden lisäämisestä ja kokonaiskulutuksen kasvattamisesta lasten näkökulmasta; ei ota selvää lopullista hyväksy/hylkää-kantaa.",
+   "evidence_quote": "Voimassa olevaa alkoholilakia on perusteltua päivittää",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 48186,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Tulen itse äänestämään kaikkein vapauttavimman vaihtoehdon puolesta.",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48187,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "vastaan",
+   "conditional_note": "",
+   "evidence_quote": "Hallituksen esitys on tästä syystä mielestäni myös ristiriitainen ja epäjohdonmukainen",
+   "confidence": 0.7
+  },
+  {
+   "speech_id": 48189,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Käsillä oleva alkoholilain uudistus on hyvä kompromissi sekä elinkeinopoliittisesta että kansanterveydellisestä näkökulmasta.",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48190,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Nyt Sipilän hallituksen periaatteiden mukaisesti näitä byrokratian kiemuroita puretaan, ne virtaviivaistetaan ja tehdään toiminnasta helpompaa, mikä sinänsä on aivan positiivista.",
+   "confidence": 0.8
+  },
+  {
+   "speech_id": 48191,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Alkoholilain uudistus on ehdottoman tarpeellinen",
+   "confidence": 0.85
+  },
+  {
+   "speech_id": 48192,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen; byrokratian purku hyvää mutta kansanterveysnäkökulma jäänyt heikommalle",
+   "stance": "ehdollinen",
+   "conditional_note": "Pitää byrokratian purkua ja pienpanimoiden ulosmyyntiä hyvänä, mutta katsoo kansanterveysnäkökulman jääneen heikommalle ja taloudellisten kustannusten menevän negatiiviselle puolelle.",
+   "evidence_quote": "koen kyllä, että tämä kansanterveysnäkökulma on jäänyt tässä heikommalle",
+   "confidence": 0.6
+  },
+  {
+   "speech_id": 48193,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Käsittelyssä olevassa alkoholilaissa on siis useita hyviä ja järkeviä askeleita",
+   "confidence": 0.65
+  },
+  {
+   "speech_id": 48194,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen; huoli Alkon monopolin murtumisriskistä",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "aiheuttaako tämä nyt käsittelyssä oleva lainsäädäntö riskiä siitä, että Alkon nykyinen monopoli murtuisi",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 48195,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen; huoli maaseudun Alkojen lakkauttamisesta",
+   "stance": "ehdollinen",
+   "conditional_note": "Nostaa esiin riskin, että muutos johtaisi jopa 150 maaseudun Alkon lakkauttamiseen ja palveluiden menetykseen; suhtautuu varauksellisesti mutta ei ilmaise selvää hyväksy/hylkää-kantaa koko esitykseen.",
+   "evidence_quote": "jos tämä mainittu muutos tehdään, niin sehän johtaa siihen, että maaseutukunnista jopa 150 Alkoa lakkaa",
+   "confidence": 0.5
+  },
+  {
+   "speech_id": 48196,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen; Viron veronkorotusten merkitys",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "Minun mielestäni on vaarallista puhua siitä, että nämä kaikki Viron veronkorotukset sitten jollain lailla muuttaisivat tätä kokonaiskuvaa.",
+   "confidence": 0.55
+  },
+  {
+   "speech_id": 48197,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen; huoli maaseudun myymälöiden lakkauttamisesta",
+   "stance": "ei_kantaa",
+   "conditional_note": "",
+   "evidence_quote": "jopa 60 prosenttia saattaa näistä maaseutumyymälöistä mennä myyntiin tämän uudistuksen myötä",
+   "confidence": 0.5
+  },
+  {
+   "speech_id": 48198,
+   "legislative_item": "HE 100/2017 vp",
+   "proposition": "Kanta alkoholilain kokonaisuudistukseen; uudistus voisi kuroa kiinni Viron viinarallia",
+   "stance": "puolesta",
+   "conditional_note": "",
+   "evidence_quote": "Tämän uudistuksen yksi suunta oli se, että voisimme mahdollisesti saada pikkusen kurottua tätä kiinni",
+   "confidence": 0.5
+  }
+ ]
+}
