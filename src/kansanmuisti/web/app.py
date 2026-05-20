@@ -36,6 +36,20 @@ templates.env.globals["ATTR_ABBR"] = queries.ATTR_ABBR
 templates.env.globals["ATTR_ORDER"] = queries.ATTR_ORDER
 
 
+def _asset_version() -> str:
+    import hashlib
+    h = hashlib.md5()
+    for f in ("static/style.css", "static/cards.js"):
+        try:
+            h.update(str((BASE / f).stat().st_mtime_ns).encode())
+        except OSError:
+            pass
+    return h.hexdigest()[:8]
+
+
+templates.env.globals["ASSET_V"] = _asset_version()
+
+
 def _conn():
     conn = db.connect()
     db.init_db(conn)
