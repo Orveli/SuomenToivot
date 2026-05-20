@@ -84,6 +84,7 @@ Tämä raportti kertoo, mitä aineistoa tietokannassa tällä hetkellä on. Se k
 
 | Työ | Tila | Erät | Päivitetty |
 |---|---|---|---|
+| political_map | done | 209 | 2026-05-20T13:08:30.110255+00:00 |
 | speeches:2015 | done | 8472 | 2026-05-20T08:39:44.493888+00:00 |
 | speeches:2016 | done | 13649 | 2026-05-20T08:51:36.547244+00:00 |
 | speeches:2017 | done | 13235 | 2026-05-20T09:07:01.224304+00:00 |
