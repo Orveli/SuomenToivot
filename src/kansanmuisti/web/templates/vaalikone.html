@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Vaalikone — puolueiden kannat — SuomenToivot{% endblock %}
+{% block body %}
+<h1>Vaalikone — mitä puolueiden ehdokkaat lupasivat</h1>
+<p class="muted">Ylen eduskuntavaalien 2023 vaalikonevastaukset (avoin data, CC BY 4.0).
+Puolueen ehdokkaiden <strong>keskimääräinen kanta</strong> kuhunkin väittämään (1 = täysin eri mieltä,
+5 = täysin samaa mieltä). Avoimesta datasta on poistettu nimet, joten tämä on <strong>puoluetason</strong>
+kuva — per-henkilö edellyttää Ylen nimellistä dataa (docs/VAALIKONE.md).</p>
+
+{% if not statements %}
+<div class="notice">Vaalikonedataa ei ole ladattu. Aja <code>km vaalikone</code>.</div>
+{% else %}
+<form method="get" action="/vaalikone" class="searchbox">
+  <select name="s" onchange="this.form.submit()" style="flex:1">
+    {% for st in statements %}<option value="{{ st.id }}" {{ 'selected' if st.id==sid }}>{{ st.text }}</option>{% endfor %}
+  </select>
+</form>
+
+<h2>{{ statement.text }}</h2>
+<table>
+  <tr><th>Ryhmä</th><th>Ehdokkaiden keskiarvo (1–5)</th><th class="right">Samaa mieltä</th><th class="right">n</th></tr>
+  {% for r in stance %}
+  <tr>
+    <td><span class="party-tag">{{ r.party_code }}</span></td>
+    <td style="width:55%"><div class="fp-row" style="grid-template-columns:1fr 42px">
+      <span class="fp-bar"><i style="width:{{ (100*(r.mean-1)/4)|round }}%;background:{{ heat_color((r.mean-1)/4) }}"></i></span>
+      <span class="fp-val">{{ '%.1f' % r.mean }}</span></div></td>
+    <td class="right">{{ '%.0f' % r.agree_pct }} %</td>
+    <td class="right small muted">{{ r.n }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<p class="source">Lähde: Yle vaalikone, eduskuntavaalit 2023, avoin data (CC BY 4.0).
+Avoimesta aineistosta on poistettu ehdokkaiden nimet ja numerot.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Lupausvahti — SuomenToivot{% endblock %}
+{% block body %}
+<h1>Lupausvahti — piti vai rikkoi?</h1>
+<div class="disclaimer">
+  Vertaa <strong>kuratoituja, lähteistettyjä lupauksia</strong> toteutuneisiin äänestyksiin.
+  "Rikkoi" tarkoittaa täsmälleen: ryhmän enemmistö äänesti toisin kuin lupausta tukeva ääni olisi
+  ollut kyseisessä kartoitetussa äänestyksessä — <strong>ei</strong> väitettä petoksesta tai motiivista.
+  Konteksti (hallituskompromissi, paketin osa) voi selittää sen; jokainen tapaus linkittyy lähteeseen
+  ja äänestykseen. Aineisto on kuratoitu otos ja laajenee. <a href="/menetelmat#3-lupaustoiminta-vertailu">Menetelmä.</a>
+</div>
+
+<h2>Lupausten pito puolueittain</h2>
+<table>
+  <tr><th>Ryhmä</th><th class="right">Piti</th><th class="right">Rikkoi</th><th class="right">Pito-%</th></tr>
+  {% for p in keeping.parties %}
+  <tr><td><span class="party-tag">{{ p.party }}</span></td>
+    <td class="right">{{ p.kept }}</td>
+    <td class="right">{{ p.broken }}</td>
+    <td class="right">{% if p.keep_pct is not none %}<span class="pill {{ 'follows' if p.keep_pct>=80 else 'deviates' if p.keep_pct<50 else '' }}">{{ p.keep_pct }} %</span>{% else %}—{% endif %}</td></tr>
+  {% endfor %}
+</table>
+
+{% if keeping.broken %}
+<h2>🔴 Rikotut lupaukset (ryhmän enemmistö äänesti lupausta vastaan)</h2>
+<table>
+  <tr><th>Ryhmä</th><th>Lupaus</th><th>Äänestys</th><th>Odotus / linja</th></tr>
+  {% for b in keeping.broken %}
+  <tr>
+    <td><span class="party-tag">{{ b.party_code }}</span></td>
+    <td>{{ b.text }}{% if b.source_url %} <a class="source" href="{{ b.source_url }}" rel="noopener">lähde</a>{% endif %}</td>
+    <td><a href="/aanestys/{{ b.vote_id }}">{{ b.legislative_item or b.title }}</a> <span class="small muted">{{ b.session_date[:10] if b.session_date }}</span></td>
+    <td class="small">odotus {{ b.expected_value }} · linja <strong>{{ b.party_line }}</strong></td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p class="muted">Kuratoiduissa lupauksissa ei (vielä) ole tapauksia, joissa ryhmän enemmistö äänesti
+lupaustaan vastaan. Aineisto laajenee.</p>
+{% endif %}
+
+<h2>🐍 Takinkääntäjät — kuka äänesti oman ryhmänsä lupausta vastaan</h2>
+<p class="small muted">Edustajat, jotka äänestivät useimmin oman puolueensa lupauksen odotusäänen
+vastaisesti (väh. 3 kartoitettua äänestystä). Korkea luku voi heijastaa itsenäistä harkintaa —
+kuvaileva, ei arvottava.</p>
+{% if breakers %}
+<table>
+  <tr><th>Edustaja</th><th>Ryhmä</th><th class="right">Vastaan</th><th class="right">/ arvioitu</th><th class="right">Osuus</th></tr>
+  {% for m in breakers %}
+  <tr><td><a href="/edustaja/{{ m.person_id }}">{{ m.full_name }}</a></td>
+    <td><span class="party-tag">{{ m.party_current or '' }}</span></td>
+    <td class="right">{{ m.against }}</td><td class="right">{{ m.eval }}</td>
+    <td class="right">{{ m.rate }} %</td></tr>
+  {% endfor %}
+</table>
+{% else %}<p class="muted">Ei riittävästi kartoitettuja äänestyksiä per edustaja vielä.</p>{% endif %}
+
+<p class="source">Täysi per-henkilö-vaalikonepohjainen lupaustenpito edellyttää Ylen nimellistä
+vaalikonedataa (ks. <a href="/vaalikone">vaalikone</a> ja docs/VAALIKONE.md).</p>
+{% endblock %}

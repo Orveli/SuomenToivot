@@ -599,6 +599,92 @@ def person_word_style(conn, pid: int) -> dict:
     return out
 
 
+def vaalikone_statements(conn, election: str = "eduskuntavaalit2023") -> List[dict]:
+    return _rows(conn, "SELECT id, text FROM vaalikone_statement WHERE election=? ORDER BY id", election)
+
+
+def vaalikone_stance(conn, statement_id: int, election: str = "eduskuntavaalit2023") -> List[dict]:
+    return _rows(conn,
+        "SELECT party, party_code, mean, n, agree_pct FROM vaalikone_party_stance"
+        " WHERE election=? AND statement_id=? AND party_code IS NOT NULL ORDER BY mean DESC",
+        election, statement_id)
+
+
+def _party_line_map(conn):
+    m = {}
+    for r in conn.execute("SELECT vote_id, party, line FROM analysis_party_line WHERE line IN ('Jaa','Ei')"):
+        m[(r["vote_id"], r["party"])] = r["line"]
+    return m
+
+
+def promise_keeping_by_party(conn) -> dict:
+    """#1 lupausvahti: piti vai rikkoi — PER LUPAUS (kukin kerran). Lupaus 'pidetty'
+    jos ryhmän enemmistölinja vastasi odotusääntä sen kartoitettujen äänestysten
+    enemmistössä. Säädöskohteen useat loppuäänestykset lasketaan yhdeksi lupaukseksi."""
+    pl = _party_line_map(conn)
+    from collections import defaultdict
+    promises = {}
+    pv = defaultdict(list)
+    for r in _rows(conn,
+            "SELECT m.promise_id, m.vote_id, m.expected_value, pr.party_code, pr.text,"
+            " pr.source_url, v.legislative_item FROM promise_vote_map m"
+            " JOIN promise pr ON pr.id=m.promise_id JOIN vote v ON v.vote_id=m.vote_id"
+            " WHERE pr.scope='party' AND pr.party_code IS NOT NULL"):
+        promises[r["promise_id"]] = r
+        line = pl.get((r["vote_id"], r["party_code"]))
+        if line is not None:
+            pv[r["promise_id"]].append(line == r["expected_value"])
+    agg = defaultdict(lambda: {"kept": 0, "broken": 0})
+    broken = []
+    for pid, results in pv.items():
+        if not results:
+            continue
+        r = promises[pid]
+        kept = sum(results) >= (len(results) / 2)
+        agg[r["party_code"]]["kept" if kept else "broken"] += 1
+        if not kept:
+            broken.append({**r, "party_line": "Ei" if r["expected_value"] == "Jaa" else "Jaa"})
+    parties = []
+    for p, d in agg.items():
+        tot = d["kept"] + d["broken"]
+        parties.append({"party": p, "kept": d["kept"], "broken": d["broken"], "total": tot,
+                        "keep_pct": round(100 * d["kept"] / tot) if tot else None})
+    parties.sort(key=lambda x: (x["keep_pct"] if x["keep_pct"] is not None else 999, -x["total"]))
+    return {"parties": parties, "broken": broken}
+
+
+def promise_breakers_persons(conn, min_eval: int = 3, limit: int = 20) -> List[dict]:
+    """Per-henkilö 'takinkääntäjät': kuinka usein edustaja äänesti oman puolueensa
+    lupauksen ODOTUSäänen vastaisesti kartoitetuissa äänestyksissä."""
+    from collections import defaultdict
+    # per (person, promise): äänestikö enemmistössä kartoitetuista äänistä odotusta vastaan
+    pp = defaultdict(lambda: defaultdict(list))  # person -> promise -> [against_bool]
+    rows = conn.execute(
+        "SELECT m.promise_id, m.expected_value, pr.party_code, vr.person_id, vr.vote_value"
+        " FROM promise_vote_map m JOIN promise pr ON pr.id=m.promise_id"
+        " JOIN vote_record vr ON vr.vote_id=m.vote_id AND vr.party=pr.party_code"
+        " WHERE pr.scope='party' AND pr.party_code IS NOT NULL AND vr.vote_value IN ('Jaa','Ei')")
+    for r in rows:
+        pp[r["person_id"]][r["promise_id"]].append(r["vote_value"] != r["expected_value"])
+    agg = defaultdict(lambda: {"against": 0, "eval": 0})
+    for pid, proms in pp.items():
+        for _prid, results in proms.items():
+            agg[pid]["eval"] += 1
+            if sum(results) > len(results) / 2:
+                agg[pid]["against"] += 1
+    out = []
+    for pid, d in agg.items():
+        if d["eval"] < min_eval or not pid:
+            continue
+        p = _one(conn, "SELECT full_name, party_current FROM person WHERE person_id=?", pid)
+        if not p:
+            continue
+        out.append({"person_id": pid, **p, "against": d["against"], "eval": d["eval"],
+                    "rate": round(100 * d["against"] / d["eval"])})
+    out.sort(key=lambda x: (-x["rate"], -x["eval"]))
+    return out[:limit]
+
+
 def power_overview(conn) -> dict:
     """#1 vallan vaikutus + #6 hallituksen läpimeno."""
     eff = {}

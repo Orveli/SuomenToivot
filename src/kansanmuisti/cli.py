@@ -114,6 +114,13 @@ def cmd_word_style(args):
     _log(f"Puhetyyli (täyte-/kirosanat) laskettu: {res}")
 
 
+def cmd_vaalikone(args):
+    from .collect.vaalikone import collect_vaalikone, YLE_2023_URL
+    with db.session() as conn:
+        res = collect_vaalikone(conn, source=args.file or YLE_2023_URL)
+    _log(f"Vaalikone (Yle, avoin CC-BY) ladattu: {res}")
+
+
 def cmd_photos(args):
     from .collect.photos import collect_photos
     with db.session() as conn:
@@ -209,6 +216,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("rhetoric-map", help="Retoriikkakartta puheupotuksista (vaatii km embed)")
     sp.set_defaults(func=cmd_rhetoric_map)
+
+    sp = sub.add_parser("vaalikone", help="Lataa Ylen avoin vaalikonedata (CC-BY, puoluetaso)")
+    sp.add_argument("--file", help="Paikallinen CSV (esim. nimellinen Yle-data); oletus lataa avoimen")
+    sp.set_defaults(func=cmd_vaalikone)
 
     sp = sub.add_parser("photos", help="Hae edustajien kuvat Wikimedia Commonsista")
     sp.add_argument("--refresh", action="store_true", help="Hae myös jo löydetyt uudelleen")

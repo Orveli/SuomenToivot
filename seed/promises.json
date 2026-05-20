@@ -179,6 +179,186 @@
       "source_year": 2023,
       "curated_by": "seed-toimitus (todennettu lähteestä)",
       "note": "Sanamuoto on tiivistys; ohjelmassa tavoitellaan velkaantumisen pysäyttämistä ja menojen sopeuttamista, ks. alkuperäislähde."
+    },
+    {
+      "id": 16,
+      "scope": "party",
+      "party_code": "kok",
+      "topic_slug": "verotus",
+      "text": "Suomen kokonaisveroastetta on laskettava, sillä verotus on Suomessa jo kireää; verotusta ei tule kiristää.",
+      "source_title": "Kokoomuksen eduskuntavaaliohjelma 2023",
+      "source_url": "https://www.kokoomus.fi/kokoomuksen-eduskuntavaaliohjelma-2023/",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde (\"Laskemme Suomen kokonaisveroastetta. Verotus on Suomessa jo kireää\")."
+    },
+    {
+      "id": 17,
+      "scope": "party",
+      "party_code": "ps",
+      "topic_slug": "verotus",
+      "text": "Veronkorotukset näivettävät taloutta; työntekijän ostovoiman parantaminen on tärkeää eikä verotusta tule kiristää.",
+      "source_title": "Perussuomalaisten talouspoliittinen ohjelma 2023 (Pohtiva)",
+      "source_url": "https://www.fsd.tuni.fi/pohtiva/ohjelmalistat/PS/1480",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde (\"Veronkorotusten ja säätelyn tiellä Suomen talous ei kasva vaan näivettyy\", \"Työntekijän ostovoiman parantaminen on perussuomalaisille tärkeää\")."
+    },
+    {
+      "id": 18,
+      "scope": "party",
+      "party_code": "kd",
+      "topic_slug": "oikeus",
+      "text": "Ihmisten suojeleminen on tärkeämpää kuin alkoholimarkkinoiden edistäminen; alkoholin saatavuutta ei tule lisätä eikä myyntiä vapauttaa.",
+      "source_title": "Kristillisdemokraattien linja alkoholipolitiikkaan (Päivi Räsänen, KD-Lehti 2024) ja eduskuntavaaliohjelma 2023",
+      "source_url": "https://www.kdlehti.fi/2024/03/12/on-tarkeampaa-suojella-ihmisia-kuin-edistaa-alkoholimarkkinoita-paivi-rasanen-kertoo-mielipiteensa-alkoholipolitiikan-eurooppalaistamisesta/",
+      "source_year": 2024,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; KD:n eduskuntaryhmä vastusti alkoholin saatavuuden lisäämistä, ks. alkuperäislähde (\"On tärkeämpää suojella ihmisiä kuin edistää alkoholimarkkinoita\")."
+    },
+    {
+      "id": 19,
+      "scope": "party",
+      "party_code": "vihr",
+      "topic_slug": "sosiaaliturva",
+      "text": "Oikeudenmukaista yhteiskuntaa ei rakenneta sosiaaliturvaa leikkaamalla; heikommassa asemassa olevilta ei tule leikata.",
+      "source_title": "Vihreiden eduskuntavaaliohjelma 2023",
+      "source_url": "https://www.vihreat.fi/eduskuntavaaliohjelma-2023/",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde (\"Oikeudenmukaista yhteiskuntaa ei rakenneta sosiaaliturvaa leikkaamalla\")."
+    },
+    {
+      "id": 20,
+      "scope": "party",
+      "party_code": "vihr",
+      "topic_slug": "koulutus",
+      "text": "Korkeakoulujen perusrahoitusta on nostettava ja rahoituksen indeksikorotukset säilytettävä; koulutuksen puolustamista on jatkettava.",
+      "source_title": "Vihreiden eduskuntavaaliohjelma 2023",
+      "source_url": "https://www.vihreat.fi/eduskuntavaaliohjelma-2023/",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde (\"Nostetaan korkeakoulujen perusrahoitusta ja säilytetään rahoituksen indeksikorotukset\")."
+    },
+    {
+      "id": 21,
+      "scope": "party",
+      "party_code": "vihr",
+      "topic_slug": "oikeus",
+      "text": "Vihreät on yhdenvertaisuutta kannattava, antirasistinen ja feministinen puolue; yhdenvertaisuutta on edistettävä.",
+      "source_title": "Vihreiden eduskuntavaaliohjelma 2023",
+      "source_url": "https://www.vihreat.fi/eduskuntavaaliohjelma-2023/",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde (\"Vihreät on feministinen, antirasistinen ja yhdenvertaisuutta kannattava puolue\")."
+    },
+    {
+      "id": 22,
+      "scope": "party",
+      "party_code": "vas",
+      "topic_slug": "koulutus",
+      "text": "Aikuiskoulutustukea on kehitettävä nykyistä anteliaammaksi ja oikeutta tukeen on laajennettava, ei heikennettävä.",
+      "source_title": "Vasemmistoliiton eduskuntavaaliohjelma 2023: Reilumpi huominen kaikille",
+      "source_url": "https://vasemmisto.fi/eduskuntavaalit-2023/eduskuntavaaliohjelma/",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde (\"Vasemmistoliitto haluaa luoda nykyistä anteliaamman aikuiskoulutustukimallin\")."
+    },
+    {
+      "id": 23,
+      "scope": "party",
+      "party_code": "vas",
+      "topic_slug": "koulutus",
+      "text": "Korkeakoulutuksen on oltava opiskelijoille maksutonta; lukukausimaksuja ei tule periä.",
+      "source_title": "Vasemmistoliiton eduskuntavaaliohjelma 2023: Reilumpi huominen kaikille",
+      "source_url": "https://vasemmisto.fi/eduskuntavaalit-2023/eduskuntavaaliohjelma/",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde (\"Korkeakoulutuksen on oltava opiskelijoille maksutonta\")."
+    },
+    {
+      "id": 24,
+      "scope": "party",
+      "party_code": "sd",
+      "topic_slug": "sosiaaliturva",
+      "text": "Työttömyysturvaa ei tule heikentää; sosiaaliturvan leikkaukset osuvat tavallisiin palkansaajiin ja eläkeläisiin.",
+      "source_title": "SDP:n eduskuntavaaliohjelma 2023: Rohkeutta olla sinun puolellasi (Pohtiva)",
+      "source_url": "https://www.fsd.tuni.fi/pohtiva/ohjelmalistat/SDP/1474",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ohjelmassa vastustetaan työttömyysturvan heikentämistä ja korostetaan tavallisten palkansaajien ja eläkeläisten asemaa, ks. alkuperäislähde."
+    },
+    {
+      "id": 25,
+      "scope": "party",
+      "party_code": "kd",
+      "topic_slug": "koulutus",
+      "text": "Lasten ja perheiden tuesta ei tule tinkiä eikä koulutuksesta säästää.",
+      "source_title": "Kristillisdemokraattien eduskuntavaaliohjelma 2023: Järjen ääni",
+      "source_url": "https://www.kd.fi/tutustu/ohjelmat/eduskuntavaaliohjelma-2023/",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde (\"On järjetöntä tinkiä lasten ja perheiden tuesta ja säästää koulutuksesta\")."
+    },
+    {
+      "id": 26,
+      "scope": "party",
+      "party_code": "kesk",
+      "topic_slug": "koulutus",
+      "text": "Koko koulutuspolku varhaiskasvatuksesta korkeakoulutukseen on Suomen menestyksen perusta ja se on turvattava.",
+      "source_title": "Keskustan eduskuntavaaliohjelma 2023 (Pohtiva)",
+      "source_url": "https://www.fsd.tuni.fi/pohtiva/ohjelmalistat/KESK/1460",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde (\"Sivistyksen ja koulutuksen koko polku ... on Suomen menestyksen perusta\")."
+    },
+    {
+      "id": 27,
+      "scope": "party",
+      "party_code": "kesk",
+      "topic_slug": "maatalous",
+      "text": "Suomalaisen alkutuotannon kannattavuudesta on huolehdittava.",
+      "source_title": "Keskustan eduskuntavaaliohjelma 2023 (Pohtiva)",
+      "source_url": "https://www.fsd.tuni.fi/pohtiva/ohjelmalistat/KESK/1460",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde (\"Suomalaisen alkutuotannon kannattavuudesta on huolehdittava\")."
+    },
+    {
+      "id": 28,
+      "scope": "party",
+      "party_code": "vas",
+      "topic_slug": "maahanmuutto",
+      "text": "Turvapaikanhakijoiden ja kansainvälistä suojelua saavien oikeuksia on parannettava, eikä oikeutta hakea turvapaikkaa tule rajoittaa.",
+      "source_title": "Vasemmistoliiton eduskuntavaaliohjelma 2023: Reilumpi huominen kaikille",
+      "source_url": "https://vasemmisto.fi/eduskuntavaalit-2023/eduskuntavaaliohjelma/",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ks. alkuperäislähde; liittyy turvapaikkaoikeuden turvaamiseen."
+    },
+    {
+      "id": 29,
+      "scope": "party",
+      "party_code": "ps",
+      "topic_slug": "maahanmuutto",
+      "text": "Kansainvälisen suojelun ja turvapaikkapolitiikan ehtoja on tiukennettava ja maahanmuuton kustannuksia hillittävä.",
+      "source_title": "Perussuomalaisten maahanmuuttopoliittinen ohjelma 2023 (Pohtiva)",
+      "source_url": "https://www.fsd.tuni.fi/pohtiva/ohjelmalistat/PS/1478",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ohjelmassa esitetään turvapaikka- ja maahanmuuttopolitiikan tiukentamista, ks. alkuperäislähde."
+    },
+    {
+      "id": 30,
+      "scope": "party",
+      "party_code": "sd",
+      "topic_slug": "koulutus",
+      "text": "Koulutuksesta ei tule leikata; aiemmat koulutusleikkaukset ovat heikentäneet osaavan työvoiman saatavuutta.",
+      "source_title": "SDP:n eduskuntavaaliohjelma 2023: Rohkeutta olla sinun puolellasi (Pohtiva)",
+      "source_url": "https://www.fsd.tuni.fi/pohtiva/ohjelmalistat/SDP/1474",
+      "source_year": 2023,
+      "curated_by": "seed-toimitus (todennettu lähteestä)",
+      "note": "Sanamuoto on tiivistys; ohjelmassa varoitetaan koulutusleikkausten seurauksista, ks. alkuperäislähde."
     }
   ],
   "promise_vote_map": [
@@ -314,6 +494,141 @@
       "expected_value": "Jaa",
       "rationale": "Kelan kuntoutusetuuksia koskevan sopeuttavan esityksen hyväksyminen on linjassa lupauksen kanssa tasapainottaa julkista taloutta ja sopeuttaa menoja.",
       "source_note": "HE 124/2024 vp muuttaa Kelan kuntoutusetuuksia (mm. ammatillisen kuntoutuksen edellytyksiä) ja perustuu hallitusohjelman julkisen talouden tasapainotustavoitteeseen; lupaus painottaa menojen sopeuttamista.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 16,
+      "legislative_item": "HE 61/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Yleisen arvonlisäveron korotuksen hylkääminen olisi linjassa lupauksen kanssa laskea kokonaisveroastetta ja olla kiristämättä verotusta.",
+      "source_note": "HE 61/2024 vp nostaa yleisen ALV-kannan 24 -> 25,5 %, mikä kasvattaa kokonaisveroastetta; lupaus kohdistuu kokonaisveroasteen laskemiseen.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 17,
+      "legislative_item": "HE 61/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Yleisen arvonlisäveron korotuksen hylkääminen olisi linjassa lupauksen kanssa olla kiristämättä verotusta ja suojata työntekijän ostovoimaa.",
+      "source_note": "HE 61/2024 vp on yleinen kulutusveron korotus, joka kohdistuu kulutushyödykkeiden hintoihin; lupaus vastustaa veronkorotuksia ja painottaa ostovoiman parantamista.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 18,
+      "legislative_item": "HE 7/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Alkoholin saatavuutta lisäävän esityksen hylkääminen olisi linjassa lupauksen kanssa olla vapauttamatta alkoholin myyntiä.",
+      "source_note": "HE 7/2024 vp sallii enintään 8 % käymällä valmistettujen juomien myynnin ruokakaupoissa; lupaus vastustaa alkoholin saatavuuden lisäämistä.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 19,
+      "legislative_item": "HE 13/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Työttömyysturvaa heikentävän esityksen hylkääminen olisi linjassa lupauksen kanssa olla leikkaamatta sosiaaliturvaa.",
+      "source_note": "HE 13/2024 vp sisältää työttömyysturvan leikkauksia; lupaus vastustaa sosiaaliturvan leikkauksia.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 20,
+      "legislative_item": "HE 8/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Aikuiskoulutustuen lakkauttamisen hylkääminen olisi linjassa lupauksen kanssa puolustaa koulutusta ja sen rahoitusta.",
+      "source_note": "HE 8/2024 vp lakkauttaa aikuiskoulutustuen; lupaus painottaa koulutuksen puolustamista ja korkeakoulurahoituksen turvaamista.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 21,
+      "legislative_item": "HE 105/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Yhdenvertaisuussuunnittelun velvoitteita keventävän esityksen hylkääminen olisi linjassa lupauksen kanssa edistää yhdenvertaisuutta.",
+      "source_note": "HE 105/2024 vp poistaa toimipaikkakohtaisen yhdenvertaisuussuunnitelman laatimisvelvoitteen varhaiskasvatuksessa; lupaus painottaa yhdenvertaisuuden edistämistä.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 22,
+      "legislative_item": "HE 8/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Aikuiskoulutustuen lakkauttamisen hylkääminen olisi linjassa lupauksen kanssa kehittää aikuiskoulutustukea anteliaammaksi.",
+      "source_note": "HE 8/2024 vp lakkauttaa aikuiskoulutustuen; lupaus tavoittelee tuen laajentamista ja anteliaampaa mallia.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 23,
+      "legislative_item": "HE 51/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Lukuvuosimaksuja korottavan esityksen hylkääminen olisi linjassa lupauksen kanssa pitää korkeakoulutus opiskelijoille maksuttomana.",
+      "source_note": "HE 51/2024 vp korottaa EU/ETA-alueen ulkopuolisten opiskelijoiden lukuvuosimaksuja kohti täysiä kustannuksia; lupaus vastustaa lukukausimaksuja.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 24,
+      "legislative_item": "HE 13/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Työttömyysturvaa heikentävän esityksen hylkääminen olisi linjassa lupauksen kanssa olla heikentämättä työttömyysturvaa.",
+      "source_note": "HE 13/2024 vp sisältää työttömyysturvan leikkauksia; lupaus vastustaa työttömyysturvan heikentämistä.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 25,
+      "legislative_item": "HE 8/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Aikuiskoulutustuen lakkauttamisen hylkääminen olisi linjassa lupauksen kanssa olla säästämättä koulutuksesta.",
+      "source_note": "HE 8/2024 vp lakkauttaa aikuiskoulutustuen; lupaus vastustaa koulutuksesta säästämistä.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 26,
+      "legislative_item": "HE 8/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Aikuiskoulutustuen lakkauttamisen hylkääminen olisi linjassa lupauksen kanssa turvata koko koulutuspolku.",
+      "source_note": "HE 8/2024 vp lakkauttaa aikuiskoulutustuen, joka on osa jatkuvan oppimisen koulutuspolkua; lupaus painottaa koko koulutuspolun turvaamista.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 27,
+      "legislative_item": "HE 61/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Yleisen arvonlisäveron korotuksen hylkääminen olisi linjassa lupauksen kanssa huolehtia alkutuotannon kannattavuudesta, koska korotus nostaa myös tuotantopanosten hintoja.",
+      "source_note": "HE 61/2024 vp nostaa yleistä ALV-kantaa, mikä vaikuttaa myös maatalouden ostopanosten hintoihin; lupaus painottaa alkutuotannon kannattavuuden turvaamista. Yhteys on välillinen.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 28,
+      "legislative_item": "HE 53/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Turvapaikkamenettelystä poikkeavan väliaikaislain hylkääminen olisi linjassa lupauksen kanssa turvata oikeus hakea turvapaikkaa.",
+      "source_note": "HE 53/2024 vp (ns. käännytys-/rajalaki) sallii väliaikaisesti turvapaikkahakemusten vastaanoton rajoittamisen; lupaus korostaa turvapaikkaoikeuden turvaamista.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 29,
+      "legislative_item": "HE 29/2024 vp",
+      "expected_value": "Jaa",
+      "rationale": "Kansainvälisen suojelun oleskelulupia lyhentävän ja päättämisperusteita laajentavan esityksen hyväksyminen on linjassa lupauksen kanssa tiukentaa turvapaikkapolitiikan ehtoja.",
+      "source_note": "HE 29/2024 vp lyhentää kansainvälisen suojelun oleskelulupia ja laajentaa suojeluaseman päättämisperusteita; lupaus esittää turvapaikka- ja suojelupolitiikan ehtojen tiukentamista.",
+      "curated_by": "seed-toimitus",
+      "mapping_version": "1"
+    },
+    {
+      "promise_id": 30,
+      "legislative_item": "HE 51/2024 vp",
+      "expected_value": "Ei",
+      "rationale": "Lukuvuosimaksuja korottavan esityksen hylkääminen olisi linjassa lupauksen kanssa olla leikkaamatta ja säästämättä koulutuksesta.",
+      "source_note": "HE 51/2024 vp korottaa EU/ETA-alueen ulkopuolisten opiskelijoiden lukuvuosimaksuja; lupaus vastustaa koulutuksesta leikkaamista ja maksujen kasvattamista.",
       "curated_by": "seed-toimitus",
       "mapping_version": "1"
     }

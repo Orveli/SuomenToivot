@@ -102,6 +102,26 @@ def test_commons_file_url():
     assert _commons_file_url(u) == "https://commons.wikimedia.org/wiki/File:Jouni_Backman.jpg"
 
 
+def test_promisewatch_renders(client):
+    r = client.get("/lupausvahti")
+    assert r.status_code == 200
+    assert "Lupausvahti" in r.text and "Takinkääntäjät" in r.text
+
+
+def test_vaalikone_page_renders(client):
+    r = client.get("/vaalikone")
+    assert r.status_code == 200
+    assert "Vaalikone" in r.text
+
+
+def test_vaalikone_party_map():
+    from kansanmuisti.collect.vaalikone import _party_code
+    assert _party_code("Kansallinen kokoomus") == "kok"
+    assert _party_code("Perussuomalaiset") == "ps"
+    assert _party_code("Vihreä liitto") == "vihr"
+    assert _party_code("Tuntematon puolue") is None
+
+
 def test_power_page_renders(client):
     r = client.get("/valta")
     assert r.status_code == 200

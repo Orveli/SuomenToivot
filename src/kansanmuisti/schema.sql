@@ -115,6 +115,28 @@ CREATE TABLE IF NOT EXISTS speech (
 );
 
 -- ---------------------------------------------------------------------------
+-- Vaalikone (Yle, avoin CC-BY, anonyymi): ehdokkaiden väittämävastaukset.
+-- Puoluetason aggregaatti (avoin data ei sisällä nimiä). Nimellinen data
+-- (per ehdokas -> edustaja) edellyttää erillistä pyyntöä Yleltä (ks. docs).
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS vaalikone_statement (
+    id        INTEGER PRIMARY KEY,
+    election  TEXT,                  -- esim. 'eduskuntavaalit2023'
+    text      TEXT
+);
+
+CREATE TABLE IF NOT EXISTS vaalikone_party_stance (
+    election     TEXT,
+    party        TEXT,               -- vaalikoneen puoluenimi (esim. 'Kokoomus')
+    party_code   TEXT,               -- normalisoitu (kok, ps, ...) jos tunnistettu
+    statement_id INTEGER,
+    mean         REAL,               -- keskiarvo 1–5 (5 = täysin samaa mieltä)
+    n            INTEGER,            -- vastanneita ehdokkaita
+    agree_pct    REAL,               -- osuus, joka samaa mieltä (4–5)
+    PRIMARY KEY (election, party, statement_id)
+);
+
+-- ---------------------------------------------------------------------------
 -- Säädösasiakirjat (HE = hallituksen esitys ym.) — sisältö VaskiDatasta.
 -- Käytetään äänestysten aiheluokittelun rikastamiseen (otsikko + pääas. sisältö).
 -- ---------------------------------------------------------------------------

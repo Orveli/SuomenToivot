@@ -133,6 +133,32 @@ def kortit(request: Request, party: str = "", sort: str = "puheet", dir: str = "
         conn.close()
 
 
+@app.get("/lupausvahti", response_class=HTMLResponse)
+def lupausvahti(request: Request):
+    conn = _conn()
+    try:
+        return render(request, "promisewatch.html",
+                      keeping=queries.promise_keeping_by_party(conn),
+                      breakers=queries.promise_breakers_persons(conn))
+    finally:
+        conn.close()
+
+
+@app.get("/vaalikone", response_class=HTMLResponse)
+def vaalikone(request: Request, s: int = 0):
+    conn = _conn()
+    try:
+        statements = queries.vaalikone_statements(conn)
+        if not statements:
+            return render(request, "vaalikone.html", statements=[], stance=[], sid=0, statement=None)
+        sid = s or statements[0]["id"]
+        statement = next((x for x in statements if x["id"] == sid), statements[0])
+        return render(request, "vaalikone.html", statements=statements,
+                      stance=queries.vaalikone_stance(conn, sid), sid=sid, statement=statement)
+    finally:
+        conn.close()
+
+
 @app.get("/valta", response_class=HTMLResponse)
 def valta(request: Request):
     conn = _conn()
