@@ -10,7 +10,7 @@
 </h1>
 <p class="muted">
   {{ speech.ptk_id }} · {{ speech.started_at[:16] if speech.started_at }}
-  {% if speech.legislative_item %} · {{ speech.legislative_item }}{% endif %}
+  {% if speech.legislative_item %} · <a href="/laki?item={{ speech.legislative_item|urlencode }}">{{ speech.legislative_item }}</a>{% endif %}
   · {{ speech.word_count }} sanaa
   {% if speech.speech_type %} · tyyppi {{ speech.speech_type }}{% endif %}
 </p>

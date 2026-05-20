@@ -1147,3 +1147,69 @@ def vote_proscons(conn, vote_id: int) -> Optional[dict]:
         except Exception:
             r[k] = []
     return r
+
+
+# --- Esitys-/synteesikyselyt (UX-kierros) ----------------------------------
+def item_stances(conn, item: str) -> dict:
+    """Säädöksen puhekannat ryhmiteltynä: kuka puhui puolesta/vastaan/ehdollisesti.
+    Yksi edustava rivi per (edustaja, kanta), korkein luottamus."""
+    rows = _rows(conn,
+        "SELECT ss.person_id, ss.stance, ss.proposition, ss.conditional_note, "
+        "ss.evidence_quote, ss.speech_id, ss.confidence, p.full_name, p.party_current "
+        "FROM analysis_speech_stance ss JOIN person p ON p.person_id=ss.person_id "
+        "WHERE ss.legislative_item=? ORDER BY ss.confidence DESC", item)
+    groups = {"puolesta": [], "vastaan": [], "ehdollinen": [], "ei_kantaa": []}
+    seen = set()
+    for r in rows:
+        key = (r["person_id"], r["stance"])
+        if key in seen or r["stance"] not in groups:
+            continue
+        seen.add(key)
+        groups[r["stance"]].append(r)
+    return {"groups": groups,
+            "counts": {k: len(v) for k, v in groups.items()}}
+
+
+def item_conflicts(conn, item: str) -> List[dict]:
+    """Säädöksen puhe–ääni-ristiriidat ja vastentahtoiset (yksi per edustaja)."""
+    rows = _rows(conn,
+        "SELECT DISTINCT wv.person_id, wv.speech_stance, wv.speech_quote, wv.speech_id, "
+        "wv.vote_value, wv.alignment, wv.context_note, p.full_name, p.party_current "
+        "FROM analysis_words_votes wv JOIN person p ON p.person_id=wv.person_id "
+        "WHERE wv.legislative_item=? AND wv.alignment IN ('ristiriita','vastentahtoinen') "
+        "ORDER BY wv.alignment, p.full_name", item)
+    out, seen = [], set()
+    for r in rows:
+        if r["person_id"] in seen:
+            continue
+        seen.add(r["person_id"])
+        out.append(r)
+    return out
+
+
+def person_highlights(conn, pid: int) -> List[dict]:
+    """Neutraalit, lähteistetyt 'kohokohdat' edustajasta — vain laskettuja faktoja,
+    ankkurilinkki todisteeseen. Ei adjektiiveja, ei arvottamista."""
+    h = []
+    s = _one(conn, "SELECT * FROM analysis_member_summary WHERE person_id=?", pid)
+    if s:
+        if s.get("n_deviations"):
+            h.append({"text": f"Äänesti {s['n_deviations']} kertaa eri tavalla kuin oma "
+                      f"ryhmänsä enemmistö", "anchor": "#aanet"})
+        if s.get("consistency_index") is not None:
+            h.append({"text": f"Johdonmukaisuusindeksi {s['consistency_index']}/100 "
+                      f"({s.get('confidence_level') or '—'} luottamus)", "anchor": "#indeksi"})
+    wv = _one(conn,
+        "SELECT SUM(alignment='ristiriita') ris, SUM(alignment='vastentahtoinen') vas, "
+        "COUNT(DISTINCT legislative_item) items FROM analysis_words_votes WHERE person_id=?", pid)
+    if wv and (wv.get("ris") or wv.get("vas")):
+        parts = []
+        if wv.get("ris"):
+            parts.append(f"{wv['ris']} puheen ja äänen ristiriita")
+        if wv.get("vas"):
+            parts.append(f"{wv['vas']} vastentahtoinen ääni")
+        h.append({"text": " · ".join(parts) + " kirjattu", "anchor": "#sanat-aanet"})
+    pc = _one(conn, "SELECT COUNT(*) c FROM analysis_position_change WHERE person_id=?", pid)
+    if pc and pc["c"]:
+        h.append({"text": f"{pc['c']} kannanmuutosta samasta säädöskohteesta", "anchor": "#muutokset"})
+    return h

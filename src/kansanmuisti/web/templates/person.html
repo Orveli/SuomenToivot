@@ -19,8 +19,32 @@
   <a class="source" href="/korjaus?person_id={{ p.person_id }}&page_ref=/edustaja/{{ p.person_id }}">Ilmoita korjaus</a>
 </p>
 
+{# ---- Tämä edustaja lyhyesti ---- #}
+{% if summary %}
+<div class="summary-grid">
+  {% if summary.consistency_index is not none %}<a class="stat-card" href="#indeksi">
+    <span class="sc-num">{{ summary.consistency_index }}<small>/100</small></span>
+    <span class="sc-lab">Johdonmukaisuus</span></a>{% endif %}
+  {% if summary.n_votes_total %}<a class="stat-card" href="#aanet">
+    <span class="sc-num">{{ (100*summary.n_votes_cast/summary.n_votes_total)|round|int }}<small>%</small></span>
+    <span class="sc-lab">Äänestysosallistuminen</span></a>{% endif %}
+  {% if summary.deviation_rate is not none %}<a class="stat-card" href="#aanet">
+    <span class="sc-num">{{ (100*summary.deviation_rate)|round(1) }}<small>%</small></span>
+    <span class="sc-lab">Poikkeama ryhmästä</span></a>{% endif %}
+  {% if summary.n_speeches %}<a class="stat-card" href="#puheet">
+    <span class="sc-num">{{ summary.n_speeches }}</span>
+    <span class="sc-lab">Puheenvuoroa</span></a>{% endif %}
+</div>
+{% endif %}
+{% if highlights %}
+<div class="highlights">
+  <b>Kohokohtia datasta</b> <span class="small muted">(laskettuja faktoja, klikkaa todisteeseen)</span>
+  <ul>{% for h in highlights %}<li>{{ h.text }} <a href="{{ h.anchor }}">→ näytä</a></li>{% endfor %}</ul>
+</div>
+{% endif %}
+
 {# ---- Johdonmukaisuusindeksi ---- #}
-<h2>Johdonmukaisuusindeksi</h2>
+<h2 id="indeksi">Johdonmukaisuusindeksi</h2>
 {% if summary and summary.consistency_index is not none %}
 <div class="indicator">
   <div style="display:flex;align-items:baseline;gap:12px">
@@ -73,7 +97,7 @@ ryhmien kanssa edustaja käytännössä äänestää, ei syytä.</p>
 {% endif %}
 
 {# ---- Äänestyskäyttäytyminen ---- #}
-<h2>Äänestyskäyttäytyminen</h2>
+<h2 id="aanet">Äänestyskäyttäytyminen</h2>
 {% set b = behavior.distribution %}
 <table>
   <tr><th>Jaa</th><th>Ei</th><th>Tyhjää</th><th>Poissa</th></tr>
@@ -100,7 +124,7 @@ ryhmien kanssa edustaja käytännössä äänestää, ei syytä.</p>
 
 {# ---- Kannanmuutosten aikajana ---- #}
 {% if position_changes %}
-<h2>Kannanmuutosten aikajana</h2>
+<h2 id="muutokset">Kannanmuutosten aikajana</h2>
 <p class="small muted">Tapaukset, joissa edustajan ääni <strong>samasta säädöskohteesta</strong>
 muuttui Jaa↔Ei ajan myötä. Emme väitä mielipiteen muuttuneen — kuvaamme äänten muutoksen.
 Lue molemmat äänestykset ja arvioi, onko kyse samasta kysymyksestä.</p>
@@ -120,7 +144,7 @@ Lue molemmat äänestykset ja arvioi, onko kyse samasta kysymyksestä.</p>
 
 {# ---- M2: Sanat vs. äänet ---- #}
 {% if words_votes %}
-<h2>Sanat vs. äänet <span class="small muted">(puheen kanta vrt. ääni)</span></h2>
+<h2 id="sanat-aanet">Sanat vs. äänet <span class="small muted">(puheen kanta vrt. ääni)</span></h2>
 <p class="small muted">Mitä edustaja sanoi lakiesityksestä salissa ja miten äänesti samasta
 asiasta. Kanta on poimittu puheesta <a href="/sanat-vs-aanet">lähteistetysti</a>; emme esitä
 motiiveja. <a href="/sanat-vs-aanet">Lue lisää menetelmästä →</a></p>
@@ -216,7 +240,7 @@ ovat alarajoja. Kuvaileva. <a href="/sanat">Vertaa kaikkia.</a></p>
 
 {# ---- Puheenvuorot ---- #}
 {% if speeches %}
-<h2>Viimeisimmät puheenvuorot</h2>
+<h2 id="puheet">Viimeisimmät puheenvuorot</h2>
 <ul class="clean">
   {% for s in speeches %}
   <li>

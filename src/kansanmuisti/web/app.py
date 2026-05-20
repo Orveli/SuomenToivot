@@ -129,7 +129,8 @@ def edustaja(request: Request, pid: int):
                       promises=queries.person_promise_alignment(conn, pid),
                       fingerprint=queries.member_party_agreement(conn, pid),
                       word_style=queries.person_word_style(conn, pid),
-                      words_votes=queries.person_words_votes(conn, pid))
+                      words_votes=queries.person_words_votes(conn, pid),
+                      highlights=queries.person_highlights(conn, pid))
     finally:
         conn.close()
 
@@ -362,7 +363,10 @@ def laki(request: Request, item: str = ""):
     try:
         ex = queries.bill_explainer(conn, item) if item else None
         votes = queries.votes_for_item(conn, item) if item else []
-        return render(request, "bill.html", item=item, ex=ex, votes=votes)
+        stances = queries.item_stances(conn, item) if item else None
+        conflicts = queries.item_conflicts(conn, item) if item else []
+        return render(request, "bill.html", item=item, ex=ex, votes=votes,
+                      stances=stances, conflicts=conflicts)
     finally:
         conn.close()
 

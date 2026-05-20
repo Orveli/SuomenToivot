@@ -45,6 +45,60 @@ esityksestä ja salipuheista.</p>
 </div>
 {% endif %}
 
+{% if stances and (stances.counts.puolesta or stances.counts.vastaan or stances.counts.ehdollinen) %}
+<h2>Kuka puhui puolesta ja vastaan</h2>
+<p class="small muted">Salipuheista poimitut kannat (lähteistetty). {{ stances.counts.puolesta }} puolesta ·
+{{ stances.counts.vastaan }} vastaan · {{ stances.counts.ehdollinen }} ehdollisesti.</p>
+<div class="pc-grid">
+  <div class="pc-col"><h3>Puolesta</h3>
+    {% for a in stances.groups.puolesta %}
+    <div class="pc-arg"><div class="small"><a href="/edustaja/{{ a.person_id }}"><b>{{ a.full_name }}</b></a>
+      <span class="party-tag">{{ a.party_current }}</span></div>
+      {% if a.evidence_quote %}<blockquote class="wv-quote">“{{ a.evidence_quote }}”
+        <a class="src" href="/puhe/{{ a.speech_id }}">puhe →</a></blockquote>{% endif %}</div>
+    {% else %}<p class="muted small">Ei kirjattuja puolesta-kantoja.</p>{% endfor %}
+  </div>
+  <div class="pc-col"><h3>Vastaan</h3>
+    {% for a in stances.groups.vastaan %}
+    <div class="pc-arg"><div class="small"><a href="/edustaja/{{ a.person_id }}"><b>{{ a.full_name }}</b></a>
+      <span class="party-tag">{{ a.party_current }}</span></div>
+      {% if a.evidence_quote %}<blockquote class="wv-quote">“{{ a.evidence_quote }}”
+        <a class="src" href="/puhe/{{ a.speech_id }}">puhe →</a></blockquote>{% endif %}</div>
+    {% else %}<p class="muted small">Ei kirjattuja vastaan-kantoja.</p>{% endfor %}
+  </div>
+</div>
+{% if stances.groups.ehdollinen %}
+<details class="plain"><summary>{{ stances.counts.ehdollinen }} ehdollista kantaa (kannattaa osaa, vastustaa osaa)</summary>
+  {% for a in stances.groups.ehdollinen %}
+  <div class="pc-arg"><div class="small"><a href="/edustaja/{{ a.person_id }}"><b>{{ a.full_name }}</b></a>
+    <span class="party-tag">{{ a.party_current }}</span>{% if a.conditional_note %} — {{ a.conditional_note }}{% endif %}</div>
+    {% if a.evidence_quote %}<blockquote class="wv-quote">“{{ a.evidence_quote }}”
+      <a class="src" href="/puhe/{{ a.speech_id }}">puhe →</a></blockquote>{% endif %}</div>
+  {% endfor %}
+</details>
+{% endif %}
+{% endif %}
+
+{% if conflicts %}
+<h2>Missä puhe ja ääni erosivat</h2>
+<p class="small muted">Edustajat, joiden puheessa esittämä kanta ja antama ääni osoittivat eri suuntiin
+tässä laissa. Emme esitä motiiveja — näytämme lainauksen ja äänen, arvioi itse.</p>
+<div class="wv-list">
+  {% for c in conflicts %}
+  <div class="wv-row" style="grid-template-columns:1fr">
+    <div class="wv-body">
+      <div class="wv-tags"><span class="wv-badge wv-{{ c.alignment }}">{{ ALIGN_LABELS[c.alignment] }}</span>
+        <a href="/edustaja/{{ c.person_id }}"><b>{{ c.full_name }}</b></a>
+        <span class="party-tag">{{ c.party_current }}</span></div>
+      <blockquote class="wv-quote">“{{ c.speech_quote }}” <a class="src" href="/puhe/{{ c.speech_id }}">puhe →</a></blockquote>
+      <div class="wv-vote small">Puheen kanta: <b>{{ c.speech_stance }}</b> · Ääni: <b>{{ c.vote_value }}</b>
+        {% if c.context_note %}<span class="muted">— {{ c.context_note }}</span>{% endif %}</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
 {% if votes %}
 <h2>Aiheeseen liittyvät äänestykset</h2>
 <table>
